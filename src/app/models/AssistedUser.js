@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const AddressSchema = require('./Address');
 
 const AssistedUserSchema = new mongoose.Schema(
   {
@@ -8,7 +9,6 @@ const AssistedUserSchema = new mongoose.Schema(
     },
     socialName: {
       type: String,
-      required: true,
     },
     maritalStatus: {
       type: String,
@@ -20,6 +20,10 @@ const AssistedUserSchema = new mongoose.Schema(
     },
     sex: {
       type: String,
+      required: true,
+    },
+    address: {
+      type: AddressSchema,
       required: true,
     },
     nationality: {
@@ -37,36 +41,8 @@ const AssistedUserSchema = new mongoose.Schema(
     deficiency: {
       type: String,
     },
-    address: {
-      type: String,
-      required: true,
-    },
-    number: {
-      type: Number,
-      required: true,
-    },
-    city: {
-      type: String,
-      required: true,
-    },
-    neighborhood: {
-      type: String,
-      required: true,
-    },
-    state: {
-      type: String,
-      required: true,
-    },
-    cep: {
-      type: String,
-      required: true,
-    },
     phone: {
       type: Number,
-      required: true,
-    },
-    referencePoint: {
-      type: String,
       required: true,
     },
     email: {

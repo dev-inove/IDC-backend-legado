@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const AddressSchema = require('./Address');
 
 const { Schema } = mongoose;
 
@@ -25,35 +26,11 @@ const ParentSchema = new mongoose.Schema({
     required: true,
   },
   address: {
-    type: String,
-    required: true,
-  },
-  number: {
-    type: Number,
-    required: true,
-  },
-  city: {
-    type: String,
-    required: true,
-  },
-  neighborhood: {
-    type: String,
-    required: true,
-  },
-  state: {
-    type: String,
-    required: true,
-  },
-  cep: {
-    type: String,
+    type: AddressSchema,
     required: true,
   },
   phone: {
     type: Number,
-    required: true,
-  },
-  referencePoint: {
-    type: String,
     required: true,
   },
   email: {
