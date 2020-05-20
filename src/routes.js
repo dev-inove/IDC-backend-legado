@@ -6,6 +6,7 @@ const routes = new Router();
 routes.post('/assisted', AssistedController.store);
 routes.get('/assisted', AssistedController.index);
 routes.get('/assisted/:id', AssistedController.show);
+routes.put('/assisted/:id', AssistedController.update);
 routes.delete('/assisted/:id', AssistedController.destroy);
 
 module.exports = routes;

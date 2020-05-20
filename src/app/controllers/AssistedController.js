@@ -81,7 +81,64 @@ class AssistedController {
   }
 
   async update(req, res) {
-    return res.json();
+    const schema = Yup.object().shape({
+      fullName: Yup.string(),
+      socialName: Yup.string(),
+      maritalStatus: Yup.string(),
+      email: Yup.string(),
+      phone: Yup.number().positive(),
+
+      birth: Yup.date(),
+      sex: Yup.string(),
+      nationality: Yup.string(),
+      placeOfBirth: Yup.string(),
+
+      hasDeficiency: Yup.boolean(),
+      deficiency: Yup.string(),
+
+      address: Yup.object().shape({
+        address: Yup.string(),
+        number: Yup.string(),
+        neighborhood: Yup.string(),
+        city: Yup.string(),
+        state: Yup.string(),
+        cep: Yup.number().positive(),
+        referencePoint: Yup.string(),
+      }),
+      identity: Yup.number().positive(),
+      cpf: Yup.string(),
+      issuingBody: Yup.string(),
+      emission: Yup.date(),
+
+      diagnostic: Yup.string(),
+      visualAcuity: Yup.string(),
+      cid10: Yup.string(),
+
+      hasARelativeAttended: Yup.boolean(),
+      relativeAttended: Yup.string(),
+
+      transport: Yup.string(),
+
+      isInGovernmentProgram: Yup.boolean(),
+      governmentProgram: Yup.string(),
+      governmentProgramValue: Yup.number().positive(),
+      beneficiary: Yup.string(),
+      nisNumber: Yup.number().positive(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails!' });
+    }
+
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ error: 'Id not received' });
+    }
+
+    const assisted = await Assisted.findByIdAndUpdate({ _id: id });
+
+    return res.json(assisted);
   }
 
   async destroy(req, res) {
