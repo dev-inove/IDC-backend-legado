@@ -67,7 +67,7 @@ const ParentSchema = new mongoose.Schema({
   },
   validity: {
     type: Date,
-    required: Number,
+    required: true,
   },
 });
 
