@@ -2,6 +2,7 @@ const { Router } = require('express');
 const AssistedController = require('./app/controllers/AssistedController');
 const ResponsibleController = require('./app/controllers/ResponsibleController');
 const ParentController = require('./app/controllers/ParentController');
+const MemberFamilyController = require('./app/controllers/MemberFamilyController');
 
 const routes = new Router();
 
@@ -18,5 +19,7 @@ routes.delete('/responsible/:id', ResponsibleController.destroy);
 routes.post('/parent', ParentController.store);
 routes.get('/parent', ParentController.index);
 routes.delete('/parent/:id', ParentController.destroy);
+
+routes.post('/memberfamily', MemberFamilyController.store);
 
 module.exports = routes;
