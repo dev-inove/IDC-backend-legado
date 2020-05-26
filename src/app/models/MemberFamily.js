@@ -5,6 +5,11 @@ const { Schema } = mongoose;
 
 const MemberFamily = new Schema(
   {
+    idAssisted: {
+      type: Schema.Types.ObjectId,
+      ref: 'AssistedUser',
+      required: true,
+    },
     kinship: { type: String, required: true },
     name: { type: String, required: true },
     rg: { type: String, required: true },
@@ -14,7 +19,6 @@ const MemberFamily = new Schema(
     renda: { type: Number, required: true },
     isResponsable: { type: Boolean, required: true },
     responsable: {
-      idAssisted: { type: String },
       rg: { type: String },
       responsibleValidator: { type: String },
       organization: { type: String },
