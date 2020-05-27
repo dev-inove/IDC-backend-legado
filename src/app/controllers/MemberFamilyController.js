@@ -1,5 +1,6 @@
 const Yup = require('yup');
 const MemberFamily = require('../models/MemberFamily');
+const Assisted = require('../models/AssistedUser');
 
 class ResponsibleController {
   async store(req, res, next) {
@@ -12,7 +13,7 @@ class ResponsibleController {
       fones: Yup.array().of(Yup.string()),
       email: Yup.string().required(),
       renda: Yup.number().required(),
-      isResponsable: Yup.boolean().required(),
+      isResponsible: Yup.boolean().required(),
       responsible: Yup.object().shape({
         rg: Yup.string().required(),
         responsibleValidator: Yup.string().required(),
@@ -23,12 +24,32 @@ class ResponsibleController {
       doMedicalTreatment: Yup.boolean().required(),
       useContinuosMedication: Yup.boolean().required(),
       typeOfDisiase: Yup.string().required(),
+      schooling: Yup.object()
+        .shape({
+          grade: Yup.string().required(),
+          turn: Yup.string().required(),
+
+          hasVinculeHelioGoes: Yup.boolean().required(),
+          transportToInstitute: Yup.string().required(),
+          hasMemberMatriculatedOrWillMatriculate: Yup.boolean().required(),
+        })
+        .required(),
     });
-    if (!schema.isValid(req.body)) {
+    const { idAssisted } = req.body;
+
+    if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ message: 'Invalid Object' });
     }
     const memberFamily = new MemberFamily(req.body);
+    if (memberFamily.isResponsible === true) {
+      const assistedUser = await Assisted.findById(idAssisted);
+      // eslint-disable-next-line no-underscore-dangle
+      assistedUser.id_Responsible = memberFamily._id;
+      assistedUser.save();
+    }
+
     memberFamily.save();
+
     return res.status(201).json(memberFamily);
   }
 

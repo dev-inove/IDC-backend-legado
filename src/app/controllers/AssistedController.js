@@ -4,6 +4,7 @@ const Assisted = require('../models/AssistedUser');
 class AssistedController {
   async store(req, res) {
     const schema = Yup.object().shape({
+      id_Responsible: Yup.string(),
       fullName: Yup.string().required(),
       socialName: Yup.string(),
       maritalStatus: Yup.string().required(),
@@ -49,6 +50,33 @@ class AssistedController {
       governmentProgramValue: Yup.number().positive(),
       beneficiary: Yup.string(),
       nisNumber: Yup.number().positive(),
+
+      schooling: Yup.object()
+        .shape({
+          grade: Yup.string().required(),
+          turn: Yup.string().required(),
+          hasVinculeHelioGoes: Yup.boolean().required(),
+          transportToInstitute: Yup.string().required(),
+          hasMemberMatriculatedOrWillMatriculate: Yup.boolean().required(),
+        })
+        .required(),
+      property: Yup.object()
+        .shape({
+          type_property: Yup.string().required(),
+          physical_structure: Yup.string().required(),
+          numberOfRooms: Yup.number().positive().required(),
+          numberOfBathrooms: Yup.number().positive().required(),
+          energyElectric: Yup.string().required(),
+          waterSupply: Yup.string().required(),
+          sanitarySewage: Yup.boolean().required(),
+          garbageCollection: Yup.boolean().required(),
+          statusProperty: Yup.string().required(),
+          monthlyRent: Yup.number().positive(),
+          monthlyFinancing: Yup.number().positive(),
+          isSharedWithOtherFamily: Yup.boolean().required(),
+          houseProvidedBy: Yup.string().required(),
+        })
+        .required(),
     });
 
     if (!(await schema.isValid(req.body))) {
