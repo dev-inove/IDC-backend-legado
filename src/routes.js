@@ -21,6 +21,6 @@ routes.get('/parent', ParentController.index);
 routes.delete('/parent/:id', ParentController.destroy);
 
 routes.post('/memberfamily', MemberFamilyController.store);
-routes.get('/memberfamily/:id_AssistedUser', MemberFamilyController.index);
+routes.get('/memberfamily/:idAssisted', MemberFamilyController.index);
 
 module.exports = routes;

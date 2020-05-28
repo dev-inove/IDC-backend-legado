@@ -2,7 +2,7 @@ const Yup = require('yup');
 const MemberFamily = require('../models/MemberFamily');
 const Assisted = require('../models/AssistedUser');
 
-class ResponsibleController {
+class MemberFamilyController {
   async store(req, res, next) {
     const schema = Yup.object().shape({
       idAssisted: Yup.string().required(),
@@ -10,30 +10,20 @@ class ResponsibleController {
       name: Yup.string().required(),
       rg: Yup.string().required(),
       cpf: Yup.string().required(),
-      fones: Yup.array().of(Yup.string()),
+      fones: Yup.array().of(Yup.number()).required(),
       email: Yup.string().required(),
       renda: Yup.number().required(),
       isResponsible: Yup.boolean().required(),
       responsible: Yup.object().shape({
-        rg: Yup.string().required(),
-        responsibleValidator: Yup.string().required(),
-        organization: Yup.string().required(),
-        validity: Yup.string().required(),
+        rg: Yup.string(),
+        responsibleValidator: Yup.string(),
+        organization: Yup.string(),
+        validity: Yup.string(),
       }),
       wasAttended: Yup.boolean().required(),
       doMedicalTreatment: Yup.boolean().required(),
       useContinuosMedication: Yup.boolean().required(),
       typeOfDisiase: Yup.string().required(),
-      schooling: Yup.object()
-        .shape({
-          grade: Yup.string().required(),
-          turn: Yup.string().required(),
-
-          hasVinculeHelioGoes: Yup.boolean().required(),
-          transportToInstitute: Yup.string().required(),
-          hasMemberMatriculatedOrWillMatriculate: Yup.boolean().required(),
-        })
-        .required(),
     });
     const { idAssisted } = req.body;
 
@@ -54,9 +44,16 @@ class ResponsibleController {
   }
 
   async index(req, res, next) {
-    const { id_AssistedUser } = req.params;
+    const schema = Yup.object().shape({
+      idAssisted: Yup.string().required(),
+    });
+
+    if (!(await schema.isValid(req.params))) {
+      return res.status(400).json({ message: 'This Id is invalid!' });
+    }
+    const { idAssisted } = req.params;
     const members = await MemberFamily.find({
-      idAssisted: id_AssistedUser,
+      idAssisted,
     }).populate('idAssisted', 'fullName');
 
     if (members.length === 0) {
@@ -68,4 +65,4 @@ class ResponsibleController {
   }
 }
 
-module.exports = new ResponsibleController();
+module.exports = new MemberFamilyController();

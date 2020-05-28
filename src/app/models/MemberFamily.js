@@ -17,8 +17,8 @@ const MemberFamily = new Schema(
     fones: [{ type: String }],
     email: { type: String, required: true },
     renda: { type: Number, required: true },
-    isResponsable: { type: Boolean, required: true },
-    responsable: {
+    isResponsible: { type: Boolean, required: true },
+    responsible: {
       rg: { type: String },
       responsibleValidator: { type: String },
       organization: { type: String },
