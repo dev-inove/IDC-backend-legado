@@ -110,50 +110,80 @@ class AssistedController {
 
   async update(req, res) {
     const schema = Yup.object().shape({
-      fullName: Yup.string(),
+      id_Responsible: Yup.string(),
+      fullName: Yup.string().required(),
       socialName: Yup.string(),
-      maritalStatus: Yup.string(),
-      email: Yup.string(),
-      phone: Yup.number().positive(),
+      maritalStatus: Yup.string().required(),
+      email: Yup.string().required(),
+      phone: Yup.number().positive().required(),
 
-      birth: Yup.date(),
-      sex: Yup.string(),
-      nationality: Yup.string(),
-      placeOfBirth: Yup.string(),
+      birth: Yup.date().required(),
+      sex: Yup.string().required(),
+      nationality: Yup.string().required(),
+      placeOfBirth: Yup.string().required(),
 
-      hasDeficiency: Yup.boolean(),
+      hasDeficiency: Yup.boolean().required(),
       deficiency: Yup.string(),
 
-      address: Yup.object().shape({
-        address: Yup.string(),
-        number: Yup.string(),
-        neighborhood: Yup.string(),
-        city: Yup.string(),
-        state: Yup.string(),
-        cep: Yup.number().positive(),
-        referencePoint: Yup.string(),
-      }),
-      identity: Yup.number().positive(),
-      cpf: Yup.string(),
-      issuingBody: Yup.string(),
-      emission: Yup.date(),
+      address: Yup.object()
+        .shape({
+          address: Yup.string().required(),
+          number: Yup.string().required(),
+          neighborhood: Yup.string().required(),
+          city: Yup.string().required(),
+          state: Yup.string().required(),
+          cep: Yup.number().positive().required(),
+          referencePoint: Yup.string().required(),
+        })
+        .required(),
 
-      diagnostic: Yup.string(),
-      visualAcuity: Yup.string(),
-      cid10: Yup.string(),
+      identity: Yup.number().positive().required(),
+      cpf: Yup.string().required(),
+      issuingBody: Yup.string().required(),
+      emission: Yup.date().required(),
 
-      hasARelativeAttended: Yup.boolean(),
+      diagnostic: Yup.string().required(),
+      visualAcuity: Yup.string().required(),
+      cid10: Yup.string().required(),
+
+      hasARelativeAttended: Yup.boolean().required(),
       relativeAttended: Yup.string(),
 
-      transport: Yup.string(),
+      transport: Yup.string().required(),
 
-      isInGovernmentProgram: Yup.boolean(),
+      isInGovernmentProgram: Yup.boolean().required(),
       governmentProgram: Yup.string(),
       governmentProgramValue: Yup.number().positive(),
       beneficiary: Yup.string(),
       nisNumber: Yup.number().positive(),
-    });
 
+      schooling: Yup.object()
+        .shape({
+          grade: Yup.string().required(),
+          turn: Yup.string().required(),
+          hasVinculeHelioGoes: Yup.boolean().required(),
+          transportToInstitute: Yup.string().required(),
+          hasMemberMatriculatedOrWillMatriculate: Yup.boolean().required(),
+        })
+        .required(),
+      property: Yup.object()
+        .shape({
+          type_property: Yup.string().required(),
+          physical_structure: Yup.string().required(),
+          numberOfRooms: Yup.number().positive().required(),
+          numberOfBathrooms: Yup.number().positive().required(),
+          energyElectric: Yup.string().required(),
+          waterSupply: Yup.string().required(),
+          sanitarySewage: Yup.boolean().required(),
+          garbageCollection: Yup.boolean().required(),
+          statusProperty: Yup.string().required(),
+          monthlyRent: Yup.number().positive(),
+          monthlyFinancing: Yup.number().positive(),
+          isSharedWithOtherFamily: Yup.boolean().required(),
+          houseProvidedBy: Yup.string().required(),
+        })
+        .required(),
+    });
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails!' });
     }
