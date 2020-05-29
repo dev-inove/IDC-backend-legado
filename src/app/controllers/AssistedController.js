@@ -6,7 +6,7 @@ class AssistedController {
     const schema = Yup.object().shape({
       fullName: Yup.string().required(),
       socialName: Yup.string(),
-      maritalStatus: Yup.string().required(),
+      maritalStatus: Yup.string(),
       email: Yup.string().required(),
       phone: Yup.number().positive().required(),
 
