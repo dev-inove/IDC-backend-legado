@@ -3,6 +3,7 @@ const AddressSchema = require('./Address')
 
 const AssistedUserSchema = new mongoose.Schema(
     {
+        // Mai Info
         id_Responsible: {
             type: mongoose.Types.ObjectId,
             ref: 'MemberFamily',
@@ -26,10 +27,7 @@ const AssistedUserSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        address: {
-            type: AddressSchema,
-            required: true,
-        },
+
         nationality: {
             type: String,
             required: true,
@@ -38,13 +36,12 @@ const AssistedUserSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        hasDeficiency: {
-            type: Boolean,
+        // Adress Info
+        address: {
+            type: AddressSchema,
             required: true,
         },
-        deficiency: {
-            type: String,
-        },
+
         phone: {
             type: Number,
             required: true,
@@ -53,6 +50,8 @@ const AssistedUserSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+
+        // Legal infos
         identity: {
             type: String,
             required: true,
@@ -69,6 +68,8 @@ const AssistedUserSchema = new mongoose.Schema(
             type: Date,
             required: true,
         },
+
+        // Visual issue info
         diagnostic: {
             type: String,
             required: true,
@@ -92,6 +93,17 @@ const AssistedUserSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+
+        // Deficiency Info
+        hasDeficiency: {
+            type: Boolean,
+            required: true,
+        },
+        deficiency: {
+            type: String,
+        },
+
+        // Government Infos
         isInGovernmentProgram: {
             type: Boolean,
             required: true,
@@ -108,6 +120,8 @@ const AssistedUserSchema = new mongoose.Schema(
         nisNumber: {
             type: Number,
         },
+
+        // schooling info
         schooling: {
             grade: { type: String, required: true },
             turn: { type: String, required: true },
@@ -119,6 +133,8 @@ const AssistedUserSchema = new mongoose.Schema(
                 required: true,
             },
         },
+
+        // Property Info
         property: {
             type_property: { type: String, required: true },
             physical_structure: { type: String, required: true },

@@ -11,9 +11,9 @@ class MemberFamilyController {
             name: Yup.string().required(),
             rg: Yup.string().required(),
             cpf: Yup.string().required(),
-            fones: Yup.array().of(Yup.number()).required(),
+            fones: Yup.array().of(Yup.number()),
             email: Yup.string().required(),
-            renda: Yup.number().required(),
+            renda: Yup.number(),
             isResponsible: Yup.boolean().required(),
             responsible: Yup.object().shape({
                 rg: Yup.string(),
@@ -21,10 +21,10 @@ class MemberFamilyController {
                 organization: Yup.string(),
                 validity: Yup.string(),
             }),
-            wasAttended: Yup.boolean().required(),
-            doMedicalTreatment: Yup.boolean().required(),
-            useContinuosMedication: Yup.boolean().required(),
-            typeOfDisiase: Yup.string().required(),
+            wasAttended: Yup.boolean(),
+            doMedicalTreatment: Yup.boolean(),
+            useContinuosMedication: Yup.boolean(),
+            typeOfDisiase: Yup.string(),
         })
         const { idAssisted } = req.body
 

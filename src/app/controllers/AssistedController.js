@@ -5,79 +5,75 @@ const MemberFamily = require('../models/MemberFamily')
 class AssistedController {
     async store(req, res) {
         const schema = Yup.object().shape({
+            // Main info
             id_Responsible: Yup.string(),
             fullName: Yup.string().required(),
             socialName: Yup.string(),
             maritalStatus: Yup.string().required(),
             email: Yup.string().required(),
             phone: Yup.number().positive().required(),
-
+            // Birth info
             birth: Yup.date().required(),
             sex: Yup.string().required(),
             nationality: Yup.string().required(),
             placeOfBirth: Yup.string().required(),
-
+            // Deficiency Info
             hasDeficiency: Yup.boolean().required(),
             deficiency: Yup.string(),
 
-            address: Yup.object()
-                .shape({
-                    address: Yup.string().required(),
-                    number: Yup.string().required(),
-                    neighborhood: Yup.string().required(),
-                    city: Yup.string().required(),
-                    state: Yup.string().required(),
-                    cep: Yup.number().positive().required(),
-                    referencePoint: Yup.string().required(),
-                })
-                .required(),
-
+            address: Yup.object().shape({
+                address: Yup.string(),
+                number: Yup.string(),
+                neighborhood: Yup.string(),
+                city: Yup.string(),
+                state: Yup.string(),
+                cep: Yup.number().positive(),
+                referencePoint: Yup.string(),
+            }),
+            // Legal Info
             identity: Yup.number().positive().required(),
             cpf: Yup.string().required(),
             issuingBody: Yup.string().required(),
             emission: Yup.date().required(),
-
-            diagnostic: Yup.string().required(),
-            visualAcuity: Yup.string().required(),
-            cid10: Yup.string().required(),
+            // Visual Issue info
+            diagnostic: Yup.string(),
+            visualAcuity: Yup.string(),
+            cid10: Yup.string(),
 
             hasARelativeAttended: Yup.boolean().required(),
             relativeAttended: Yup.string(),
 
-            transport: Yup.string().required(),
-
-            isInGovernmentProgram: Yup.boolean().required(),
+            transport: Yup.string(),
+            // Government infos
+            isInGovernmentProgram: Yup.boolean(),
             governmentProgram: Yup.string(),
             governmentProgramValue: Yup.number().positive(),
             beneficiary: Yup.string(),
             nisNumber: Yup.number().positive(),
-
-            schooling: Yup.object()
-                .shape({
-                    grade: Yup.string().required(),
-                    turn: Yup.string().required(),
-                    hasVinculeHelioGoes: Yup.boolean().required(),
-                    transportToInstitute: Yup.string().required(),
-                    hasMemberMatriculatedOrWillMatriculate: Yup.boolean().required(),
-                })
-                .required(),
-            property: Yup.object()
-                .shape({
-                    type_property: Yup.string().required(),
-                    physical_structure: Yup.string().required(),
-                    numberOfRooms: Yup.number().positive().required(),
-                    numberOfBathrooms: Yup.number().positive().required(),
-                    energyElectric: Yup.string().required(),
-                    waterSupply: Yup.string().required(),
-                    sanitarySewage: Yup.boolean().required(),
-                    garbageCollection: Yup.boolean().required(),
-                    statusProperty: Yup.string().required(),
-                    monthlyRent: Yup.number().positive(),
-                    monthlyFinancing: Yup.number().positive(),
-                    isSharedWithOtherFamily: Yup.boolean().required(),
-                    houseProvidedBy: Yup.string().required(),
-                })
-                .required(),
+            // schooling info
+            schooling: Yup.object().shape({
+                grade: Yup.string(),
+                turn: Yup.string(),
+                hasVinculeHelioGoes: Yup.boolean(),
+                transportToInstitute: Yup.string(),
+                hasMemberMatriculatedOrWillMatriculate: Yup.boolean(),
+            }),
+            // Property info
+            property: Yup.object().shape({
+                type_property: Yup.string(),
+                physical_structure: Yup.string(),
+                numberOfRooms: Yup.number().positive(),
+                numberOfBathrooms: Yup.number().positive(),
+                energyElectric: Yup.string(),
+                waterSupply: Yup.string(),
+                sanitarySewage: Yup.boolean(),
+                garbageCollection: Yup.boolean(),
+                statusProperty: Yup.string(),
+                monthlyRent: Yup.number().positive(),
+                monthlyFinancing: Yup.number().positive(),
+                isSharedWithOtherFamily: Yup.boolean(),
+                houseProvidedBy: Yup.string(),
+            }),
         })
 
         if (!(await schema.isValid(req.body))) {
@@ -111,79 +107,75 @@ class AssistedController {
 
     async update(req, res) {
         const schema = Yup.object().shape({
+            // Main info
             id_Responsible: Yup.string(),
             fullName: Yup.string().required(),
             socialName: Yup.string(),
             maritalStatus: Yup.string().required(),
             email: Yup.string().required(),
             phone: Yup.number().positive().required(),
-
+            // Birth info
             birth: Yup.date().required(),
             sex: Yup.string().required(),
             nationality: Yup.string().required(),
             placeOfBirth: Yup.string().required(),
-
+            // Deficiency Info
             hasDeficiency: Yup.boolean().required(),
             deficiency: Yup.string(),
 
-            address: Yup.object()
-                .shape({
-                    address: Yup.string().required(),
-                    number: Yup.string().required(),
-                    neighborhood: Yup.string().required(),
-                    city: Yup.string().required(),
-                    state: Yup.string().required(),
-                    cep: Yup.number().positive().required(),
-                    referencePoint: Yup.string().required(),
-                })
-                .required(),
-
+            address: Yup.object().shape({
+                address: Yup.string(),
+                number: Yup.string(),
+                neighborhood: Yup.string(),
+                city: Yup.string(),
+                state: Yup.string(),
+                cep: Yup.number().positive(),
+                referencePoint: Yup.string(),
+            }),
+            // Legal Info
             identity: Yup.number().positive().required(),
             cpf: Yup.string().required(),
             issuingBody: Yup.string().required(),
             emission: Yup.date().required(),
-
-            diagnostic: Yup.string().required(),
-            visualAcuity: Yup.string().required(),
-            cid10: Yup.string().required(),
+            // Visual Issue info
+            diagnostic: Yup.string(),
+            visualAcuity: Yup.string(),
+            cid10: Yup.string(),
 
             hasARelativeAttended: Yup.boolean().required(),
             relativeAttended: Yup.string(),
 
-            transport: Yup.string().required(),
-
-            isInGovernmentProgram: Yup.boolean().required(),
+            transport: Yup.string(),
+            // Government infos
+            isInGovernmentProgram: Yup.boolean(),
             governmentProgram: Yup.string(),
             governmentProgramValue: Yup.number().positive(),
             beneficiary: Yup.string(),
             nisNumber: Yup.number().positive(),
-
-            schooling: Yup.object()
-                .shape({
-                    grade: Yup.string().required(),
-                    turn: Yup.string().required(),
-                    hasVinculeHelioGoes: Yup.boolean().required(),
-                    transportToInstitute: Yup.string().required(),
-                    hasMemberMatriculatedOrWillMatriculate: Yup.boolean().required(),
-                })
-                .required(),
-            property: Yup.object()
-                .shape({
-                    type_property: Yup.string().required(),
-                    physical_structure: Yup.string().required(),
-                    numberOfRooms: Yup.number().positive().required(),
-                    numberOfBathrooms: Yup.number().positive().required(),
-                    energyElectric: Yup.string().required(),
-                    waterSupply: Yup.string().required(),
-                    sanitarySewage: Yup.boolean().required(),
-                    garbageCollection: Yup.boolean().required(),
-                    statusProperty: Yup.string().required(),
-                    monthlyRent: Yup.number().positive(),
-                    monthlyFinancing: Yup.number().positive(),
-                    isSharedWithOtherFamily: Yup.boolean().required(),
-                    houseProvidedBy: Yup.string().required(),
-                })
-                .required(),
+            // schooling info
+            schooling: Yup.object().shape({
+                grade: Yup.string(),
+                turn: Yup.string(),
+                hasVinculeHelioGoes: Yup.boolean(),
+                transportToInstitute: Yup.string(),
+                hasMemberMatriculatedOrWillMatriculate: Yup.boolean(),
+            }),
+            // Property info
+            property: Yup.object().shape({
+                type_property: Yup.string(),
+                physical_structure: Yup.string(),
+                numberOfRooms: Yup.number().positive(),
+                numberOfBathrooms: Yup.number().positive(),
+                energyElectric: Yup.string(),
+                waterSupply: Yup.string(),
+                sanitarySewage: Yup.boolean(),
+                garbageCollection: Yup.boolean(),
+                statusProperty: Yup.string(),
+                monthlyRent: Yup.number().positive(),
+                monthlyFinancing: Yup.number().positive(),
+                isSharedWithOtherFamily: Yup.boolean(),
+                houseProvidedBy: Yup.string(),
+            }),
         })
         if (!(await schema.isValid(req.body))) {
             return res.status(400).json({ error: 'Validation fails!' })
