@@ -1,57 +1,83 @@
 const Yup = require('yup')
 const Assisted = require('../models/AssistedUser')
+const MemberFamily = require('../models/MemberFamily')
 
 class AssistedController {
     async store(req, res) {
         const schema = Yup.object().shape({
-            // Main Info
+            id_Responsible: Yup.string(),
             fullName: Yup.string().required(),
             socialName: Yup.string(),
             maritalStatus: Yup.string().required(),
-            email: Yup.string(),
+            email: Yup.string().required(),
             phone: Yup.number().positive().required(),
+
             birth: Yup.date().required(),
             sex: Yup.string().required(),
             nationality: Yup.string().required(),
             placeOfBirth: Yup.string().required(),
 
-            // Deficiency
             hasDeficiency: Yup.boolean().required(),
             deficiency: Yup.string(),
 
-            // Address Info
-            address: Yup.object().shape({
-                address: Yup.string(),
-                number: Yup.string(),
-                neighborhood: Yup.string(),
-                city: Yup.string(),
-                state: Yup.string(),
-                cep: Yup.number().positive(),
-                referencePoint: Yup.string(),
-            }),
+            address: Yup.object()
+                .shape({
+                    address: Yup.string().required(),
+                    number: Yup.string().required(),
+                    neighborhood: Yup.string().required(),
+                    city: Yup.string().required(),
+                    state: Yup.string().required(),
+                    cep: Yup.number().positive().required(),
+                    referencePoint: Yup.string().required(),
+                })
+                .required(),
 
-            // Legal docs info
-            identity: Yup.string(),
-            cpf: Yup.string(),
-            emissionDate: Yup.date(),
-            documentEmitter: Yup.string(),
+            identity: Yup.number().positive().required(),
+            cpf: Yup.string().required(),
+            issuingBody: Yup.string().required(),
+            emission: Yup.date().required(),
 
-            // Visual issue info
-            diagnostic: Yup.string(),
-            visualAcuity: Yup.string(),
-            cid10: Yup.string(),
+            diagnostic: Yup.string().required(),
+            visualAcuity: Yup.string().required(),
+            cid10: Yup.string().required(),
 
-            hasARelativeAttended: Yup.boolean(),
+            hasARelativeAttended: Yup.boolean().required(),
             relativeAttended: Yup.string(),
 
-            transport: Yup.string(),
+            transport: Yup.string().required(),
 
-            // Government assistence
-            isInGovernmentProgram: Yup.boolean(),
+            isInGovernmentProgram: Yup.boolean().required(),
             governmentProgram: Yup.string(),
             governmentProgramValue: Yup.number().positive(),
             beneficiary: Yup.string(),
             nisNumber: Yup.number().positive(),
+
+            schooling: Yup.object()
+                .shape({
+                    grade: Yup.string().required(),
+                    turn: Yup.string().required(),
+                    hasVinculeHelioGoes: Yup.boolean().required(),
+                    transportToInstitute: Yup.string().required(),
+                    hasMemberMatriculatedOrWillMatriculate: Yup.boolean().required(),
+                })
+                .required(),
+            property: Yup.object()
+                .shape({
+                    type_property: Yup.string().required(),
+                    physical_structure: Yup.string().required(),
+                    numberOfRooms: Yup.number().positive().required(),
+                    numberOfBathrooms: Yup.number().positive().required(),
+                    energyElectric: Yup.string().required(),
+                    waterSupply: Yup.string().required(),
+                    sanitarySewage: Yup.boolean().required(),
+                    garbageCollection: Yup.boolean().required(),
+                    statusProperty: Yup.string().required(),
+                    monthlyRent: Yup.number().positive(),
+                    monthlyFinancing: Yup.number().positive(),
+                    isSharedWithOtherFamily: Yup.boolean().required(),
+                    houseProvidedBy: Yup.string().required(),
+                })
+                .required(),
         })
 
         if (!(await schema.isValid(req.body))) {
@@ -63,13 +89,12 @@ class AssistedController {
         return res.json(assisted)
     }
 
-    // Get all assisteds
     async index(req, res) {
         const assisted = await Assisted.find()
+
         return res.json(assisted)
     }
 
-    // Get assisted by ID
     async show(req, res) {
         const schema = Yup.object().shape({
             id: Yup.string().required(),
@@ -86,55 +111,80 @@ class AssistedController {
 
     async update(req, res) {
         const schema = Yup.object().shape({
-            fullName: Yup.string(),
+            id_Responsible: Yup.string(),
+            fullName: Yup.string().required(),
             socialName: Yup.string(),
-            maritalStatus: Yup.string(),
-            email: Yup.string(),
-            phone: Yup.number().positive(),
-            birth: Yup.date(),
-            sex: Yup.string(),
-            nationality: Yup.string(),
-            placeOfBirth: Yup.string(),
+            maritalStatus: Yup.string().required(),
+            email: Yup.string().required(),
+            phone: Yup.number().positive().required(),
 
-            // Deficiency
-            hasDeficiency: Yup.boolean(),
+            birth: Yup.date().required(),
+            sex: Yup.string().required(),
+            nationality: Yup.string().required(),
+            placeOfBirth: Yup.string().required(),
+
+            hasDeficiency: Yup.boolean().required(),
             deficiency: Yup.string(),
 
-            // Address Info
-            address: Yup.object().shape({
-                address: Yup.string(),
-                number: Yup.string(),
-                neighborhood: Yup.string(),
-                city: Yup.string(),
-                state: Yup.string(),
-                cep: Yup.number().positive(),
-                referencePoint: Yup.string(),
-            }),
+            address: Yup.object()
+                .shape({
+                    address: Yup.string().required(),
+                    number: Yup.string().required(),
+                    neighborhood: Yup.string().required(),
+                    city: Yup.string().required(),
+                    state: Yup.string().required(),
+                    cep: Yup.number().positive().required(),
+                    referencePoint: Yup.string().required(),
+                })
+                .required(),
 
-            // Legal docs info
-            identity: Yup.string(),
-            cpf: Yup.string(),
-            emissionDate: Yup.date(),
-            documentEmitter: Yup.string(),
+            identity: Yup.number().positive().required(),
+            cpf: Yup.string().required(),
+            issuingBody: Yup.string().required(),
+            emission: Yup.date().required(),
 
-            // Visual issue info
-            diagnostic: Yup.string(),
-            visualAcuity: Yup.string(),
-            cid10: Yup.string(),
+            diagnostic: Yup.string().required(),
+            visualAcuity: Yup.string().required(),
+            cid10: Yup.string().required(),
 
-            hasARelativeAttended: Yup.boolean(),
+            hasARelativeAttended: Yup.boolean().required(),
             relativeAttended: Yup.string(),
 
-            transport: Yup.string(),
+            transport: Yup.string().required(),
 
-            // Government assistence
-            isInGovernmentProgram: Yup.boolean(),
+            isInGovernmentProgram: Yup.boolean().required(),
             governmentProgram: Yup.string(),
             governmentProgramValue: Yup.number().positive(),
             beneficiary: Yup.string(),
             nisNumber: Yup.number().positive(),
-        })
 
+            schooling: Yup.object()
+                .shape({
+                    grade: Yup.string().required(),
+                    turn: Yup.string().required(),
+                    hasVinculeHelioGoes: Yup.boolean().required(),
+                    transportToInstitute: Yup.string().required(),
+                    hasMemberMatriculatedOrWillMatriculate: Yup.boolean().required(),
+                })
+                .required(),
+            property: Yup.object()
+                .shape({
+                    type_property: Yup.string().required(),
+                    physical_structure: Yup.string().required(),
+                    numberOfRooms: Yup.number().positive().required(),
+                    numberOfBathrooms: Yup.number().positive().required(),
+                    energyElectric: Yup.string().required(),
+                    waterSupply: Yup.string().required(),
+                    sanitarySewage: Yup.boolean().required(),
+                    garbageCollection: Yup.boolean().required(),
+                    statusProperty: Yup.string().required(),
+                    monthlyRent: Yup.number().positive(),
+                    monthlyFinancing: Yup.number().positive(),
+                    isSharedWithOtherFamily: Yup.boolean().required(),
+                    houseProvidedBy: Yup.string().required(),
+                })
+                .required(),
+        })
         if (!(await schema.isValid(req.body))) {
             return res.status(400).json({ error: 'Validation fails!' })
         }
@@ -147,6 +197,9 @@ class AssistedController {
 
         const assisted = await Assisted.findByIdAndUpdate({ _id: id })
 
+        assisted.set(req.body)
+        assisted.save()
+
         return res.json(assisted)
     }
 
@@ -158,6 +211,12 @@ class AssistedController {
         if (!(await schema.isValid(req.params))) {
             return res.status(400).json({ error: 'Validation fails!' })
         }
+
+        const members = await MemberFamily.find({ idAssisted: req.params.id })
+
+        await members.forEach((member) => {
+            member.remove()
+        })
 
         await Assisted.findByIdAndDelete({ _id: req.params.id })
 
