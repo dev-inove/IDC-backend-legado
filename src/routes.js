@@ -24,5 +24,6 @@ routes.post('/memberfamily', MemberFamilyController.store);
 routes.get('/memberfamily/:idAssisted', MemberFamilyController.index);
 routes.get('/memberfamily/search/:_id', MemberFamilyController.show);
 routes.put('/memberfamily/update/:_id', MemberFamilyController.update);
+routes.delete('/memberfamily/delete/:_id', MemberFamilyController.destroy);
 
 module.exports = routes;

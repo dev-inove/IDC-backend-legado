@@ -144,6 +144,31 @@ class MemberFamilyController {
     member.save();
     return res.status(204).json({ member_updated: member });
   }
+
+  async destroy(req, res, next) {
+    const schema = Yup.object().shape({
+      _id: Yup.string().required(),
+    });
+
+    if (!(await schema.isValid(req.params))) {
+      return res.status(400).json({ message: 'Invalid Id!' });
+    }
+    const { _id } = req.params;
+    try {
+      const member = await MemberFamily.findById({ _id });
+
+      if (member.isResponsible) {
+        const assisted = await Assisted.findById({ _id: member.idAssisted });
+        assisted.id_Responsible = null;
+        delete assisted.id_Responsible;
+        assisted.save();
+      }
+      member.remove();
+      return res.status(204).json({ message: 'Member deleted!' });
+    } catch (err) {
+      return res.status(401).json({ message: `Member not deleted! ${err}` });
+    }
+  }
 }
 
 module.exports = new MemberFamilyController();

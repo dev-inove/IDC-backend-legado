@@ -1,5 +1,6 @@
 const Yup = require('yup');
 const Assisted = require('../models/AssistedUser');
+const MemberFamily = require('../models/MemberFamily');
 
 class AssistedController {
   async store(req, res) {
@@ -196,6 +197,9 @@ class AssistedController {
 
     const assisted = await Assisted.findByIdAndUpdate({ _id: id });
 
+    assisted.set(req.body);
+    assisted.save();
+
     return res.json(assisted);
   }
 
@@ -207,6 +211,12 @@ class AssistedController {
     if (!(await schema.isValid(req.params))) {
       return res.status(400).json({ error: 'Validation fails!' });
     }
+
+    const members = await MemberFamily.find({ idAssisted: req.params.id });
+
+    await members.forEach((member) => {
+      member.remove();
+    });
 
     await Assisted.findByIdAndDelete({ _id: req.params.id });
 
