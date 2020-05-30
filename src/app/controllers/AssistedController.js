@@ -1,6 +1,7 @@
 const Yup = require('yup')
 const Assisted = require('../models/AssistedUser')
 const MemberFamily = require('../models/MemberFamily')
+const ReturnByType = require('../service/ReturnAssistedByVariableType')
 
 class AssistedController {
     async store(req, res) {
@@ -95,14 +96,21 @@ class AssistedController {
         const schema = Yup.object().shape({
             id: Yup.string().required(),
         })
+        // const path = req.path
+        const { type } = req.query
 
         if (!(await schema.isValid(req.params))) {
             return res.status(400).json({ error: 'Validation fails!' })
         }
 
-        const assisted = await Assisted.findById({ _id: req.params.id })
+        const assisted = await ReturnByType.exec(type, req.params.id)
 
-        return res.json(assisted)
+        if (assisted === null) {
+            return res.status(400).json({ message: "user don't exists!" })
+        }
+
+        return res.status(200).json({ assisted })
+        // const assisted = await Assisted.find({ _id: req.params.id })
     }
 
     async update(req, res) {
