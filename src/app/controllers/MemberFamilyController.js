@@ -3,6 +3,11 @@ const Yup = require('yup')
 const MemberFamily = require('../models/MemberFamily')
 const Assisted = require('../models/AssistedUser')
 
+const ReturnByTypeVariable = require('../service/ReturnMemberFamilyByVariableType')
+const ReturnByTypeVariableAndEdit = require('../service/ReturnMemberFamilyByVariableTypeAndUpdate')
+
+// const ReturnByTypeAndEditAssisted = require('../service/ReturnAssistedByVariableTypeAndEdit')
+
 class MemberFamilyController {
     async store(req, res, next) {
         const schema = Yup.object().shape({
@@ -34,7 +39,10 @@ class MemberFamilyController {
         const memberFamily = new MemberFamily(req.body)
         if (memberFamily.isResponsible === true) {
             const assistedUser = await Assisted.findById(idAssisted)
-            if (assistedUser.id_Responsible !== undefined) {
+            if (
+                assistedUser.id_Responsible !== undefined &&
+                assistedUser.id_Responsible !== null
+            ) {
                 return res
                     .status(401)
                     .json('This Assisted already has a Responsible')
@@ -71,16 +79,17 @@ class MemberFamilyController {
 
     async show(req, res, next) {
         const schema = Yup.object().shape({
-            _id: Yup.string().required(),
+            id: Yup.string().required(),
         })
 
         if (!(await schema.isValid(req.params))) {
             return res.status(400).json({ message: 'This Id is invalid! rapa' })
         }
 
-        const { _id } = req.params
+        const { id } = req.params
+        const { type } = req.query
 
-        const member = await MemberFamily.findById({ _id })
+        const member = await ReturnByTypeVariable.exec(type, id)
 
         if (member === undefined || member === null) {
             return res
@@ -92,14 +101,14 @@ class MemberFamilyController {
 
     async update(req, res, next) {
         const schema = Yup.object().shape({
-            idAssisted: Yup.string().required(),
+            idAssisted: Yup.string(),
             kinship: Yup.string().required(),
             name: Yup.string().required(),
             rg: Yup.string().required(),
             cpf: Yup.string().required(),
-            fones: Yup.array().of(Yup.number()).required(),
-            email: Yup.string().required(),
-            renda: Yup.number().required(),
+            fones: Yup.array().of(Yup.number()),
+            email: Yup.string(),
+            renda: Yup.number(),
             isResponsible: Yup.boolean().required(),
             responsible: Yup.object().shape({
                 rg: Yup.string(),
@@ -116,24 +125,25 @@ class MemberFamilyController {
         if (!(await schema.isValid(req.body))) {
             return res.status(400).json({ message: 'Invalid Object' })
         }
-        const idMember = req.params._id
+        const { id } = req.params
+        const { type } = req.query
 
         const isResponsibleBody = req.body.isResponsible
-        const idAssistedBody = req.body.idAssisted
 
-        const member = await MemberFamily.findById({ _id: idMember })
+        const member = await ReturnByTypeVariableAndEdit.exec(type, id)
+        const { idAssisted } = member
 
-        const assistedUser = await Assisted.findById({ _id: idAssistedBody })
+        const assistedUser = await Assisted.findById({ _id: idAssisted })
         if (member.isResponsible === true && isResponsibleBody === false) {
             assistedUser.id_Responsible = null
             delete assistedUser.id_Responsible
             assistedUser.save()
         }
         if (member.isResponsible === false && isResponsibleBody === true) {
+            console.log(assistedUser.id_Responsible)
             if (assistedUser.id_Responsible === undefined) {
                 assistedUser.set('id_Responsible', member._id)
-            }
-            if (assistedUser.id_Responsible === null) {
+            } else if (assistedUser.id_Responsible === null) {
                 assistedUser.set('id_Responsible', member._id)
             } else {
                 return res
@@ -141,7 +151,7 @@ class MemberFamilyController {
                     .json({ message: 'this user alredy has a Responsible' })
             }
 
-            assistedUser.set('id_Responsible', member._id)
+            // assistedUser.set('id_Responsible', member._id)
             assistedUser.save()
         }
         member.set(req.body)
@@ -151,15 +161,16 @@ class MemberFamilyController {
 
     async destroy(req, res, next) {
         const schema = Yup.object().shape({
-            _id: Yup.string().required(),
+            id: Yup.string().required(),
         })
 
         if (!(await schema.isValid(req.params))) {
             return res.status(400).json({ message: 'Invalid Id!' })
         }
-        const { _id } = req.params
+        const { id } = req.params
+        const { type } = req.query
         try {
-            const member = await MemberFamily.findById({ _id })
+            const member = await ReturnByTypeVariableAndEdit.exec(type, id)
 
             if (member.isResponsible) {
                 const assisted = await Assisted.findById({

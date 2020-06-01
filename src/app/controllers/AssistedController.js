@@ -2,6 +2,10 @@ const Yup = require('yup')
 const Assisted = require('../models/AssistedUser')
 const MemberFamily = require('../models/MemberFamily')
 const ReturnByType = require('../service/ReturnAssistedByVariableType')
+const ReturnByTypeAndEdit = require('../service/ReturnAssistedByVariableTypeAndEdit')
+const ReturnByTypeAndDelete = require('../service/ReturnAssistedByVariableTypeAndDelete')
+
+// const ReturnByTypeVariableAndEdit = require('../service/ReturnMemberFamilyByVariableTypeAndUpdate')
 
 class AssistedController {
     async store(req, res) {
@@ -142,7 +146,7 @@ class AssistedController {
             }),
             // Legal Info
             identity: Yup.number().positive().required(),
-            cpf: Yup.string().required(),
+            // cpf: Yup.string().required(),
             issuingBody: Yup.string().required(),
             emission: Yup.date().required(),
             // Visual Issue info
@@ -195,8 +199,16 @@ class AssistedController {
             return res.status(400).json({ error: 'Id not received' })
         }
 
-        const assisted = await Assisted.findByIdAndUpdate({ _id: id })
+        const { type } = req.query
 
+        const assisted = await ReturnByTypeAndEdit.exec(type, req.params.id)
+
+        if (assisted === null) {
+            return res.status(400).json({ message: "user don't exists!" })
+        }
+
+        // const assisted = await Assisted.findByIdAndUpdate({ _id: id })
+        // console.log(assisted)
         assisted.set(req.body)
         assisted.save()
 
@@ -212,14 +224,29 @@ class AssistedController {
             return res.status(400).json({ error: 'Validation fails!' })
         }
 
-        const members = await MemberFamily.find({ idAssisted: req.params.id })
+        const { id } = req.params
+
+        if (!id) {
+            return res.status(400).json({ error: 'Id not received' })
+        }
+
+        const { type } = req.query
+
+        const assisted = await ReturnByTypeAndDelete.exec(type, req.params.id)
+        // console.log(assisted)
+        if (assisted === null) {
+            return res.status(400).json({ message: "user don't exists!" })
+        }
+
+        const members = await MemberFamily.find({
+            idAssisted: assisted.id,
+        })
 
         await members.forEach((member) => {
             member.remove()
         })
-
-        await Assisted.findByIdAndDelete({ _id: req.params.id })
-
+        // assisted.remove()
+        // assisted.save()
         return res.json({ success: 'Successfully deleted' })
     }
 }
