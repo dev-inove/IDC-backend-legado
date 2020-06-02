@@ -51,6 +51,39 @@ class UserController {
 
         return res.status(200).json({ user })
     }
+
+    // Do after Authentication
+
+    // async update(req, res, next) {
+    //     const schema = Yup.object().shape({
+    //         name: Yup.string(),
+    //         email: Yup.string().required(),
+    //         password: Yup.string().required(),
+    //         newPassword: Yup.string(),
+    //         confirmNewPassword: Yup.string(),
+    //     })
+
+    //     if (!(await schema.isValid(req.body))) {
+    //         return res.status(400).json({ message: 'Format invalid' })
+    //     }
+
+    //     const {
+    //         name,
+    //         email,
+    //         password,
+    //         newPassword,
+    //         confirmNewPassword,
+    //     } = req.body
+
+    //     const user = await User.findOne({ email })
+
+    //     if (!newPassword) {
+    //         if (name) user.name = name
+    //         if (email){
+    //           const exists = await User.findOne({email})
+    //         }
+    //     }
+    // }
 }
 
 module.exports = new UserController()

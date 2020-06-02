@@ -2,6 +2,7 @@ const { Router } = require('express')
 const AssistedController = require('./app/controllers/AssistedController')
 const MemberFamilyController = require('./app/controllers/MemberFamilyController')
 const UserController = require('./app/controllers/UserController')
+const SessionController = require('./app/controllers/SessionController')
 
 const routes = new Router()
 
@@ -21,5 +22,7 @@ routes.delete('/memberfamily/delete/:id', MemberFamilyController.destroy)
 routes.post('/user', UserController.store)
 routes.get('/user/:email', UserController.show)
 routes.get('/user/', UserController.index)
+
+routes.post('/session', SessionController.store)
 
 module.exports = routes
