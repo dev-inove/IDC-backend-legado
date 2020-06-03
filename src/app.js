@@ -1,4 +1,5 @@
 require('dotenv').config()
+const passport = require('passport')
 require('./database')
 // eslint-disable-next-line no-underscore-dangle
 require('events').EventEmitter.prototype._maxListeners = 100
@@ -20,6 +21,7 @@ class App {
 
     middlewares() {
         this.server.use(express.json())
+        this.server.use(passport.initialize())
     }
 }
 
