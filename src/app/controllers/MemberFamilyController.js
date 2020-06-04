@@ -11,7 +11,7 @@ const ReturnByTypeVariableAndEdit = require('../service/ReturnMemberFamilyByVari
 class MemberFamilyController {
     async store(req, res, next) {
         const schema = Yup.object().shape({
-            idAssisted: Yup.string().required(),
+            cpf_assisted: Yup.string().required(),
             kinship: Yup.string().required(),
             name: Yup.string().required(),
             rg: Yup.string().required(),
@@ -31,14 +31,18 @@ class MemberFamilyController {
             useContinuosMedication: Yup.boolean(),
             typeOfDisiase: Yup.string(),
         })
-        const { idAssisted } = req.body
+        const { cpf_assisted } = req.body
 
         if (!(await schema.isValid(req.body))) {
             return res.status(400).json({ message: 'Invalid Object' })
         }
         const memberFamily = new MemberFamily(req.body)
         if (memberFamily.isResponsible === true) {
-            const assistedUser = await Assisted.findById(idAssisted)
+            const assistedUser = await Assisted.findOne({ cpf: cpf_assisted })
+            if (!assistedUser)
+                return res.status(400).json({
+                    message: 'User nor found, try again with another CPF',
+                })
             if (
                 assistedUser.id_Responsible !== undefined &&
                 assistedUser.id_Responsible !== null
@@ -48,6 +52,7 @@ class MemberFamilyController {
                     .json('This Assisted already has a Responsible')
             }
             assistedUser.id_Responsible = memberFamily._id
+            memberFamily.idAssisted = assistedUser._id
             assistedUser.save()
         }
 
@@ -132,7 +137,7 @@ class MemberFamilyController {
 
         const member = await ReturnByTypeVariableAndEdit.exec(type, id)
         const { idAssisted } = member
-
+        console.log(idAssisted)
         const assistedUser = await Assisted.findById({ _id: idAssisted })
         if (member.isResponsible === true && isResponsibleBody === false) {
             assistedUser.id_Responsible = null
@@ -140,7 +145,6 @@ class MemberFamilyController {
             assistedUser.save()
         }
         if (member.isResponsible === false && isResponsibleBody === true) {
-            console.log(assistedUser.id_Responsible)
             if (assistedUser.id_Responsible === undefined) {
                 assistedUser.set('id_Responsible', member._id)
             } else if (assistedUser.id_Responsible === null) {
