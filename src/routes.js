@@ -12,11 +12,12 @@ const routes = new Router()
 routes.post('/user', UserController.store)
 routes.get('/user/:email', UserController.show)
 routes.get('/user/', UserController.index)
-
 routes.post('/session', SessionController.store)
 
 passport.use(SchemaPassport)
 routes.use(passport.authenticate('jwt', { session: false }))
+
+routes.put('/user/', UserController.update)
 
 routes.post('/assisted', AssistedController.store)
 routes.get('/assisted', AssistedController.index)
