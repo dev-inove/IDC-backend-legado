@@ -63,7 +63,7 @@ const AssistedUserSchema = new mongoose.Schema(
             required: true,
             unique: true,
         },
-        issuingBody: {
+        Department: {
             type: String,
             required: true,
         },

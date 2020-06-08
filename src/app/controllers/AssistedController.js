@@ -36,7 +36,7 @@ class AssistedController {
             // Legal Info
             identity: Yup.number().positive().required(),
             cpf: Yup.string().required(),
-            issuingBody: Yup.string().required(),
+            Department: Yup.string().required(),
             emission: Yup.date().required(),
             // Visual Issue info
             diagnostic: Yup.string(),
@@ -148,7 +148,7 @@ class AssistedController {
             // Legal Info
             identity: Yup.number().positive().required(),
             cpf: Yup.string(),
-            issuingBody: Yup.string().required(),
+            Department: Yup.string().required(),
             emission: Yup.date().required(),
             // Visual Issue info
             diagnostic: Yup.string(),
