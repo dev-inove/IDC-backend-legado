@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-// const AddressSchema = require('./Address');
+const uniqueValidator = require('mongoose-unique-validator')
 
 const { Schema } = mongoose
 
@@ -15,11 +15,11 @@ const MemberFamily = new Schema(
         ],
         kinship: { type: String, required: true },
         name: { type: String, required: true },
-        rg: { type: String, required: true },
-        cpf: { type: String, required: true },
+        rg: { type: String, required: true, unique: true },
+        cpf: { type: String, required: true, unique: true },
         fones: [{ type: String }],
-        email: { type: String, required: true },
-        renda: { type: Number, required: true },
+        email: { type: String, unique: true },
+        renda: { type: Number },
         // Responsible infos
         isResponsible: { type: Boolean, required: true },
         responsible: {
@@ -29,16 +29,19 @@ const MemberFamily = new Schema(
             validity: { type: String },
         },
         // Medical infos
-        wasAttended: { type: Boolean, required: true },
-        doMedicalTreatment: { type: Boolean, required: true },
-        useContinuosMedication: { type: Boolean, required: true },
-        typeOfDisiase: { type: String, required: true },
+        wasAttended: { type: Boolean },
+        doMedicalTreatment: { type: Boolean },
+        useContinuosMedication: { type: Boolean },
+        typeOfDisiase: { type: String },
     },
     {
         timestamps: true,
     }
 )
-
+MemberFamily.plugin(uniqueValidator, {
+    type: 'mongoose-unique-validator',
+    message: 'Error, expected {PATH} to be unique.',
+})
 // Id, Nome, Grau de
 // Parentesco com o candidato (a), RG, CPF, N° Telefone(s), E-mail, Renda, Se for
 // responsável (Documento, Comprobatório da Responsabilidade, Órgão Responsável,

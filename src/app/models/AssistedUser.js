@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const uniqueValidator = require('mongoose-unique-validator')
 const AddressSchema = require('./Address')
 
 const AssistedUserSchema = new mongoose.Schema(
@@ -55,10 +56,12 @@ const AssistedUserSchema = new mongoose.Schema(
         identity: {
             type: String,
             required: true,
+            unique: true,
         },
         cpf: {
             type: String,
             required: true,
+            unique: true,
         },
         issuingBody: {
             type: String,
@@ -165,5 +168,10 @@ const AssistedUserSchema = new mongoose.Schema(
         timestamps: true,
     }
 )
+
+AssistedUserSchema.plugin(uniqueValidator, {
+    type: 'mongoose-unique-validator',
+    message: 'Error, expected {PATH} to be unique.',
+})
 
 module.exports = mongoose.model('AssistedUser', AssistedUserSchema)
