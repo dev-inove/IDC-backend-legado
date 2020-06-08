@@ -6,11 +6,13 @@ const { Schema } = mongoose
 const MemberFamily = new Schema(
     {
         // Main Infos
-        idAssisted: {
-            type: Schema.Types.ObjectId,
-            ref: 'AssistedUser',
-            required: true,
-        },
+        idAssisted: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'AssistedUser',
+                required: true,
+            },
+        ],
         kinship: { type: String, required: true },
         name: { type: String, required: true },
         rg: { type: String, required: true },

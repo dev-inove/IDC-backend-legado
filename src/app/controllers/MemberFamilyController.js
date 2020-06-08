@@ -37,11 +37,12 @@ class MemberFamilyController {
             return res.status(400).json({ message: 'Invalid Object' })
         }
         const memberFamily = new MemberFamily(req.body)
+        const assistedUser = await Assisted.findOne({ cpf: cpf_assisted })
+
         if (memberFamily.isResponsible === true) {
-            const assistedUser = await Assisted.findOne({ cpf: cpf_assisted })
             if (!assistedUser)
                 return res.status(400).json({
-                    message: 'User nor found, try again with another CPF',
+                    message: 'User not found, try again with another CPF',
                 })
             if (
                 assistedUser.id_Responsible !== undefined &&
@@ -52,10 +53,12 @@ class MemberFamilyController {
                     .json('This Assisted already has a Responsible')
             }
             assistedUser.id_Responsible = memberFamily._id
-            memberFamily.idAssisted = assistedUser._id
+            memberFamily.idAssisted.push(assistedUser._id)
             assistedUser.save()
         }
-
+        if (memberFamily.idAssisted.length === 0) {
+            memberFamily.idAssisted.push(assistedUser._id)
+        }
         memberFamily.save()
 
         return res.status(201).json(memberFamily)

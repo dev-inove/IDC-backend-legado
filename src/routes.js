@@ -6,6 +6,7 @@ const AssistedController = require('./app/controllers/AssistedController')
 const MemberFamilyController = require('./app/controllers/MemberFamilyController')
 const UserController = require('./app/controllers/UserController')
 const SessionController = require('./app/controllers/SessionController')
+const AssociateAssistedWithMemberController = require('./app/controllers/AssociateAssistedWithMemberFamilyController')
 
 const routes = new Router()
 
@@ -31,5 +32,7 @@ routes.get('/memberfamily/:idAssisted', MemberFamilyController.index)
 routes.get('/memberfamily/search/:id', MemberFamilyController.show)
 routes.put('/memberfamily/update/:id', MemberFamilyController.update)
 routes.delete('/memberfamily/delete/:id', MemberFamilyController.destroy)
+
+routes.put('/associate', AssociateAssistedWithMemberController.update)
 
 module.exports = routes
