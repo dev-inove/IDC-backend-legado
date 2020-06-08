@@ -11,7 +11,7 @@ class AssistedController {
     async store(req, res) {
         const schema = Yup.object().shape({
             // Main info
-            id_Responsible: Yup.string(),
+            // id_Responsible: Yup.string(),
             fullName: Yup.string().required(),
             socialName: Yup.string(),
             maritalStatus: Yup.string().required(),
@@ -120,7 +120,7 @@ class AssistedController {
     async update(req, res) {
         const schema = Yup.object().shape({
             // Main info
-            id_Responsible: Yup.string(),
+            // id_Responsible: Yup.string(),
             fullName: Yup.string().required(),
             socialName: Yup.string(),
             maritalStatus: Yup.string().required(),
@@ -231,6 +231,7 @@ class AssistedController {
         }
 
         const { type } = req.query
+        const { destroy_members } = req.query
 
         const assisted = await ReturnByTypeAndDelete.exec(type, req.params.id)
         // console.log(assisted)
@@ -238,13 +239,15 @@ class AssistedController {
             return res.status(400).json({ message: "user don't exists!" })
         }
 
-        const members = await MemberFamily.find({
-            idAssisted: assisted.id,
-        })
+        if (destroy_members) {
+            const members = await MemberFamily.find({
+                idAssisted: assisted.id,
+            })
 
-        await members.forEach((member) => {
-            member.remove()
-        })
+            await members.forEach((member) => {
+                member.remove()
+            })
+        }
         // assisted.remove()
         // assisted.save()
         return res.json({ success: 'Successfully deleted' })
