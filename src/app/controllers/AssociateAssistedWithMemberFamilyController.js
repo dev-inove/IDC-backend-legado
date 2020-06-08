@@ -41,6 +41,7 @@ class UserController {
                         'The user alredy has a Responsible, try angain uncheck the option of responsible',
                 })
             }
+            member.isResponsible = true
             member.idAssisted.push(assisted.id)
             assisted.id_Responsible = member.id
             await member.save()
