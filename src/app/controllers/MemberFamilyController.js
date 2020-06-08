@@ -109,7 +109,7 @@ class MemberFamilyController {
 
     async update(req, res, next) {
         const schema = Yup.object().shape({
-            idAssisted: Yup.string(),
+            CPFAssisted: Yup.string(),
             kinship: Yup.string().required(),
             name: Yup.string().required(),
             rg: Yup.string().required(),
@@ -117,7 +117,7 @@ class MemberFamilyController {
             fones: Yup.array().of(Yup.number()),
             email: Yup.string(),
             renda: Yup.number(),
-            isResponsible: Yup.boolean().required(),
+            isResponsible: Yup.boolean(),
             responsible: Yup.object().shape({
                 rg: Yup.string(),
                 responsibleValidator: Yup.string(),
@@ -139,15 +139,23 @@ class MemberFamilyController {
         const isResponsibleBody = req.body.isResponsible
 
         const member = await ReturnByTypeVariableAndEdit.exec(type, id)
-        const { idAssisted } = member
-        console.log(idAssisted)
-        const assistedUser = await Assisted.findById({ _id: idAssisted })
+
+        const { CPFAssisted } = req.body
+
+        const assistedUser = await Assisted.findOne({ cpf: CPFAssisted })
+
         if (member.isResponsible === true && isResponsibleBody === false) {
             assistedUser.id_Responsible = null
             delete assistedUser.id_Responsible
             assistedUser.save()
         }
         if (member.isResponsible === false && isResponsibleBody === true) {
+            if (!member.idAssisted.includes(assistedUser.id)) {
+                return res.status(401).json({
+                    message: 'This Assisted and Member are not parents',
+                })
+            }
+
             if (assistedUser.id_Responsible === undefined) {
                 assistedUser.set('id_Responsible', member._id)
             } else if (assistedUser.id_Responsible === null) {
@@ -162,6 +170,7 @@ class MemberFamilyController {
             assistedUser.save()
         }
         member.set(req.body)
+
         member.save()
         return res.status(204).json({ member_updated: member })
     }
