@@ -1,3 +1,6 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable guard-for-in */
+/* eslint-disable no-return-await */
 /* eslint-disable no-underscore-dangle */
 const Yup = require('yup')
 const MemberFamily = require('../models/MemberFamily')
@@ -189,15 +192,17 @@ class MemberFamilyController {
             const member = await ReturnByTypeVariableAndEdit.exec(type, id)
 
             if (member.isResponsible) {
-                const assisted = await Assisted.findById({
-                    _id: member.idAssisted,
+                member.idAssisted.map(async (assisted) => {
+                    const element = await Assisted.findById({ _id: assisted })
+                    element.id_Responsible = null
+                    delete element.id_Responsible
+                    element.save()
+                    return element
                 })
-                assisted.id_Responsible = null
-                delete assisted.id_Responsible
-                assisted.save()
             }
+
             member.remove()
-            return res.status(204).json({ message: 'Member deleted!' })
+            return res.status(204).json({ message: `Member deleted!` })
         } catch (err) {
             return res
                 .status(401)
