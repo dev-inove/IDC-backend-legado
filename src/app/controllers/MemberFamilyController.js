@@ -62,7 +62,11 @@ class MemberFamilyController {
         if (memberFamily.idAssisted.length === 0) {
             memberFamily.idAssisted.push(assistedUser._id)
         }
-        memberFamily.save()
+        try {
+            await memberFamily.save()
+        } catch (error) {
+            return res.status(400).json({ message: error })
+        }
 
         return res.status(201).json(memberFamily)
     }
@@ -168,14 +172,20 @@ class MemberFamilyController {
                     .status(401)
                     .json({ message: 'this user alredy has a Responsible' })
             }
-
-            // assistedUser.set('id_Responsible', member._id)
-            assistedUser.save()
+            try {
+                await assistedUser.save()
+            } catch (error) {
+                return res.status(400).json({ message: error })
+            }
         }
-        member.set(req.body)
+        try {
+            member.set(req.body)
 
-        member.save()
-        return res.status(204).json({ member_updated: member })
+            await member.save()
+            return res.status(204).json({ member_updated: member })
+        } catch (error) {
+            return res.status(400).json({ message: error })
+        }
     }
 
     async destroy(req, res, next) {

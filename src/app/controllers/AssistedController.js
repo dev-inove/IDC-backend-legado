@@ -5,8 +5,6 @@ const ReturnByType = require('../service/ReturnAssistedByVariableType')
 const ReturnByTypeAndEdit = require('../service/ReturnAssistedByVariableTypeAndEdit')
 const ReturnByTypeAndDelete = require('../service/ReturnAssistedByVariableTypeAndDelete')
 
-// const ReturnByTypeVariableAndEdit = require('../service/ReturnMemberFamilyByVariableTypeAndUpdate')
-
 class AssistedController {
     async store(req, res) {
         const schema = Yup.object().shape({
@@ -85,9 +83,12 @@ class AssistedController {
             return res.status(400).json({ error: 'Validation fails!' })
         }
 
-        const assisted = await Assisted.create(req.body)
-
-        return res.json(assisted)
+        try {
+            const assisted = await Assisted.create(req.body)
+            return res.json(assisted)
+        } catch (error) {
+            return res.status(400).json({ message: error })
+        }
     }
 
     async index(req, res) {
@@ -146,7 +147,7 @@ class AssistedController {
             }),
             // Legal Info
             identity: Yup.number().positive().required(),
-            // cpf: Yup.string().required(),
+            cpf: Yup.string(),
             issuingBody: Yup.string().required(),
             emission: Yup.date().required(),
             // Visual Issue info
@@ -206,13 +207,14 @@ class AssistedController {
         if (assisted === null) {
             return res.status(400).json({ message: "user don't exists!" })
         }
+        try {
+            assisted.set(req.body)
+            await assisted.save()
 
-        // const assisted = await Assisted.findByIdAndUpdate({ _id: id })
-        // console.log(assisted)
-        assisted.set(req.body)
-        assisted.save()
-
-        return res.json(assisted)
+            return res.json(assisted)
+        } catch (error) {
+            return res.status(400).json({ message: error })
+        }
     }
 
     async destroy(req, res) {
@@ -234,7 +236,7 @@ class AssistedController {
         const { destroy_members } = req.query
 
         const assisted = await ReturnByTypeAndDelete.exec(type, req.params.id)
-        // console.log(assisted)
+
         if (assisted === null) {
             return res.status(400).json({ message: "user don't exists!" })
         }
