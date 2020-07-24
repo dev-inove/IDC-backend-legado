@@ -12,7 +12,7 @@ module.exports = new JwtStrategy(
         passReqToCallback: true,
     },
     async (request, jwt_payload, done) => {
-        // console.log('ok3')
+        // console.log(request.data)
         const exists = await User.findOne({ _id: jwt_payload.sub })
         if (!exists) return done(null, false, { message: 'login required' })
 
