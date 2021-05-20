@@ -6,6 +6,7 @@ class Database {
     }
 
     init() {
+        console.log('Mongo: ', process.env.LOCAL_MONGO)
         try {
             mongoose.connect(process.env.LOCAL_MONGO, {
                 useCreateIndex: true,
