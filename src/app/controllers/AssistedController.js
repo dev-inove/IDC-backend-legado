@@ -1,159 +1,259 @@
-const Yup = require('yup');
-const Assisted = require('../models/AssistedUser');
+const Yup = require('yup')
+const Assisted = require('../models/AssistedUser')
+const MemberFamily = require('../models/MemberFamily')
+const ReturnByType = require('../service/ReturnAssistedByVariableType')
+const ReturnByTypeAndEdit = require('../service/ReturnAssistedByVariableTypeAndEdit')
+const ReturnByTypeAndDelete = require('../service/ReturnAssistedByVariableTypeAndDelete')
 
 class AssistedController {
-  async store(req, res) {
-    const schema = Yup.object().shape({
-      fullName: Yup.string().required(),
-      socialName: Yup.string(),
-      maritalStatus: Yup.string(),
-      email: Yup.string().required(),
-      phone: Yup.number().positive().required(),
+    async store(req, res) {
+        const schema = Yup.object().shape({
+            // Main info
+            // id_Responsible: Yup.string(),
+            fullName: Yup.string().required(),
+            socialName: Yup.string(),
+            maritalStatus: Yup.string().required(),
+            email: Yup.string().required(),
+            phone: Yup.number().positive().required(),
+            // Birth info
+            birth: Yup.date().required(),
+            sex: Yup.string().required(),
+            nationality: Yup.string().required(),
+            placeOfBirth: Yup.string().required(),
+            // Deficiency Info
+            hasDeficiency: Yup.boolean().required(),
+            deficiency: Yup.string(),
 
-      birth: Yup.date().required(),
-      sex: Yup.string().required(),
-      nationality: Yup.string().required(),
-      placeOfBirth: Yup.string().required(),
+            address: Yup.object().shape({
+                address: Yup.string(),
+                number: Yup.string(),
+                neighborhood: Yup.string(),
+                city: Yup.string(),
+                state: Yup.string(),
+                cep: Yup.number().positive(),
+                referencePoint: Yup.string(),
+            }),
+            // Legal Info
+            identity: Yup.number().positive().required(),
+            cpf: Yup.string().required(),
+            Department: Yup.string().required(),
+            emission: Yup.date().required(),
+            // Visual Issue info
+            diagnostic: Yup.string(),
+            visualAcuity: Yup.string(),
+            cid10: Yup.string(),
 
-      hasDeficiency: Yup.boolean().required(),
-      deficiency: Yup.string(),
+            hasARelativeAttended: Yup.boolean().required(),
+            relativeAttended: Yup.string(),
 
-      address: Yup.object()
-        .shape({
-          address: Yup.string().required(),
-          number: Yup.string().required(),
-          neighborhood: Yup.string().required(),
-          city: Yup.string().required(),
-          state: Yup.string().required(),
-          cep: Yup.number().positive().required(),
-          referencePoint: Yup.string().required(),
+            transport: Yup.string(),
+            // Government infos
+            isInGovernmentProgram: Yup.boolean(),
+            governmentProgram: Yup.string(),
+            governmentProgramValue: Yup.number().positive(),
+            beneficiary: Yup.string(),
+            nisNumber: Yup.number().positive(),
+            // schooling info
+            schooling: Yup.object().shape({
+                grade: Yup.string(),
+                turn: Yup.string(),
+                hasVinculeHelioGoes: Yup.boolean(),
+                transportToInstitute: Yup.string(),
+                hasMemberMatriculatedOrWillMatriculate: Yup.boolean(),
+            }),
+            // Property info
+            property: Yup.object().shape({
+                type_property: Yup.string(),
+                physical_structure: Yup.string(),
+                numberOfRooms: Yup.number().positive(),
+                numberOfBathrooms: Yup.number().positive(),
+                energyElectric: Yup.string(),
+                waterSupply: Yup.string(),
+                sanitarySewage: Yup.boolean(),
+                garbageCollection: Yup.boolean(),
+                statusProperty: Yup.string(),
+                monthlyRent: Yup.number().positive(),
+                monthlyFinancing: Yup.number().positive(),
+                isSharedWithOtherFamily: Yup.boolean(),
+                houseProvidedBy: Yup.string(),
+            }),
         })
-        .required(),
 
-      identity: Yup.number().positive().required(),
-      cpf: Yup.string().required(),
-      issuingBody: Yup.string().required(),
-      emission: Yup.date().required(),
+        if (!(await schema.isValid(req.body))) {
+            return res.status(400).json({ error: 'Validation fails!' })
+        }
 
-      diagnostic: Yup.string().required(),
-      visualAcuity: Yup.string().required(),
-      cid10: Yup.string().required(),
-
-      hasARelativeAttended: Yup.boolean().required(),
-      relativeAttended: Yup.string(),
-
-      transport: Yup.string().required(),
-
-      isInGovernmentProgram: Yup.boolean().required(),
-      governmentProgram: Yup.string(),
-      governmentProgramValue: Yup.number().positive(),
-      beneficiary: Yup.string(),
-      nisNumber: Yup.number().positive(),
-    });
-
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails!' });
+        try {
+            const assisted = await Assisted.create(req.body)
+            return res.json(assisted)
+        } catch (error) {
+            return res.status(400).json({ message: error })
+        }
     }
 
-    const assisted = await Assisted.create(req.body);
+    async index(req, res) {
+        const assisted = await Assisted.find()
 
-    return res.json(assisted);
-  }
-
-  async index(req, res) {
-    const assisted = await Assisted.find();
-
-    return res.json(assisted);
-  }
-
-  async show(req, res) {
-    const schema = Yup.object().shape({
-      id: Yup.string().required(),
-    });
-
-    if (!(await schema.isValid(req.params))) {
-      return res.status(400).json({ error: 'Validation fails!' });
+        return res.json(assisted)
     }
 
-    const assisted = await Assisted.findById({ _id: req.params.id });
+    async show(req, res) {
+        const schema = Yup.object().shape({
+            id: Yup.string().required(),
+        })
+        // const path = req.path
+        const { type } = req.query
 
-    return res.json(assisted);
-  }
+        if (!(await schema.isValid(req.params))) {
+            return res.status(400).json({ error: 'Validation fails!' })
+        }
 
-  async update(req, res) {
-    const schema = Yup.object().shape({
-      fullName: Yup.string(),
-      socialName: Yup.string(),
-      maritalStatus: Yup.string(),
-      email: Yup.string(),
-      phone: Yup.number().positive(),
+        const assisted = await ReturnByType.exec(type, req.params.id)
 
-      birth: Yup.date(),
-      sex: Yup.string(),
-      nationality: Yup.string(),
-      placeOfBirth: Yup.string(),
+        if (assisted === null) {
+            return res.status(400).json({ message: "user don't exists!" })
+        }
 
-      hasDeficiency: Yup.boolean(),
-      deficiency: Yup.string(),
-
-      address: Yup.object().shape({
-        address: Yup.string(),
-        number: Yup.string(),
-        neighborhood: Yup.string(),
-        city: Yup.string(),
-        state: Yup.string(),
-        cep: Yup.number().positive(),
-        referencePoint: Yup.string(),
-      }),
-      identity: Yup.number().positive(),
-      cpf: Yup.string(),
-      issuingBody: Yup.string(),
-      emission: Yup.date(),
-
-      diagnostic: Yup.string(),
-      visualAcuity: Yup.string(),
-      cid10: Yup.string(),
-
-      hasARelativeAttended: Yup.boolean(),
-      relativeAttended: Yup.string(),
-
-      transport: Yup.string(),
-
-      isInGovernmentProgram: Yup.boolean(),
-      governmentProgram: Yup.string(),
-      governmentProgramValue: Yup.number().positive(),
-      beneficiary: Yup.string(),
-      nisNumber: Yup.number().positive(),
-    });
-
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails!' });
+        return res.status(200).json({ assisted })
+        // const assisted = await Assisted.find({ _id: req.params.id })
     }
 
-    const { id } = req.params;
+    async update(req, res) {
+        const schema = Yup.object().shape({
+            // Main info
+            // id_Responsible: Yup.string(),
+            fullName: Yup.string().required(),
+            socialName: Yup.string(),
+            maritalStatus: Yup.string().required(),
+            email: Yup.string().required(),
+            phone: Yup.number().positive().required(),
+            // Birth info
+            birth: Yup.date().required(),
+            sex: Yup.string().required(),
+            nationality: Yup.string().required(),
+            placeOfBirth: Yup.string().required(),
+            // Deficiency Info
+            hasDeficiency: Yup.boolean().required(),
+            deficiency: Yup.string(),
 
-    if (!id) {
-      return res.status(400).json({ error: 'Id not received' });
+            address: Yup.object().shape({
+                address: Yup.string(),
+                number: Yup.string(),
+                neighborhood: Yup.string(),
+                city: Yup.string(),
+                state: Yup.string(),
+                cep: Yup.number().positive(),
+                referencePoint: Yup.string(),
+            }),
+            // Legal Info
+            identity: Yup.number().positive().required(),
+            cpf: Yup.string(),
+            Department: Yup.string().required(),
+            emission: Yup.date().required(),
+            // Visual Issue info
+            diagnostic: Yup.string(),
+            visualAcuity: Yup.string(),
+            cid10: Yup.string(),
+
+            hasARelativeAttended: Yup.boolean().required(),
+            relativeAttended: Yup.string(),
+
+            transport: Yup.string(),
+            // Government infos
+            isInGovernmentProgram: Yup.boolean(),
+            governmentProgram: Yup.string(),
+            governmentProgramValue: Yup.number().positive(),
+            beneficiary: Yup.string(),
+            nisNumber: Yup.number().positive(),
+            // schooling info
+            schooling: Yup.object().shape({
+                grade: Yup.string(),
+                turn: Yup.string(),
+                hasVinculeHelioGoes: Yup.boolean(),
+                transportToInstitute: Yup.string(),
+                hasMemberMatriculatedOrWillMatriculate: Yup.boolean(),
+            }),
+            // Property info
+            property: Yup.object().shape({
+                type_property: Yup.string(),
+                physical_structure: Yup.string(),
+                numberOfRooms: Yup.number().positive(),
+                numberOfBathrooms: Yup.number().positive(),
+                energyElectric: Yup.string(),
+                waterSupply: Yup.string(),
+                sanitarySewage: Yup.boolean(),
+                garbageCollection: Yup.boolean(),
+                statusProperty: Yup.string(),
+                monthlyRent: Yup.number().positive(),
+                monthlyFinancing: Yup.number().positive(),
+                isSharedWithOtherFamily: Yup.boolean(),
+                houseProvidedBy: Yup.string(),
+            }),
+        })
+        if (!(await schema.isValid(req.body))) {
+            return res.status(400).json({ error: 'Validation fails!' })
+        }
+
+        const { id } = req.params
+
+        if (!id) {
+            return res.status(400).json({ error: 'Id not received' })
+        }
+
+        const { type } = req.query
+
+        const assisted = await ReturnByTypeAndEdit.exec(type, req.params.id)
+
+        if (assisted === null) {
+            return res.status(400).json({ message: "user don't exists!" })
+        }
+        try {
+            assisted.set(req.body)
+            await assisted.save()
+
+            return res.json(assisted)
+        } catch (error) {
+            return res.status(400).json({ message: error })
+        }
     }
 
-    const assisted = await Assisted.findByIdAndUpdate({ _id: id });
+    async destroy(req, res) {
+        const schema = Yup.object().shape({
+            id: Yup.string().required(),
+        })
 
-    return res.json(assisted);
-  }
+        if (!(await schema.isValid(req.params))) {
+            return res.status(400).json({ error: 'Validation fails!' })
+        }
 
-  async destroy(req, res) {
-    const schema = Yup.object().shape({
-      id: Yup.string().required(),
-    });
+        const { id } = req.params
 
-    if (!(await schema.isValid(req.params))) {
-      return res.status(400).json({ error: 'Validation fails!' });
+        if (!id) {
+            return res.status(400).json({ error: 'Id not received' })
+        }
+
+        const { type } = req.query
+        const { destroy_members } = req.query
+
+        const assisted = await ReturnByTypeAndDelete.exec(type, req.params.id)
+
+        if (assisted === null) {
+            return res.status(400).json({ message: "user don't exists!" })
+        }
+
+        if (destroy_members) {
+            const members = await MemberFamily.find({
+                idAssisted: assisted.id,
+            })
+
+            await members.forEach((member) => {
+                member.remove()
+            })
+        }
+        // assisted.remove()
+        // assisted.save()
+        return res.json({ success: 'Successfully deleted' })
     }
-
-    await Assisted.findByIdAndDelete({ _id: req.params.id });
-
-    return res.json({ success: 'Successfully deleted' });
-  }
 }
 
-module.exports = new AssistedController();
+module.exports = new AssistedController()
