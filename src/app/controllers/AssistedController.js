@@ -9,7 +9,6 @@ class AssistedController {
     async store(req, res) {
         const schema = Yup.object().shape({
             // Main info
-            // id_Responsible: Yup.string(),
             fullName: Yup.string().required(),
             socialName: Yup.string(),
             maritalStatus: Yup.string().required(),

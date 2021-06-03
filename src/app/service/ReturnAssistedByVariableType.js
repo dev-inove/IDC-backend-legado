@@ -11,6 +11,7 @@ module.exports = {
             const assisted = await Assisted.find({
                 // regexp to change every - to ' '
                 // $in just for the fullName has to be exact
+
                 fullName: { $nin: value.replace(/-/gi, ' ') || value },
             })
             return assisted

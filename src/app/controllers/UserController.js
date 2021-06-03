@@ -34,7 +34,10 @@ class UserController {
     }
 
     async index(req, res, next) {
-        const users = await User.find({}, { password_hash: 0 })
+        const users = await User.find(
+            {},
+            { password_hash: 0, createdAt: 0, updatedAt: 0 }
+        )
         if (!users) {
             return res.status(400).json({ message: "Users don't exists!" })
         }
@@ -68,13 +71,8 @@ class UserController {
             return res.status(400).json({ message: 'Format invalid' })
         }
 
-        const {
-            name,
-            email,
-            password,
-            newPassword,
-            confirmNewPassword,
-        } = req.body
+        const { name, email, password, newPassword, confirmNewPassword } =
+            req.body
 
         const user = await User.findOne({ _id: req.user._id })
 

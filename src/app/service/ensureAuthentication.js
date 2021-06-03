@@ -13,6 +13,7 @@ module.exports = {
             password,
             userVerified.password_hash
         )
+
         if (!passwordMatch) throw new Error('wrong password')
 
         const { secret, expiresIn } = config.jwt
@@ -24,7 +25,7 @@ module.exports = {
 
         return {
             user: {
-                _id: userVerified.id,
+                // _id: userVerified.id,
                 name: userVerified.name,
                 email: userVerified.email,
             },

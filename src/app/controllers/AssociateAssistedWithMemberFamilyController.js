@@ -4,6 +4,8 @@ const MemberFamily = require('../models/MemberFamily')
 const AssistedUser = require('../models/AssistedUser')
 
 class UserController {
+    // Esse controller é usado apenas quando quero fazer a associação rápida
+    // entre asssitido e membro da familia
     async update(req, res, next) {
         const schema = Yup.object().shape({
             CPFAssisted: Yup.string().required(),

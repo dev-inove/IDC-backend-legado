@@ -33,6 +33,7 @@ routes.get('/memberfamily/search/:id', MemberFamilyController.show)
 routes.put('/memberfamily/update/:id', MemberFamilyController.update)
 routes.delete('/memberfamily/delete/:id', MemberFamilyController.destroy)
 
+// Rota para associar um membro a um assistido
 routes.put('/associate', AssociateAssistedWithMemberController.update)
 
 module.exports = routes
