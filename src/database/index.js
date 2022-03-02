@@ -7,12 +7,7 @@ class Database {
 
     init() {
         try {
-            mongoose.connect(process.env.LOCAL_MONGO, {
-                useCreateIndex: true,
-                useNewUrlParser: true,
-                useFindAndModify: true,
-                useUnifiedTopology: true,
-            })
+            mongoose.connect(process.env.MONGO_URL)
 
             console.log('Database connected!')
         } catch (e) {
