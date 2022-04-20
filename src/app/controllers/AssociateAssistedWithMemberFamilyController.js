@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 const Yup = require('yup');
 const MemberFamily = require('../models/MemberFamily');
 const AssistedUser = require('../models/AssistedUser');

@@ -4,7 +4,6 @@ const AddressSchema = require('./Address');
 
 const AssistedUserSchema = new mongoose.Schema(
   {
-    // Mai Info
     id_Responsible: {
       type: mongoose.Types.ObjectId,
       ref: 'MemberFamily',
@@ -37,7 +36,7 @@ const AssistedUserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    // Adress Info
+
     address: {
       type: AddressSchema,
       required: true,
@@ -52,7 +51,6 @@ const AssistedUserSchema = new mongoose.Schema(
       required: true,
     },
 
-    // Legal infos
     identity: {
       type: String,
       required: true,
@@ -72,7 +70,6 @@ const AssistedUserSchema = new mongoose.Schema(
       required: true,
     },
 
-    // Visual issue info
     diagnostic: {
       type: String,
       required: true,
@@ -97,7 +94,6 @@ const AssistedUserSchema = new mongoose.Schema(
       required: true,
     },
 
-    // Deficiency Info
     hasDeficiency: {
       type: Boolean,
       required: true,
@@ -106,7 +102,6 @@ const AssistedUserSchema = new mongoose.Schema(
       type: String,
     },
 
-    // Government Infos
     isInGovernmentProgram: {
       type: Boolean,
       required: true,
@@ -124,7 +119,6 @@ const AssistedUserSchema = new mongoose.Schema(
       type: Number,
     },
 
-    // schooling info
     schooling: {
       grade: { type: String, required: true },
       turn: { type: String, required: true },
@@ -137,7 +131,6 @@ const AssistedUserSchema = new mongoose.Schema(
       },
     },
 
-    // Property Info
     property: {
       type_property: { type: String, required: true },
       physical_structure: { type: String, required: true },
@@ -154,15 +147,6 @@ const AssistedUserSchema = new mongoose.Schema(
       houseProvidedBy: { type: String, required: true },
     },
   },
-
-  //   Tipo de Imóvel, Estrutura Física,
-  // Quantidade de Cômodos (exceto banheiro), Quantidade de Banheiro ou Sanitário,
-  // Fornecimento de Energia Elétrica (Companhia distribuidora, Inexistente,Outro, favor
-  // especificar), Abastecimento de Água (Companhia distribuidora, Poço Artesiano,
-  // Inexistente, Outro favor especificar), Esgoto Sanitário(Existente, Inexiste), Coleta de lixo
-  // (Existente, Inexiste), Existente, Inexiste(Existente, Inexiste), Status (Próprio, Alugado,
-  // informar o valor/ mês R$, Financiamento R$, Compartilhado com outra família, Cedido
-  // por).
 
   {
     timestamps: true,

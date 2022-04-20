@@ -22,7 +22,6 @@ module.exports = {
 
     return {
       user: {
-        // _id: userVerified.id,
         name: userVerified.name,
         email: userVerified.email,
       },

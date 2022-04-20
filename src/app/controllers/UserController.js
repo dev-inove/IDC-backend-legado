@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 const Yup = require('yup');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
@@ -55,8 +54,6 @@ class UserController {
 
     return res.status(200).json({ user });
   }
-
-  // Do after Authentication
 
   async update(req, res, next) {
     const schema = Yup.object().shape({
