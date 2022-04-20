@@ -5,7 +5,6 @@ const { Schema } = mongoose;
 
 const MemberFamily = new Schema(
   {
-    // Main Infos
     idAssisted: [
       {
         type: Schema.Types.ObjectId,
@@ -20,7 +19,7 @@ const MemberFamily = new Schema(
     fones: [{ type: String }],
     email: { type: String, unique: true },
     renda: { type: Number },
-    // Responsible infos
+
     isResponsible: { type: Boolean, required: true },
     responsible: {
       rg: { type: String },
@@ -28,7 +27,7 @@ const MemberFamily = new Schema(
       organization: { type: String },
       validity: { type: String },
     },
-    // Medical infos
+
     wasAttended: { type: Boolean },
     doMedicalTreatment: { type: Boolean },
     useContinuosMedication: { type: Boolean },
@@ -42,9 +41,5 @@ MemberFamily.plugin(uniqueValidator, {
   type: 'mongoose-unique-validator',
   message: 'Error, expected {PATH} to be unique.',
 });
-// Id, Nome, Grau de
-// Parentesco com o candidato (a), RG, CPF, N° Telefone(s), E-mail, Renda, Se for
-// responsável (Documento, Comprobatório da Responsabilidade, Órgão Responsável,
-// Vigência), foi atendido pela entidade(S,N), faz tratamento médico (S, N), usa medicamento
-// contínuo(S, N), Tipo de doença.
+
 module.exports = mongoose.model('MemberFamily', MemberFamily);

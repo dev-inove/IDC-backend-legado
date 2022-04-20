@@ -8,18 +8,17 @@ const ReturnByTypeAndDelete = require('../service/ReturnAssistedByVariableTypeAn
 class AssistedController {
   async store(req, res) {
     const schema = Yup.object().shape({
-      // Main info
       fullName: Yup.string().required(),
       socialName: Yup.string(),
       maritalStatus: Yup.string().required(),
       email: Yup.string().required(),
       phone: Yup.number().positive().required(),
-      // Birth info
+
       birth: Yup.date().required(),
       sex: Yup.string().required(),
       nationality: Yup.string().required(),
       placeOfBirth: Yup.string().required(),
-      // Deficiency Info
+
       hasDeficiency: Yup.boolean().required(),
       deficiency: Yup.string(),
 
@@ -32,12 +31,12 @@ class AssistedController {
         cep: Yup.number().positive(),
         referencePoint: Yup.string(),
       }),
-      // Legal Info
+
       identity: Yup.number().positive().required(),
       cpf: Yup.string().required(),
       Department: Yup.string().required(),
       emission: Yup.date().required(),
-      // Visual Issue info
+
       diagnostic: Yup.string(),
       visualAcuity: Yup.string(),
       cid10: Yup.string(),
@@ -46,13 +45,13 @@ class AssistedController {
       relativeAttended: Yup.string(),
 
       transport: Yup.string(),
-      // Government infos
+
       isInGovernmentProgram: Yup.boolean(),
       governmentProgram: Yup.string(),
       governmentProgramValue: Yup.number().positive(),
       beneficiary: Yup.string(),
       nisNumber: Yup.number().positive(),
-      // schooling info
+
       schooling: Yup.object().shape({
         grade: Yup.string(),
         turn: Yup.string(),
@@ -60,7 +59,7 @@ class AssistedController {
         transportToInstitute: Yup.string(),
         hasMemberMatriculatedOrWillMatriculate: Yup.boolean(),
       }),
-      // Property info
+
       property: Yup.object().shape({
         type_property: Yup.string(),
         physical_structure: Yup.string(),
@@ -100,7 +99,7 @@ class AssistedController {
     const schema = Yup.object().shape({
       id: Yup.string().required(),
     });
-    // const path = req.path
+
     const { type } = req.query;
 
     if (!(await schema.isValid(req.params))) {
@@ -114,24 +113,21 @@ class AssistedController {
     }
 
     return res.status(200).json({ assisted });
-    // const assisted = await Assisted.find({ _id: req.params.id })
   }
 
   async update(req, res) {
     const schema = Yup.object().shape({
-      // Main info
-      // id_Responsible: Yup.string(),
       fullName: Yup.string().required(),
       socialName: Yup.string(),
       maritalStatus: Yup.string().required(),
       email: Yup.string().required(),
       phone: Yup.number().positive().required(),
-      // Birth info
+
       birth: Yup.date().required(),
       sex: Yup.string().required(),
       nationality: Yup.string().required(),
       placeOfBirth: Yup.string().required(),
-      // Deficiency Info
+
       hasDeficiency: Yup.boolean().required(),
       deficiency: Yup.string(),
 
@@ -144,12 +140,12 @@ class AssistedController {
         cep: Yup.number().positive(),
         referencePoint: Yup.string(),
       }),
-      // Legal Info
+
       identity: Yup.number().positive().required(),
       cpf: Yup.string(),
       Department: Yup.string().required(),
       emission: Yup.date().required(),
-      // Visual Issue info
+
       diagnostic: Yup.string(),
       visualAcuity: Yup.string(),
       cid10: Yup.string(),
@@ -158,13 +154,13 @@ class AssistedController {
       relativeAttended: Yup.string(),
 
       transport: Yup.string(),
-      // Government infos
+
       isInGovernmentProgram: Yup.boolean(),
       governmentProgram: Yup.string(),
       governmentProgramValue: Yup.number().positive(),
       beneficiary: Yup.string(),
       nisNumber: Yup.number().positive(),
-      // schooling info
+
       schooling: Yup.object().shape({
         grade: Yup.string(),
         turn: Yup.string(),
@@ -172,7 +168,7 @@ class AssistedController {
         transportToInstitute: Yup.string(),
         hasMemberMatriculatedOrWillMatriculate: Yup.boolean(),
       }),
-      // Property info
+
       property: Yup.object().shape({
         type_property: Yup.string(),
         physical_structure: Yup.string(),
@@ -245,12 +241,11 @@ class AssistedController {
         idAssisted: assisted.id,
       });
 
-      await members.forEach((member) => {
+      await members.forEach(member => {
         member.remove();
       });
     }
-    // assisted.remove()
-    // assisted.save()
+
     return res.json({ success: 'Successfully deleted' });
   }
 }
