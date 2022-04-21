@@ -30,8 +30,5 @@
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-import": "^2.26.0",
     "nodemon": "^2.0.15"
-  },
-  "_moduleAliases": {
-    "@deep": "./src/app/models"
   }
 }
