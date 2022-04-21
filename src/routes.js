@@ -5,7 +5,7 @@ const AssistedController = require('@controllers/AssistedController');
 const MemberFamilyController = require('@controllers/MemberFamilyController');
 const UserController = require('@controllers/UserController');
 const UserAuthenticationController = require('@controllers/UserAuthenticationController');
-const AssociateAssistedWithMemberController = require('@controllers/AssociateAssistedWithMemberFamilyController');
+const AssociateAssistedWithMemberFamilyController = require('@controllers/AssociateAssistedWithMemberFamilyController');
 const SchemaPassport = require('./app/middlewares/Auth');
 
 const routes = new Router();
@@ -34,6 +34,6 @@ routes.put('/memberfamily/update/:id', MemberFamilyController.update);
 routes.delete('/memberfamily/delete/:id', MemberFamilyController.destroy);
 
 // Rota para associar um membro a um assistido
-routes.put('/associate', AssociateAssistedWithMemberController.update);
+routes.put('/associate', AssociateAssistedWithMemberFamilyController.update);
 
 module.exports = routes;

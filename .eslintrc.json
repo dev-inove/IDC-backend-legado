@@ -19,13 +19,15 @@
   },
   "settings": {
     "import/resolver": {
-      "alias": [
-        ["~", "./src"],
-        ["@models", "./src/app/models"],
-        ["@controllers", "./src/app/controllers"],
-        ["@config", "./src/app/config"],
-        ["@service", "./src/app/service"]
-      ]
+      "alias": {
+        "map": [
+          ["@models", "./src/app/models"],
+          ["@controllers", "./src/app/controllers"],
+          ["@config", "./src/app/config"],
+          ["@service", "./src/app/service"]
+        ],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
     }
   }
 }

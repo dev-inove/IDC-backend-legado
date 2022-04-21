@@ -30,5 +30,12 @@
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-import": "^2.26.0",
     "nodemon": "^2.0.15"
+  },
+  "_moduleAliases": {
+    "~": "",
+    "@controllers": "src/app/controllers",
+    "@models": "src/app/models",
+    "@config": "src/app/config",
+    "@service": "src/app/service"
   }
 }
