@@ -6,7 +6,7 @@ const MemberFamilyController = require('@controllers/MemberFamilyController');
 const UserController = require('@controllers/UserController');
 const UserAuthenticationController = require('@controllers/UserAuthenticationController');
 const AssociateAssistedWithMemberFamilyController = require('@controllers/AssociateAssistedWithMemberFamilyController');
-const SchemaPassport = require('./app/middlewares/Auth');
+const SchemaPassport = require('./middlewares/Auth');
 
 const routes = new Router();
 

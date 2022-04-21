@@ -1,4 +1,5 @@
 require('module-alias/register');
+require('@config/moduleAliasConfig');
 require('dotenv').config();
 const passport = require('passport');
 require('./database');

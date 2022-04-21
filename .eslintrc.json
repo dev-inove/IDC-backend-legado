@@ -21,10 +21,10 @@
     "import/resolver": {
       "alias": {
         "map": [
-          ["@models", "./src/app/models"],
-          ["@controllers", "./src/app/controllers"],
-          ["@config", "./src/app/config"],
-          ["@service", "./src/app/service"]
+          ["@models", "./src/models"],
+          ["@controllers", "./src/controllers"],
+          ["@config", "./src/config"],
+          ["@service", "./src/service"]
         ],
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
