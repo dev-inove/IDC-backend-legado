@@ -1,7 +1,7 @@
 const { compare } = require('bcryptjs');
 const { sign } = require('jsonwebtoken');
-const config = require('../config/Auth');
-const User = require('../models/User');
+const config = require('@config/Auth');
+const User = require('@models/User');
 
 module.exports = {
   async exec(email, password) {

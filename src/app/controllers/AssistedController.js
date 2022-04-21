@@ -1,9 +1,9 @@
 const Yup = require('yup');
-const Assisted = require('../models/AssistedUser');
-const MemberFamily = require('../models/MemberFamily');
-const ReturnByType = require('../service/ReturnAssistedByVariableType');
-const ReturnByTypeAndEdit = require('../service/ReturnAssistedByVariableTypeAndEdit');
-const ReturnByTypeAndDelete = require('../service/ReturnAssistedByVariableTypeAndDelete');
+const Assisted = require('@models/AssistedUser');
+const MemberFamily = require('@models/MemberFamily');
+const ReturnByType = require('@service/ReturnAllAssistedByTypeService');
+const ReturnByTypeAndEdit = require('@service/ReturnAssistedByTypeService');
+const ReturnByTypeAndDelete = require('@service/ReturnAssistedByTypeAndDeleteService');
 
 class AssistedController {
   async store(req, res) {

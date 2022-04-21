@@ -22,7 +22,9 @@
       "alias": [
         ["~", "./src"],
         ["@models", "./src/app/models"],
-        ["@controllers", "./src/app/controllers"]
+        ["@controllers", "./src/app/controllers"],
+        ["@config", "./src/app/config"],
+        ["@service", "./src/app/service"]
       ]
     }
   }

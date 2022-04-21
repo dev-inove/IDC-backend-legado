@@ -4,7 +4,7 @@ const passport = require('passport');
 const AssistedController = require('@controllers/AssistedController');
 const MemberFamilyController = require('@controllers/MemberFamilyController');
 const UserController = require('@controllers/UserController');
-const SessionController = require('@controllers/SessionController');
+const UserAuthenticationController = require('@controllers/UserAuthenticationController');
 const AssociateAssistedWithMemberController = require('@controllers/AssociateAssistedWithMemberFamilyController');
 const SchemaPassport = require('./app/middlewares/Auth');
 
@@ -13,7 +13,7 @@ const routes = new Router();
 routes.post('/user', UserController.store);
 routes.get('/user/:email', UserController.show);
 routes.get('/user/', UserController.index);
-routes.post('/session', SessionController.store);
+routes.post('/authentication', UserAuthenticationController.store);
 
 passport.use(SchemaPassport);
 routes.use(passport.authenticate('jwt', { session: false }));
