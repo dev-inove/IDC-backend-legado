@@ -16,5 +16,14 @@
     "arrow-parens": "off",
     "object-curly-newline": "off",
     "no-underscore-dangle": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "alias": [
+        ["~", "./src"],
+        ["@models", "./src/app/models"],
+        ["@controllers", "./src/app/controllers"]
+      ]
+    }
   }
 }

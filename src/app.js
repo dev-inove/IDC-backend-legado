@@ -1,4 +1,5 @@
 require('dotenv').config();
+require('./app/config/moduleAliasConfig');
 const passport = require('passport');
 require('./database');
 

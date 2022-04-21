@@ -1,12 +1,12 @@
 const { Router } = require('express');
 const passport = require('passport');
 
+const AssistedController = require('@controllers/AssistedController');
+const MemberFamilyController = require('@controllers/MemberFamilyController');
+const UserController = require('@controllers/UserController');
+const SessionController = require('@controllers/SessionController');
+const AssociateAssistedWithMemberController = require('@controllers/AssociateAssistedWithMemberFamilyController');
 const SchemaPassport = require('./app/middlewares/Auth');
-const AssistedController = require('./app/controllers/AssistedController');
-const MemberFamilyController = require('./app/controllers/MemberFamilyController');
-const UserController = require('./app/controllers/UserController');
-const SessionController = require('./app/controllers/SessionController');
-const AssociateAssistedWithMemberController = require('./app/controllers/AssociateAssistedWithMemberFamilyController');
 
 const routes = new Router();
 
