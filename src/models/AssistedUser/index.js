@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
-const AddressSchema = require('./Address');
+const AddressSchema = require('@models/Address');
 
 const AssistedUserSchema = new mongoose.Schema(
   {

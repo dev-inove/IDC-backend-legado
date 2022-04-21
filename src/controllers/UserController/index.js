@@ -1,6 +1,6 @@
 const Yup = require('yup');
 const bcrypt = require('bcryptjs');
-const User = require('../models/User');
+const User = require('@models/User');
 
 class UserController {
   async store(req, res, next) {

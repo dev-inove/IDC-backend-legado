@@ -1,9 +1,9 @@
 const Yup = require('yup');
-const MemberFamily = require('../models/MemberFamily');
-const Assisted = require('../models/AssistedUser');
+const MemberFamily = require('@models/MemberFamily');
+const Assisted = require('@models/AssistedUser');
 
-const ReturnByTypeVariable = require('../service/ReturnMemberFamilyByVariableType');
-const ReturnByTypeVariableAndEdit = require('../service/ReturnMemberFamilyByVariableTypeAndUpdate');
+const ReturnByTypeVariableAndEdit = require('@service/ReturnAllMemberFamilyByTypeService');
+const ReturnByTypeVariable = require('@service/ReturnMemberFamilyByTypeService');
 
 class MemberFamilyController {
   async store(req, res, next) {

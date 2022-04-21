@@ -1,8 +1,8 @@
 const Yup = require('yup');
-const MemberFamily = require('../models/MemberFamily');
-const AssistedUser = require('../models/AssistedUser');
+const MemberFamily = require('@models/MemberFamily');
+const AssistedUser = require('@models/AssistedUser');
 
-class UserController {
+class AssociateAssistedWithMemberFamilyController {
   // Esse controller é usado apenas quando quero fazer a associação rápida
   // entre asssitido e membro da familia
   async update(req, res, next) {
@@ -54,4 +54,4 @@ class UserController {
   }
 }
 
-module.exports = new UserController();
+module.exports = new AssociateAssistedWithMemberFamilyController();

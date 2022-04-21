@@ -1,7 +1,7 @@
 const Yup = require('yup');
-const AuthLogin = require('../service/ensureAuthentication');
+const AuthLogin = require('@service/UserAuthenticationService');
 
-class SessionController {
+class UserAuthenticationController {
   async store(req, res, next) {
     const schema = Yup.object().shape({
       email: Yup.string().required(),
@@ -24,4 +24,4 @@ class SessionController {
   }
 }
 
-module.exports = new SessionController();
+module.exports = new UserAuthenticationController();

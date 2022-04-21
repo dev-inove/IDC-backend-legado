@@ -1,19 +1,19 @@
 const { Router } = require('express');
 const passport = require('passport');
 
-const SchemaPassport = require('./app/middlewares/Auth');
-const AssistedController = require('./app/controllers/AssistedController');
-const MemberFamilyController = require('./app/controllers/MemberFamilyController');
-const UserController = require('./app/controllers/UserController');
-const SessionController = require('./app/controllers/SessionController');
-const AssociateAssistedWithMemberController = require('./app/controllers/AssociateAssistedWithMemberFamilyController');
+const AssistedController = require('@controllers/AssistedController');
+const MemberFamilyController = require('@controllers/MemberFamilyController');
+const UserController = require('@controllers/UserController');
+const UserAuthenticationController = require('@controllers/UserAuthenticationController');
+const AssociateAssistedWithMemberFamilyController = require('@controllers/AssociateAssistedWithMemberFamilyController');
+const SchemaPassport = require('./middlewares/Auth');
 
 const routes = new Router();
 
 routes.post('/user', UserController.store);
 routes.get('/user/:email', UserController.show);
 routes.get('/user/', UserController.index);
-routes.post('/session', SessionController.store);
+routes.post('/authentication', UserAuthenticationController.store);
 
 passport.use(SchemaPassport);
 routes.use(passport.authenticate('jwt', { session: false }));
@@ -34,6 +34,6 @@ routes.put('/memberfamily/update/:id', MemberFamilyController.update);
 routes.delete('/memberfamily/delete/:id', MemberFamilyController.destroy);
 
 // Rota para associar um membro a um assistido
-routes.put('/associate', AssociateAssistedWithMemberController.update);
+routes.put('/associate', AssociateAssistedWithMemberFamilyController.update);
 
 module.exports = routes;

@@ -1,4 +1,4 @@
-const MemberFamily = require('../models/MemberFamily');
+const MemberFamily = require('@models/MemberFamily');
 
 module.exports = {
   async exec(type, value) {
