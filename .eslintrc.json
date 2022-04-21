@@ -15,7 +15,16 @@
     "operator-linebreak": "off",
     "arrow-parens": "off",
     "object-curly-newline": "off",
-    "no-underscore-dangle": "off"
+    "no-underscore-dangle": "off",
+    "import/no-unresolved": [2, { "caseSensitive": false }],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": false,
+        "optionalDependencies": false,
+        "peerDependencies": false
+      }
+    ]
   },
   "settings": {
     "import/resolver": {
