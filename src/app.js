@@ -7,7 +7,7 @@ require('./database');
 require('events').EventEmitter.prototype._maxListeners = 100;
 const express = require('express');
 const cors = require('cors');
-const routes = require('./routes');
+const routes = require('./index.routes');
 
 class App {
   constructor() {

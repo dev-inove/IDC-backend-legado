@@ -33,7 +33,8 @@
           ["@models", "./src/models"],
           ["@controllers", "./src/controllers"],
           ["@config", "./src/config"],
-          ["@service", "./src/service"]
+          ["@service", "./src/service"],
+          ["@routes", "./src/routes"]
         ],
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }

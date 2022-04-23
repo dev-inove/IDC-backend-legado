@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return */
 const JwtStrategy = require('passport-jwt').Strategy;
 const { ExtractJwt } = require('passport-jwt');
 const config = require('../config/Auth');
