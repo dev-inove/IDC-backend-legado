@@ -12,7 +12,7 @@ const routes = new Router();
 routes.post('/authentication', UserAuthenticationController.store);
 
 passport.use(SchemaPassport);
-routes.use(passport.authenticate('jwt', { session: true }));
+routes.use(passport.authenticate('jwt', { session: false }));
 
 routes.use(userRouter);
 routes.use(assistedRouter);
