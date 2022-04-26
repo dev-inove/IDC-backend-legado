@@ -3,9 +3,8 @@ const { Router } = require('express');
 
 const userRouter = Router();
 
-userRouter.post('/user', UserController.store);
-userRouter.get('/user/:email', UserController.show);
-userRouter.get('/user/', UserController.index);
-userRouter.put('/user/', UserController.update);
+userRouter.get('/:email', UserController.show);
+userRouter.get('/', UserController.index);
+userRouter.put('/', UserController.update);
 
 module.exports = userRouter;
