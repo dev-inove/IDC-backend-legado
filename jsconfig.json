@@ -6,7 +6,8 @@
       "@controllers/*": ["controllers/*"],
       "@models/*": ["models/*"],
       "@config/*": ["config/*"],
-      "@service/*": ["service/*"]
+      "@service/*": ["service/*"],
+      "@routes/*": ["routes/*"]
     }
   }
 }
