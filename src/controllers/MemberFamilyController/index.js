@@ -71,32 +71,7 @@ class MemberFamilyController {
     return res.status(202).json({ member });
   }
 
-  async update(req, res, next) {
-    const schema = Yup.object().shape({
-      CPFAssisted: Yup.string(),
-      kinship: Yup.string(),
-      name: Yup.string(),
-      rg: Yup.string(),
-      cpf: Yup.string(),
-      fones: Yup.array().of(Yup.number()),
-      email: Yup.string(),
-      renda: Yup.number(),
-      isResponsible: Yup.boolean(),
-      responsible: Yup.object().shape({
-        rg: Yup.string(),
-        responsibleValidator: Yup.string(),
-        organization: Yup.string(),
-        validity: Yup.string(),
-      }),
-      wasAttended: Yup.boolean(),
-      doMedicalTreatment: Yup.boolean(),
-      useContinuosMedication: Yup.boolean(),
-      typeOfDisiase: Yup.string(),
-    });
-
-    if (!(await schema.isValid(req.body, { strict: true }))) {
-      return res.status(400).json({ message: 'Invalid Object' });
-    }
+  async update(req, res) {
     const { id } = req.params;
     const { type } = req.query;
 
