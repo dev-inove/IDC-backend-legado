@@ -6,6 +6,7 @@ const CreateAssistedValidation = require('@middlewares/validations/CreateAssiste
 const ShowAssistedValidation = require('@middlewares/validations/ShowAssistedValidation');
 const UpdateAssistedValidation = require('@middlewares/validations/UpdateAssistedValidation');
 const DestroyAssistedValidation = require('@middlewares/validations/DestroyAssistedValidation');
+const AssociateAssistedWithMemberFamilyValidation = require('@middlewares/validations/AssociateAssistedWithMemberFamilyValidation');
 
 const assistedRouter = Router();
 
@@ -27,6 +28,7 @@ assistedRouter.delete(
 // Rota para associar um membro a um assistido
 assistedRouter.put(
   '/associate',
+  AssociateAssistedWithMemberFamilyValidation,
   AssociateAssistedWithMemberFamilyController.update,
 );
 
