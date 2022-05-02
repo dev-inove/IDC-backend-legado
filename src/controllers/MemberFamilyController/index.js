@@ -45,14 +45,7 @@ class MemberFamilyController {
     return res.status(201).json(memberFamily);
   }
 
-  async index(req, res, next) {
-    const schema = Yup.object().shape({
-      idAssisted: Yup.string().required(),
-    });
-
-    if (!(await schema.isValid(req.params, { strict: true }))) {
-      return res.status(400).json({ message: 'This Id is invalid!' });
-    }
+  async index(req, res) {
     const { idAssisted } = req.params;
     const members = await MemberFamily.find({
       idAssisted,
