@@ -117,18 +117,18 @@ class AssistedController {
 
   async update(req, res) {
     const schema = Yup.object().shape({
-      fullName: Yup.string().required(),
+      fullName: Yup.string(),
       socialName: Yup.string(),
-      maritalStatus: Yup.string().required(),
-      email: Yup.string().required(),
-      phone: Yup.number().positive().required(),
+      maritalStatus: Yup.string(),
+      email: Yup.string(),
+      phone: Yup.number().positive(),
 
-      birth: Yup.date().required(),
-      sex: Yup.string().required(),
-      nationality: Yup.string().required(),
-      placeOfBirth: Yup.string().required(),
+      birth: Yup.date(),
+      sex: Yup.string(),
+      nationality: Yup.string(),
+      placeOfBirth: Yup.string(),
 
-      hasDeficiency: Yup.boolean().required(),
+      hasDeficiency: Yup.boolean(),
       deficiency: Yup.string(),
 
       address: Yup.object().shape({
@@ -141,16 +141,16 @@ class AssistedController {
         referencePoint: Yup.string(),
       }),
 
-      identity: Yup.number().positive().required(),
+      identity: Yup.number().positive(),
       cpf: Yup.string(),
-      Department: Yup.string().required(),
-      emission: Yup.date().required(),
+      Department: Yup.string(),
+      emission: Yup.date(),
 
       diagnostic: Yup.string(),
       visualAcuity: Yup.string(),
       cid10: Yup.string(),
 
-      hasARelativeAttended: Yup.boolean().required(),
+      hasARelativeAttended: Yup.boolean(),
       relativeAttended: Yup.string(),
 
       transport: Yup.string(),

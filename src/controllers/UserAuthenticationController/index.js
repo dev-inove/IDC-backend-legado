@@ -8,7 +8,7 @@ class UserAuthenticationController {
       password: Yup.string().required(),
     });
 
-    if (!(await schema.isValid(req.body))) {
+    if (!(await schema.isValid(req.body, { strict: true }))) {
       return res.status(400).json({ message: 'invalid format' });
     }
 

@@ -30,7 +30,7 @@ class MemberFamilyController {
     });
     const { cpf_assisted } = req.body;
 
-    if (!(await schema.isValid(req.body))) {
+    if (!(await schema.isValid(req.body, { strict: true }))) {
       return res.status(400).json({ message: 'Invalid Object' });
     }
 
@@ -75,7 +75,7 @@ class MemberFamilyController {
       idAssisted: Yup.string().required(),
     });
 
-    if (!(await schema.isValid(req.params))) {
+    if (!(await schema.isValid(req.params, { strict: true }))) {
       return res.status(400).json({ message: 'This Id is invalid!' });
     }
     const { idAssisted } = req.params;
@@ -96,7 +96,7 @@ class MemberFamilyController {
       id: Yup.string().required(),
     });
 
-    if (!(await schema.isValid(req.params))) {
+    if (!(await schema.isValid(req.params, { strict: true }))) {
       return res.status(400).json({ message: 'This Id is invalid! rapa' });
     }
 
@@ -114,10 +114,10 @@ class MemberFamilyController {
   async update(req, res, next) {
     const schema = Yup.object().shape({
       CPFAssisted: Yup.string(),
-      kinship: Yup.string().required(),
-      name: Yup.string().required(),
-      rg: Yup.string().required(),
-      cpf: Yup.string().required(),
+      kinship: Yup.string(),
+      name: Yup.string(),
+      rg: Yup.string(),
+      cpf: Yup.string(),
       fones: Yup.array().of(Yup.number()),
       email: Yup.string(),
       renda: Yup.number(),
@@ -128,13 +128,13 @@ class MemberFamilyController {
         organization: Yup.string(),
         validity: Yup.string(),
       }),
-      wasAttended: Yup.boolean().required(),
-      doMedicalTreatment: Yup.boolean().required(),
-      useContinuosMedication: Yup.boolean().required(),
-      typeOfDisiase: Yup.string().required(),
+      wasAttended: Yup.boolean(),
+      doMedicalTreatment: Yup.boolean(),
+      useContinuosMedication: Yup.boolean(),
+      typeOfDisiase: Yup.string(),
     });
 
-    if (!(await schema.isValid(req.body))) {
+    if (!(await schema.isValid(req.body, { strict: true }))) {
       return res.status(400).json({ message: 'Invalid Object' });
     }
     const { id } = req.params;
@@ -191,7 +191,7 @@ class MemberFamilyController {
       id: Yup.string().required(),
     });
 
-    if (!(await schema.isValid(req.params))) {
+    if (!(await schema.isValid(req.params, { strict: true }))) {
       return res.status(400).json({ message: 'Invalid Id!' });
     }
     const { id } = req.params;
