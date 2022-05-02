@@ -1,19 +1,8 @@
-const Yup = require('yup');
 const bcrypt = require('bcryptjs');
 const User = require('@models/User');
 
 class UserController {
-  async store(req, res, next) {
-    const schema = Yup.object().shape({
-      name: Yup.string().required(),
-      email: Yup.string().required(),
-      password: Yup.string().required(),
-    });
-
-    if (!(await schema.isValid(req.body, { strict: true }))) {
-      return res.status(400).json({ message: 'Format invalid' });
-    }
-
+  async store(req, res) {
     const { name, email, password } = req.body;
 
     const exists = await User.findOne({ email });
@@ -32,7 +21,7 @@ class UserController {
     return res.status(201).json({ user });
   }
 
-  async index(req, res, next) {
+  async index(req, res) {
     const users = await User.find(
       {},
       { password_hash: 0, createdAt: 0, updatedAt: 0 },
@@ -44,7 +33,7 @@ class UserController {
     return res.status(200).json({ users });
   }
 
-  async show(req, res, next) {
+  async show(req, res) {
     const { email } = req.params;
 
     const user = await User.findOne({ email }, { password_hash: 0 });
@@ -55,19 +44,7 @@ class UserController {
     return res.status(200).json({ user });
   }
 
-  async update(req, res, next) {
-    const schema = Yup.object().shape({
-      name: Yup.string(),
-      email: Yup.string().required(),
-      password: Yup.string().required(),
-      newPassword: Yup.string(),
-      confirmNewPassword: Yup.string(),
-    });
-
-    if (!(await schema.isValid(req.body, { strict: true }))) {
-      return res.status(400).json({ message: 'Format invalid' });
-    }
-
+  async update(req, res) {
     const { name, email, password, newPassword, confirmNewPassword } = req.body;
 
     const user = await User.findOne({ _id: req.user._id });
