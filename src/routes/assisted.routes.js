@@ -3,13 +3,14 @@ const AssociateAssistedWithMemberFamilyController = require('@controllers/Associ
 const { Router } = require('express');
 
 const CreateAssistedValidation = require('@middlewares/validations/CreateAssistedValidation');
+const ShowAssistedValidation = require('@middlewares/validations/ShowAssistedValidation');
 
 const assistedRouter = Router();
 
 assistedRouter.post('/', CreateAssistedValidation, AssistedController.store);
 assistedRouter.get('/', AssistedController.index);
 // use ?type=[TYPE] after id as query param to set the type of search
-assistedRouter.get('/:id', AssistedController.show);
+assistedRouter.get('/:id', ShowAssistedValidation, AssistedController.show);
 assistedRouter.put('/update/:id', AssistedController.update);
 assistedRouter.delete('/:id', AssistedController.destroy);
 

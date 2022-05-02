@@ -23,13 +23,6 @@ class AssistedController {
 
   async show(req, res) {
     const { type } = req.query;
-    const schema = Yup.object().shape({
-      id: Yup.string().required(),
-    });
-
-    if (!(await schema.isValid(req.params, { strict: true }))) {
-      return res.status(400).json({ error: 'Validation fails!' });
-    }
 
     const assisted = await ReturnByType.exec(type, req.params.id);
 
