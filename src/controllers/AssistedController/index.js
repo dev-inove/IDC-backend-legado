@@ -1,4 +1,3 @@
-const Yup = require('yup');
 const Assisted = require('@models/AssistedUser');
 const MemberFamily = require('@models/MemberFamily');
 const ReturnByType = require('@service/ReturnAllAssistedByTypeService');
@@ -58,14 +57,6 @@ class AssistedController {
   }
 
   async destroy(req, res) {
-    const schema = Yup.object().shape({
-      id: Yup.string().required(),
-    });
-
-    if (!(await schema.isValid(req.params, { strict: true }))) {
-      return res.status(400).json({ error: 'Validation fails!' });
-    }
-
     const { id } = req.params;
 
     if (!id) {

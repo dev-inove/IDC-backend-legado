@@ -5,6 +5,7 @@ const { Router } = require('express');
 const CreateAssistedValidation = require('@middlewares/validations/CreateAssistedValidation');
 const ShowAssistedValidation = require('@middlewares/validations/ShowAssistedValidation');
 const UpdateAssistedValidation = require('@middlewares/validations/UpdateAssistedValidation');
+const DestroyAssistedValidation = require('@middlewares/validations/DestroyAssistedValidation');
 
 const assistedRouter = Router();
 
@@ -17,7 +18,11 @@ assistedRouter.put(
   UpdateAssistedValidation,
   AssistedController.update,
 );
-assistedRouter.delete('/:id', AssistedController.destroy);
+assistedRouter.delete(
+  '/:id',
+  DestroyAssistedValidation,
+  AssistedController.destroy,
+);
 
 // Rota para associar um membro a um assistido
 assistedRouter.put(
