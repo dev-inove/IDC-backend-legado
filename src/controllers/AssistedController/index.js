@@ -77,7 +77,7 @@ class AssistedController {
       }),
     });
 
-    if (!(await schema.isValid(req.body))) {
+    if (!(await schema.isValid(req.body, { strict: true }))) {
       return res.status(400).json({ error: 'Validation fails!' });
     }
 
@@ -102,7 +102,7 @@ class AssistedController {
 
     const { type } = req.query;
 
-    if (!(await schema.isValid(req.params))) {
+    if (!(await schema.isValid(req.params, { strict: true }))) {
       return res.status(400).json({ error: 'Validation fails!' });
     }
 
@@ -185,7 +185,7 @@ class AssistedController {
         houseProvidedBy: Yup.string(),
       }),
     });
-    if (!(await schema.isValid(req.body))) {
+    if (!(await schema.isValid(req.body, { strict: true }))) {
       return res.status(400).json({ error: 'Validation fails!' });
     }
 
@@ -217,7 +217,7 @@ class AssistedController {
       id: Yup.string().required(),
     });
 
-    if (!(await schema.isValid(req.params))) {
+    if (!(await schema.isValid(req.params, { strict: true }))) {
       return res.status(400).json({ error: 'Validation fails!' });
     }
 
