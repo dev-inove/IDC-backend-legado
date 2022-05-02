@@ -6,11 +6,16 @@ const userRouter = require('@routes/user.routes');
 const { Router } = require('express');
 const passport = require('passport');
 
-const SchemaPassport = require('./middlewares/Auth');
+const AuthenticationValidation = require('@middlewares/validations/AuthenticationValidation');
+const SchemaPassport = require('@middlewares/Auth');
 
 const routes = new Router();
 
-routes.post('/authentication', UserAuthenticationController.store);
+routes.post(
+  '/authentication',
+  AuthenticationValidation,
+  UserAuthenticationController.store,
+);
 userRouter.post('/user', UserController.store);
 
 passport.use(SchemaPassport);

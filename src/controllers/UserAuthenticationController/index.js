@@ -2,16 +2,7 @@ const Yup = require('yup');
 const AuthLogin = require('@service/UserAuthenticationService');
 
 class UserAuthenticationController {
-  async store(req, res, next) {
-    const schema = Yup.object().shape({
-      email: Yup.string().required(),
-      password: Yup.string().required(),
-    });
-
-    if (!(await schema.isValid(req.body, { strict: true }))) {
-      return res.status(400).json({ message: 'invalid format' });
-    }
-
+  async store(req, res) {
     const { email, password } = req.body;
 
     try {
