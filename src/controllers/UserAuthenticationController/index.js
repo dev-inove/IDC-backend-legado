@@ -1,4 +1,3 @@
-const Yup = require('yup');
 const AuthLogin = require('@service/UserAuthenticationService');
 
 class UserAuthenticationController {
