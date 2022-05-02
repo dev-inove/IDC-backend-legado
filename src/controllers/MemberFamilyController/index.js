@@ -6,33 +6,8 @@ const ReturnByTypeVariableAndEdit = require('@service/ReturnAllMemberFamilyByTyp
 const ReturnByTypeVariable = require('@service/ReturnMemberFamilyByTypeService');
 
 class MemberFamilyController {
-  async store(req, res, next) {
-    const schema = Yup.object().shape({
-      cpf_assisted: Yup.string().required(),
-      kinship: Yup.string().required(),
-      name: Yup.string().required(),
-      rg: Yup.string().required(),
-      cpf: Yup.string().required(),
-      fones: Yup.array().of(Yup.number()),
-      email: Yup.string().required(),
-      renda: Yup.number(),
-      isResponsible: Yup.boolean().required(),
-      responsible: Yup.object().shape({
-        rg: Yup.string(),
-        responsibleValidator: Yup.string(),
-        organization: Yup.string(),
-        validity: Yup.string(),
-      }),
-      wasAttended: Yup.boolean(),
-      doMedicalTreatment: Yup.boolean(),
-      useContinuosMedication: Yup.boolean(),
-      typeOfDisiase: Yup.string(),
-    });
+  async store(req, res) {
     const { cpf_assisted } = req.body;
-
-    if (!(await schema.isValid(req.body, { strict: true }))) {
-      return res.status(400).json({ message: 'Invalid Object' });
-    }
 
     const memberFamily = new MemberFamily(req.body);
 

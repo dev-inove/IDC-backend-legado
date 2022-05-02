@@ -1,9 +1,15 @@
 const MemberFamilyController = require('@controllers/MemberFamilyController');
 const { Router } = require('express');
 
+const CreateMemberFamilyValidation = require('@middlewares/validations/CreateMemberFamilyValidation');
+
 const memberFamilyRouter = Router();
 
-memberFamilyRouter.post('/', MemberFamilyController.store);
+memberFamilyRouter.post(
+  '/',
+  CreateMemberFamilyValidation,
+  MemberFamilyController.store,
+);
 memberFamilyRouter.get('/:idAssisted', MemberFamilyController.index);
 memberFamilyRouter.get('/search/:id', MemberFamilyController.show);
 memberFamilyRouter.put('/update/:id', MemberFamilyController.update);
