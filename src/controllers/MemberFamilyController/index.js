@@ -1,4 +1,3 @@
-const Yup = require('yup');
 const MemberFamily = require('@models/MemberFamily');
 const Assisted = require('@models/AssistedUser');
 
@@ -121,14 +120,7 @@ class MemberFamilyController {
     }
   }
 
-  async destroy(req, res, next) {
-    const schema = Yup.object().shape({
-      id: Yup.string().required(),
-    });
-
-    if (!(await schema.isValid(req.params, { strict: true }))) {
-      return res.status(400).json({ message: 'Invalid Id!' });
-    }
+  async destroy(req, res) {
     const { id } = req.params;
     const { type } = req.query;
     try {

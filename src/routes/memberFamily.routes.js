@@ -5,6 +5,7 @@ const CreateMemberFamilyValidation = require('@middlewares/validations/CreateMem
 const ListMembersFamilyValidation = require('@middlewares/validations/ListMembersFamilyValidation');
 const ShowMemberFamilyValidation = require('@middlewares/validations/ShowMemberFamilyValidation');
 const UpdateMemberFamilyValidation = require('@middlewares/validations/UodateMemberFamilyValidation');
+const DestroyMemberFamilyValidation = require('@middlewares/validations/DestroyMemberFamilyValidation');
 
 const memberFamilyRouter = Router();
 
@@ -28,6 +29,10 @@ memberFamilyRouter.put(
   UpdateMemberFamilyValidation,
   MemberFamilyController.update,
 );
-memberFamilyRouter.delete('/delete/:id', MemberFamilyController.destroy);
+memberFamilyRouter.delete(
+  '/delete/:id',
+  DestroyMemberFamilyValidation,
+  MemberFamilyController.destroy,
+);
 
 module.exports = memberFamilyRouter;
