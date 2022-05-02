@@ -2,9 +2,11 @@ const AssistedController = require('@controllers/AssistedController');
 const AssociateAssistedWithMemberFamilyController = require('@controllers/AssociateAssistedWithMemberFamilyController');
 const { Router } = require('express');
 
+const CreateAssistedValidation = require('@middlewares/validations/CreateAssistedValidation');
+
 const assistedRouter = Router();
 
-assistedRouter.post('/', AssistedController.store);
+assistedRouter.post('/', CreateAssistedValidation, AssistedController.store);
 assistedRouter.get('/', AssistedController.index);
 // use ?type=[TYPE] after id as query param to set the type of search
 assistedRouter.get('/:id', AssistedController.show);
