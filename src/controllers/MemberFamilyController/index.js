@@ -59,15 +59,7 @@ class MemberFamilyController {
     return res.status(200).json({ members });
   }
 
-  async show(req, res, next) {
-    const schema = Yup.object().shape({
-      id: Yup.string().required(),
-    });
-
-    if (!(await schema.isValid(req.params, { strict: true }))) {
-      return res.status(400).json({ message: 'This Id is invalid! rapa' });
-    }
-
+  async show(req, res) {
     const { id } = req.params;
     const { type } = req.query;
 
