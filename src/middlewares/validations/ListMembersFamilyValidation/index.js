@@ -2,12 +2,19 @@ const Yup = require('yup');
 
 async function ListMembersFamilyValidation(request, response, next) {
   const schema = Yup.object().shape({
-    idAssisted: Yup.string().required(),
+    idAssisted: Yup.string()
+      .required('O id do assistido deve ser informado')
+      .typeError('O id do assistido deve ser um texto'),
   });
 
-  if (!(await schema.isValid(request.params, { strict: true }))) {
-    return response.status(400).json({ message: 'This Id is invalid!' });
+  try {
+    await schema.isValid(request.params, { strict: true, abortEarly: false });
+  } catch (err) {
+    const validationErros = err.errors;
+
+    return response.status(400).json({ errors: validationErros });
   }
+
   return next();
 }
 
