@@ -8,7 +8,7 @@ async function ListMembersFamilyValidation(request, response, next) {
   });
 
   try {
-    await schema.isValid(request.params, { strict: true, abortEarly: false });
+    await schema.validate(request.params, { strict: true, abortEarly: false });
   } catch (err) {
     const validationErros = err.errors;
 
