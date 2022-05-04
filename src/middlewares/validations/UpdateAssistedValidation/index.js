@@ -82,7 +82,7 @@ async function UpdateAssistedValidation(request, response, next) {
         'Transporte para a escola deve ser um texto.',
       ),
       hasMemberMatriculatedOrWillMatriculate: Yup.boolean().typeError(
-        'Se é um menbro matriculado ou vai matricular deve ser um boolean.',
+        'Se é um membro matriculado ou vai matricular deve ser um boolean.',
       ),
     }),
 
@@ -103,7 +103,7 @@ async function UpdateAssistedValidation(request, response, next) {
         'Energia elétrica deve ser um texto.',
       ),
       waterSupply: Yup.string().typeError(
-        'Fonecimento de água deve ser um texto.',
+        'Fornecimento de água deve ser um texto.',
       ),
       sanitarySewage: Yup.boolean().typeError(
         'Saneamento básico deve ser um boolean.',
