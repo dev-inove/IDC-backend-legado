@@ -3,8 +3,8 @@ const Yup = require('yup');
 async function DestroyAssistedValidation(request, response, next) {
   const schema = Yup.object().shape({
     id: Yup.string()
-      .required('O id deve ser informado')
-      .typeError('O id deve ser um texto'),
+      .required('O id deve ser informado.')
+      .typeError('O id deve ser um texto.'),
   });
 
   try {
