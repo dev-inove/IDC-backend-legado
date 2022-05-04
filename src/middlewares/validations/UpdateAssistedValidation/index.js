@@ -59,7 +59,7 @@ async function UpdateAssistedValidation(request, response, next) {
     transport: Yup.string().typeError('Transporte deve ser um texto.'),
 
     isInGovernmentProgram: Yup.boolean().typeError(
-      'Se está em um programa do governo deve ser um boolean',
+      'Se está em um programa do governo deve ser um boolean.',
     ),
     governmentProgram: Yup.string().typeError(
       'Programa do governo deve ser um texto.',
