@@ -3,8 +3,8 @@ const Yup = require('yup');
 async function ShowMemberFamilyValidation(request, response, next) {
   const schema = Yup.object().shape({
     id: Yup.string()
-      .required('O id do menbro da família deve ser informado.')
-      .typeError('O id do mebro da família deve ser um texto'),
+      .required('O id do membro da família deve ser informado.')
+      .typeError('O id do membro da família deve ser um texto'),
   });
 
   try {
