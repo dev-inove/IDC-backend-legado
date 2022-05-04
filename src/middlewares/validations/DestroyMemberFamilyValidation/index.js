@@ -3,8 +3,8 @@ const Yup = require('yup');
 async function DestroyMemberFamilyValidation(request, response, next) {
   const schema = Yup.object().shape({
     id: Yup.string()
-      .required('o id deve ser informado')
-      .typeError('o id deve ser um texto'),
+      .required('o id deve ser informado.')
+      .typeError('o id deve ser um texto.'),
   });
 
   try {
