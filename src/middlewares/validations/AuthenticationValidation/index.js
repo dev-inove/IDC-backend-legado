@@ -3,11 +3,11 @@ const Yup = require('yup');
 async function AuthenticationValidation(request, response, next) {
   const schema = Yup.object().shape({
     email: Yup.string()
-      .required('O email deve ser informado')
+      .required('O email deve ser informado.')
       .typeError('O email deve ser um texto.'),
     password: Yup.string()
-      .required('A senha deve informada')
-      .typeError('A senha deve ser um texto'),
+      .required('A senha deve informada.')
+      .typeError('A senha deve ser um texto.'),
   });
 
   try {
