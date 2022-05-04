@@ -10,7 +10,7 @@ async function CreateUserValidation(request, response, next) {
       .typeError('O email deve ser um texto'),
     password: Yup.string()
       .required('A senha deve ser informado')
-      .typeError('A senha deve ser um texto.'),
+      .typeError('A senha deve ser um texto'),
   });
 
   try {
