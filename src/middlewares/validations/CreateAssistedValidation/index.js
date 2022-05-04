@@ -206,7 +206,7 @@ async function CreateAssistedValidation(request, response, next) {
   } catch (err) {
     const validationErros = err.errors;
 
-    return response.status(400).json({ error: validationErros });
+    return response.status(400).json({ errors: validationErros });
   }
   return next();
 }

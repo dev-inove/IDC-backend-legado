@@ -49,7 +49,9 @@ async function CreateMemberFamilyValidation(request, response, next) {
       .typeError('Se ja foi atendido deve ser verdadeiro ou falso.'),
     doMedicalTreatment: Yup.boolean()
       .required('Se faz algum tratamento medico deve ser informado.')
-      .typeError('Se faz algum tratamento medico deve ser verdadeiro ou falso.'),
+      .typeError(
+        'Se faz algum tratamento medico deve ser verdadeiro ou falso.',
+      ),
     useContinuosMedication: Yup.boolean()
       .required('Se faz uso continuo de medicamentos deve informado.')
       .typeError(
