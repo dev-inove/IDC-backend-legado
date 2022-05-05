@@ -36,6 +36,7 @@
     "@controllers": "src/controllers",
     "@models": "src/models",
     "@config": "src/config",
-    "@service": "src/service"
+    "@service": "src/service",
+    "@middlewares": "src/middlewares"
   }
 }

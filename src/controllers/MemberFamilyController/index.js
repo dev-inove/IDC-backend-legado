@@ -1,4 +1,3 @@
-const Yup = require('yup');
 const MemberFamily = require('@models/MemberFamily');
 const Assisted = require('@models/AssistedUser');
 
@@ -6,33 +5,8 @@ const ReturnByTypeVariableAndEdit = require('@service/ReturnAllMemberFamilyByTyp
 const ReturnByTypeVariable = require('@service/ReturnMemberFamilyByTypeService');
 
 class MemberFamilyController {
-  async store(req, res, next) {
-    const schema = Yup.object().shape({
-      cpf_assisted: Yup.string().required(),
-      kinship: Yup.string().required(),
-      name: Yup.string().required(),
-      rg: Yup.string().required(),
-      cpf: Yup.string().required(),
-      fones: Yup.array().of(Yup.number()),
-      email: Yup.string().required(),
-      renda: Yup.number(),
-      isResponsible: Yup.boolean().required(),
-      responsible: Yup.object().shape({
-        rg: Yup.string(),
-        responsibleValidator: Yup.string(),
-        organization: Yup.string(),
-        validity: Yup.string(),
-      }),
-      wasAttended: Yup.boolean(),
-      doMedicalTreatment: Yup.boolean(),
-      useContinuosMedication: Yup.boolean(),
-      typeOfDisiase: Yup.string(),
-    });
+  async store(req, res) {
     const { cpf_assisted } = req.body;
-
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ message: 'Invalid Object' });
-    }
 
     const memberFamily = new MemberFamily(req.body);
 
@@ -70,14 +44,7 @@ class MemberFamilyController {
     return res.status(201).json(memberFamily);
   }
 
-  async index(req, res, next) {
-    const schema = Yup.object().shape({
-      idAssisted: Yup.string().required(),
-    });
-
-    if (!(await schema.isValid(req.params))) {
-      return res.status(400).json({ message: 'This Id is invalid!' });
-    }
+  async index(req, res) {
     const { idAssisted } = req.params;
     const members = await MemberFamily.find({
       idAssisted,
@@ -91,15 +58,7 @@ class MemberFamilyController {
     return res.status(200).json({ members });
   }
 
-  async show(req, res, next) {
-    const schema = Yup.object().shape({
-      id: Yup.string().required(),
-    });
-
-    if (!(await schema.isValid(req.params))) {
-      return res.status(400).json({ message: 'This Id is invalid! rapa' });
-    }
-
+  async show(req, res) {
     const { id } = req.params;
     const { type } = req.query;
 
@@ -111,32 +70,7 @@ class MemberFamilyController {
     return res.status(202).json({ member });
   }
 
-  async update(req, res, next) {
-    const schema = Yup.object().shape({
-      CPFAssisted: Yup.string(),
-      kinship: Yup.string().required(),
-      name: Yup.string().required(),
-      rg: Yup.string().required(),
-      cpf: Yup.string().required(),
-      fones: Yup.array().of(Yup.number()),
-      email: Yup.string(),
-      renda: Yup.number(),
-      isResponsible: Yup.boolean(),
-      responsible: Yup.object().shape({
-        rg: Yup.string(),
-        responsibleValidator: Yup.string(),
-        organization: Yup.string(),
-        validity: Yup.string(),
-      }),
-      wasAttended: Yup.boolean().required(),
-      doMedicalTreatment: Yup.boolean().required(),
-      useContinuosMedication: Yup.boolean().required(),
-      typeOfDisiase: Yup.string().required(),
-    });
-
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ message: 'Invalid Object' });
-    }
+  async update(req, res) {
     const { id } = req.params;
     const { type } = req.query;
 
@@ -186,14 +120,7 @@ class MemberFamilyController {
     }
   }
 
-  async destroy(req, res, next) {
-    const schema = Yup.object().shape({
-      id: Yup.string().required(),
-    });
-
-    if (!(await schema.isValid(req.params))) {
-      return res.status(400).json({ message: 'Invalid Id!' });
-    }
+  async destroy(req, res) {
     const { id } = req.params;
     const { type } = req.query;
     try {

@@ -31,7 +31,7 @@ const MemberFamily = new Schema(
     wasAttended: { type: Boolean },
     doMedicalTreatment: { type: Boolean },
     useContinuosMedication: { type: Boolean },
-    typeOfDisiase: { type: String },
+    typeOfDisease: { type: String },
   },
   {
     timestamps: true,

@@ -6,12 +6,18 @@ const userRouter = require('@routes/user.routes');
 const { Router } = require('express');
 const passport = require('passport');
 
-const SchemaPassport = require('./middlewares/Auth');
+const AuthenticationValidation = require('@middlewares/validations/AuthenticationValidation');
+const CreateUserValidation = require('@middlewares/validations/CreateUserValidation');
+const SchemaPassport = require('@middlewares/Auth');
 
 const routes = new Router();
 
-routes.post('/authentication', UserAuthenticationController.store);
-userRouter.post('/user', UserController.store);
+routes.post(
+  '/authentication',
+  AuthenticationValidation,
+  UserAuthenticationController.store,
+);
+userRouter.post('/user', CreateUserValidation, UserController.store);
 
 passport.use(SchemaPassport);
 routes.use(passport.authenticate('jwt', { session: false }));
