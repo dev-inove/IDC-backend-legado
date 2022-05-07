@@ -6,8 +6,13 @@ const ListMembersFamilyValidation = require('@middlewares/validations/ListMember
 const ShowMemberFamilyValidation = require('@middlewares/validations/ShowMemberFamilyValidation');
 const UpdateMemberFamilyValidation = require('@middlewares/validations/UpdateMemberFamilyValidation');
 const DestroyMemberFamilyValidation = require('@middlewares/validations/DestroyMemberFamilyValidation');
+const SchemaPassport = require('@middlewares/Auth');
+const passport = require('passport');
 
 const memberFamilyRouter = Router();
+
+passport.use(SchemaPassport);
+memberFamilyRouter.use(passport.authenticate('jwt', { session: false }));
 
 memberFamilyRouter.post(
   '/',
@@ -27,6 +32,7 @@ memberFamilyRouter.get(
 memberFamilyRouter.put(
   '/update/:id',
   UpdateMemberFamilyValidation,
+
   MemberFamilyController.update,
 );
 memberFamilyRouter.delete(

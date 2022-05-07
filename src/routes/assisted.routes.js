@@ -7,8 +7,13 @@ const ShowAssistedValidation = require('@middlewares/validations/ShowAssistedVal
 const UpdateAssistedValidation = require('@middlewares/validations/UpdateAssistedValidation');
 const DestroyAssistedValidation = require('@middlewares/validations/DestroyAssistedValidation');
 const AssociateAssistedWithMemberFamilyValidation = require('@middlewares/validations/AssociateAssistedWithMemberFamilyValidation');
+const SchemaPassport = require('@middlewares/Auth');
+const passport = require('passport');
 
 const assistedRouter = Router();
+
+passport.use(SchemaPassport);
+assistedRouter.use(passport.authenticate('jwt', { session: false }));
 
 assistedRouter.post('/', CreateAssistedValidation, AssistedController.store);
 assistedRouter.get('/', AssistedController.index);

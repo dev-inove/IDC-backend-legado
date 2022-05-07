@@ -1,4 +1,7 @@
 const bcrypt = require('bcryptjs');
+
+const CreateUserService = require('@service/CreateUserService');
+
 const User = require('@models/User');
 
 class UserController {
@@ -12,11 +15,9 @@ class UserController {
         .status(401)
         .json({ message: 'email alredy exists, try again' });
     }
+    const createUserService = new CreateUserService();
 
-    const password_hash = await bcrypt.hash(password, 9);
-
-    const user = new User({ name, email, password_hash });
-    user.save();
+    const user = await createUserService.execute({ name, email, password });
 
     return res.status(201).json({ user });
   }
