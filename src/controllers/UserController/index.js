@@ -1,5 +1,5 @@
-const User = require('@models/User');
 const CreateUserService = require('@service/CreateUserService');
+const ListAllUsersService = require('@service/ListAllUsersService');
 const ShowUserByEmail = require('@service/ShowUserByEmail');
 
 const UpdateUserService = require('@service/UpdateUserService');
@@ -31,15 +31,20 @@ class UserController {
   }
 
   async index(request, response) {
-    const users = await User.find(
-      {},
-      { password_hash: 0, createdAt: 0, updatedAt: 0 },
-    );
-    if (!users) {
-      return response.status(400).json({ error: "Users don't exists!" });
-    }
+    try {
+      const listAllUserService = new ListAllUsersService();
 
-    return response.status(200).json({ users });
+      const users = await listAllUserService.execute(
+        {},
+        { password_hash: 0, createdAt: 0, updatedAt: 0 },
+      );
+
+      return response.status(200).json({ users });
+    } catch (err) {
+      const messageError = err.message;
+
+      return response.status(400).json({ error: messageError });
+    }
   }
 
   async show(request, response) {
