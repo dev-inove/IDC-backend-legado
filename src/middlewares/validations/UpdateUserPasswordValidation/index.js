@@ -2,11 +2,12 @@ const Yup = require('yup');
 
 async function UpdateUserPasswordValidation(request, response, next) {
   const schema = Yup.object().shape({
-    password: Yup.string().typeError('A senha deve ser um texto.'),
-    newPassword: Yup.string().typeError('A nova senha deve ser um texto.'),
-    confirmNewPassword: Yup.string().typeError(
-      'A confirmação da nova senha deve ser um texto.',
-    ),
+    newPassword: Yup.string()
+      .typeError('A nova senha deve ser um texto.')
+      .required('A nova senha deve ser informada!'),
+    confirmNewPassword: Yup.string()
+      .typeError('A confirmação da nova senha deve ser um texto.')
+      .required('A confirmação da nova senha deve ser informada!'),
   });
 
   try {

@@ -1,38 +1,28 @@
 const User = require('@models/User');
 const bcrypt = require('bcryptjs');
 
-class UpdateUserPasswordService {
-  async execute({ _id, newPassword, confirmNewPassword, password }) {
+class ChangeUserPasswordService {
+  async execute({ _id, newPassword, confirmNewPassword }) {
     const userFinded = await User.findOne({ _id });
 
     if (!userFinded) throw new Error('Usuário não encontrado!');
 
-    if (password) {
-      const passwordMatch = await bcrypt.compare(
-        password,
+    if (
+      !!newPassword &&
+      !!confirmNewPassword &&
+      newPassword === confirmNewPassword
+    ) {
+      const newPasswordHash = await bcrypt.hash(newPassword, 9);
 
-        userFinded.password_hash,
+      await User.updateOne(
+        { _id },
+
+        {
+          password_hash: newPasswordHash,
+        },
       );
-
-      if (passwordMatch) {
-        if (
-          !!newPassword &&
-          !!confirmNewPassword &&
-          newPassword === confirmNewPassword
-        ) {
-          const newPasswordHash = await bcrypt.hash(newPassword, 9);
-
-          await User.updateOne(
-            { _id },
-
-            {
-              password_hash: newPasswordHash,
-            },
-          );
-        } else throw new Error('A confirmação de senha falhou!');
-      } else throw new Error('A senha informada não corresponde!');
-    }
+    } else throw new Error('A confirmação de senha falhou!');
   }
 }
 
-module.exports = UpdateUserPasswordService;
+module.exports = ChangeUserPasswordService;

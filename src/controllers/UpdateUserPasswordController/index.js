@@ -4,7 +4,7 @@ class UpdateUserPasswordController {
   async update(request, response) {
     try {
       const { _id } = request.user;
-      const { newPassword, confirmNewPassword, password } = request.body;
+      const { newPassword, confirmNewPassword } = request.body;
 
       const updateUserPasswordService = new UpdateUserPasswordService();
 
@@ -12,7 +12,6 @@ class UpdateUserPasswordController {
         _id,
         newPassword,
         confirmNewPassword,
-        password,
       });
 
       return response
