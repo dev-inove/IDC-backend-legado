@@ -67,8 +67,7 @@ class UserController {
 
   async update(request, response) {
     try {
-      const { name, email, password, newPassword, confirmNewPassword } =
-        request.body;
+      const { name, email } = request.body;
 
       const { _id } = request.user._id;
 
@@ -78,9 +77,6 @@ class UserController {
         _id,
         name,
         email,
-        password,
-        newPassword,
-        confirmNewPassword,
       });
 
       return response.status(200).json(userUpdate);
