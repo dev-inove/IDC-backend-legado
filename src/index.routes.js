@@ -5,6 +5,7 @@ const userRouter = require('@routes/user.routes');
 const { Router } = require('express');
 
 const AuthenticationValidation = require('@middlewares/validations/AuthenticationValidation');
+const forgotPasswordRouter = require('@routes/forgotPassword.routes');
 
 const routes = new Router();
 
@@ -17,5 +18,6 @@ routes.post(
 routes.use('/user', userRouter);
 routes.use('/assisted', assistedRouter);
 routes.use('/memberfamily', memberFamilyRouter);
+routes.use('/forgotpassword', forgotPasswordRouter);
 
 module.exports = routes;
