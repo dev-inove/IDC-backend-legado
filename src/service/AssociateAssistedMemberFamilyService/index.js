@@ -1,4 +1,3 @@
-const User = require('@models/User');
 const MemberFamily = require('@models/MemberFamily');
 const AssistedUser = require('@models/AssistedUser');
 
@@ -8,11 +7,13 @@ class AssociateAssistedWithMemberFamilyService {
 
     const member = await AssistedUser.findOne({ CPFAssisted });
 
-    if (!assisted || !member)
+    if (!assisted || !member) {
       throw new Error('Cheque os dados e tente novamente');
+    }
 
-    if (member.idAssisted.includes(assisted.id))
+    if (member.idAssisted.includes(assisted.id)) {
       throw new Error('Assistido ja esta incluso em membro da familia');
+    }
 
     if (isResponsible) {
       if (
@@ -20,7 +21,7 @@ class AssociateAssistedWithMemberFamilyService {
         assisted.id_Responsible !== undefined
       ) {
         throw new Error(
-          'o usuário ja é um responsável, tente desmarcar a opção de responsável de novo.',
+          'O assistido já possui um Responsável, desmarque a opção de responsável e tente novamente.',
         );
       }
       member.isResponsible = true;
