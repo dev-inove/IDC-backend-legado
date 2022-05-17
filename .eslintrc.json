@@ -35,7 +35,8 @@
           ["@config", "./src/config"],
           ["@service", "./src/service"],
           ["@routes", "./src/routes"],
-          ["@middlewares", "./src/middlewares"]
+          ["@middlewares", "./src/middlewares"],
+          ["@providers", "./src/providers"]
         ],
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
