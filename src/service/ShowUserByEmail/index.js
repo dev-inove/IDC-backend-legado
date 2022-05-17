@@ -6,8 +6,6 @@ class ShowUserByEmail {
 
     const userExists = await User.findOne({ email }, { password_hash: 0 });
 
-    if (!userExists) throw new Error('Usuário não encontrado!');
-
     return userExists;
   }
 }
