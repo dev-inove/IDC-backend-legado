@@ -3,6 +3,7 @@ const { sign } = require('jsonwebtoken');
 const ShowUserByEmail = require('@service/ShowUserByEmail');
 
 const forgotTokenConfig = require('@config/ForgotPassConfig');
+const mailerTransport = require('@providers/mailerProvider');
 
 class ForgotPasswordConbtroller {
   async store(request, response) {
@@ -19,7 +20,17 @@ class ForgotPasswordConbtroller {
         expiresIn,
       });
 
-      return response.status(201).json({ token });
+      await mailerTransport.sendMail({
+        to: email,
+        from: 'brunoviniciusazevedolopes@alu.ufc.br',
+        subject: 'Recuperação de senha!',
+        template: 'forgotPassword',
+        context: { token },
+      });
+
+      return response
+        .status(201)
+        .json({ message: 'email enviado com sucesso' });
     } catch (err) {
       const errorMessage = err.message;
 

@@ -8,7 +8,8 @@
       "@config/*": ["config/*"],
       "@service/*": ["service/*"],
       "@routes/*": ["routes/*"],
-      "@middlewares/*": ["middlewares/*"]
+      "@middlewares/*": ["middlewares/*"],
+      "@providers/*": ["providers/*"]
     }
   }
 }
