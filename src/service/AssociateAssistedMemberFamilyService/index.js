@@ -6,8 +6,6 @@ class AssociateAssistedWithMemberFamilyService {
   async execute({ CPFAssisted, CPFMemberFamily, isResponsible }) {
     const assisted = await MemberFamily.findOne({ CPFMemberFamily });
 
-    const responsible = await MemberFamily.findOne({ isResponsible });
-
     const member = await AssistedUser.findOne({ CPFAssisted });
 
     if (!assisted || !member)
@@ -16,7 +14,7 @@ class AssociateAssistedWithMemberFamilyService {
     if (member.idAssisted.includes(assisted.id))
       throw new Error('Assistido ja esta incluso em membro da familia');
 
-    if (responsible) {
+    if (isResponsible) {
       if (
         assisted.id_Responsible !== null &&
         assisted.id_Responsible !== undefined
