@@ -4,6 +4,7 @@ const Assisted = require('@models/AssistedUser');
 const ReturnByTypeVariableAndEdit = require('@service/ReturnAllMemberFamilyByTypeService');
 const ReturnByTypeVariable = require('@service/ReturnMemberFamilyByTypeService');
 const CreateMemberFamilyService = require('@service/CreateMemberFamilyService');
+const ListMemberFamilyByidAssistedService = require('@service/ListMemberFamilyByIdAssistedService');
 
 class MemberFamilyController {
   async store(request, response) {
@@ -25,17 +26,22 @@ class MemberFamilyController {
   }
 
   async index(request, response) {
-    const { idAssisted } = request.params;
-    const members = await MemberFamily.find({
-      idAssisted,
-    }).populate('idAssisted', 'fullName');
+    try {
+      const { idAssisted } = request.params;
 
-    if (members.length === 0) {
-      return response.status(400).json({
-        message: "This user don't have members of family in the system",
+      const listMemberFamilyByIdAssistedService =
+        new ListMemberFamilyByidAssistedService();
+
+      const membersFamily = await listMemberFamilyByIdAssistedService.execute({
+        idAssisted,
       });
+
+      return response.status(200).json(membersFamily);
+    } catch (error) {
+      const errorMessage = err.message;
+
+      return response.status(400).json({ error: errorMessage });
     }
-    return response.status(200).json({ members });
   }
 
   async show(request, response) {
