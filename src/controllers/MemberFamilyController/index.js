@@ -37,7 +37,7 @@ class MemberFamilyController {
       });
 
       return response.status(200).json(membersFamily);
-    } catch (error) {
+    } catch (err) {
       const errorMessage = err.message;
 
       return response.status(400).json({ error: errorMessage });
@@ -45,17 +45,24 @@ class MemberFamilyController {
   }
 
   async show(request, response) {
-    const { id } = request.params;
-    const { type } = request.query;
+    try {
+      const { id } = request.params;
+      const { type } = request.query;
 
-    const member = await ReturnByTypeVariable.exec(type, id);
+      const member = await ReturnByTypeVariable.exec(type, id);
 
-    if (member === undefined || member === null) {
-      return response
-        .status(400)
-        .json({ message: 'Member of Family not found' });
+      if (!member) {
+        return response
+          .status(404)
+          .json({ error: 'Menbro da família não encontrado' });
+      }
+
+      return response.status(202).json(member);
+    } catch (err) {
+      const errorMessage = err.message;
+
+      return response.status(400).json({ error: errorMessage });
     }
-    return response.status(202).json({ member });
   }
 
   async update(request, response) {
