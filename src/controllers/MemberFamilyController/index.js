@@ -116,9 +116,10 @@ class MemberFamilyController {
   }
 
   async destroy(request, response) {
-    const { id } = request.params;
-    const { type } = request.query;
     try {
+      const { id } = request.params;
+      const { type } = request.query;
+
       const member = await ReturnByTypeVariableAndEdit.exec(type, id);
 
       if (member.isResponsible) {
@@ -131,12 +132,15 @@ class MemberFamilyController {
         });
       }
 
-      member.remove();
-      return response.status(204).json({ message: 'Member deleted!' });
-    } catch (err) {
+      await member.remove();
+
       return response
-        .status(401)
-        .json({ message: `Member not deleted! ${err}` });
+        .status(204)
+        .json({ message: 'Menbro da família deletado com sucesso.' });
+    } catch (err) {
+      const errorMessage = err.message;
+
+      return response.status(401).json({ error: errorMessage });
     }
   }
 }
