@@ -5,6 +5,7 @@ const ReturnByTypeVariableAndEdit = require('@service/ReturnAllMemberFamilyByTyp
 const ReturnByTypeVariable = require('@service/ReturnMemberFamilyByTypeService');
 const CreateMemberFamilyService = require('@service/CreateMemberFamilyService');
 const ListMemberFamilyByidAssistedService = require('@service/ListMemberFamilyByIdAssistedService');
+const UpdateMemberFamilyService = require('@service/UpdateMemberFamilyService');
 
 class MemberFamilyController {
   async store(request, response) {
@@ -66,52 +67,22 @@ class MemberFamilyController {
   }
 
   async update(request, response) {
-    const { id } = request.params;
-    const { type } = request.query;
-
-    const isResponsibleBody = request.body.isResponsible;
-
-    const member = await ReturnByTypeVariableAndEdit.exec(type, id);
-
-    const { CPFAssisted } = request.body;
-
-    const assistedUser = await Assisted.findOne({ cpf: CPFAssisted });
-
-    if (member.isResponsible === true && isResponsibleBody === false) {
-      assistedUser.id_Responsible = null;
-      delete assistedUser.id_Responsible;
-      assistedUser.save();
-    }
-
-    if (member.isResponsible === false && isResponsibleBody === true) {
-      if (!member.idAssisted.includes(assistedUser.id)) {
-        return response.status(401).json({
-          message: 'This Assisted and Member are not parents',
-        });
-      }
-
-      if (assistedUser.id_Responsible === undefined) {
-        assistedUser.set('id_Responsible', member._id);
-      } else if (assistedUser.id_Responsible === null) {
-        assistedUser.set('id_Responsible', member._id);
-      } else {
-        return response
-          .status(401)
-          .json({ message: 'this user alredy has a Responsible' });
-      }
-      try {
-        await assistedUser.save();
-      } catch (error) {
-        return response.status(400).json({ message: error });
-      }
-    }
     try {
-      member.set(request.body);
+      const { id } = request.params;
+      const dataMemberFamilyUpdate = request.body;
 
-      await member.save();
-      return response.status(204).json({ member_updated: member });
-    } catch (error) {
-      return response.status(400).json({ message: error });
+      const updateMemberFamilyService = new UpdateMemberFamilyService();
+
+      const memberFamilyUpdated = updateMemberFamilyService.execute({
+        id,
+        dataMemberFamilyUpdate,
+      });
+
+      return response.status(200).json(memberFamilyUpdated);
+    } catch (err) {
+      const errorMessage = err.message;
+
+      return response.status(400).json({ error: errorMessage });
     }
   }
 
