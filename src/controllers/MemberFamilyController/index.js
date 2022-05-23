@@ -6,6 +6,7 @@ const ReturnByTypeVariable = require('@service/ReturnMemberFamilyByTypeService')
 const CreateMemberFamilyService = require('@service/CreateMemberFamilyService');
 const ListMemberFamilyByidAssistedService = require('@service/ListMemberFamilyByIdAssistedService');
 const UpdateMemberFamilyService = require('@service/UpdateMemberFamilyService');
+const DeleteMemberFamilyService = require('@service/DeleteMemberFamilyService');
 
 class MemberFamilyController {
   async store(request, response) {
@@ -73,7 +74,7 @@ class MemberFamilyController {
 
       const updateMemberFamilyService = new UpdateMemberFamilyService();
 
-      const memberFamilyUpdated = updateMemberFamilyService.execute({
+      const memberFamilyUpdated = await updateMemberFamilyService.execute({
         id,
         dataMemberFamilyUpdate,
       });
@@ -89,29 +90,25 @@ class MemberFamilyController {
   async destroy(request, response) {
     try {
       const { id } = request.params;
-      const { type } = request.query;
 
-      const member = await ReturnByTypeVariableAndEdit.exec(type, id);
+      const deleteMemberFamilyService = new DeleteMemberFamilyService();
 
-      if (member.isResponsible) {
-        member.idAssisted.map(async assisted => {
-          const element = await Assisted.findById({ _id: assisted });
-          element.id_Responsible = null;
-          delete element.id_Responsible;
-          element.save();
-          return element;
-        });
-      }
+      const deleteResult = await deleteMemberFamilyService.execute({
+        MemberFamiliId: id,
+      });
 
-      await member.remove();
-
-      return response
-        .status(204)
-        .json({ message: 'Menbro da família deletado com sucesso.' });
+      if (deleteResult)
+        return response
+          .status(200)
+          .json({ message: 'Menbro da família deletado com sucesso.' });
+      else
+        return response
+          .status(400)
+          .json({ error: 'Falha ao deletar o menbro da família.' });
     } catch (err) {
       const errorMessage = err.message;
 
-      return response.status(401).json({ error: errorMessage });
+      return response.status(200).json({ error: errorMessage });
     }
   }
 }
