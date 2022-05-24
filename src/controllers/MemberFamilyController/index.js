@@ -55,7 +55,7 @@ class MemberFamilyController {
       if (!member) {
         return response
           .status(404)
-          .json({ error: 'Menbro da família não encontrado' });
+          .json({ error: 'Membro da família não encontrado' });
       }
 
       return response.status(202).json(member);
@@ -99,11 +99,11 @@ class MemberFamilyController {
       if (deleteResult)
         return response
           .status(200)
-          .json({ message: 'Menbro da família deletado com sucesso.' });
+          .json({ message: 'Membro da família deletado com sucesso.' });
       else
         return response
           .status(400)
-          .json({ error: 'Falha ao deletar o menbro da família.' });
+          .json({ error: 'Falha ao deletar o membro da família.' });
     } catch (err) {
       const errorMessage = err.message;
 
