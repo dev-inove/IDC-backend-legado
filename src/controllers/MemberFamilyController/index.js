@@ -7,6 +7,7 @@ const CreateMemberFamilyService = require('@service/CreateMemberFamilyService');
 const ListMemberFamilyByidAssistedService = require('@service/ListMemberFamilyByIdAssistedService');
 const UpdateMemberFamilyService = require('@service/UpdateMemberFamilyService');
 const DeleteMemberFamilyService = require('@service/DeleteMemberFamilyService');
+const ReturnMemberFamilyById = require('@service/ReturnMemberFamilyById');
 
 class MemberFamilyController {
   async store(request, response) {
@@ -49,9 +50,12 @@ class MemberFamilyController {
   async show(request, response) {
     try {
       const { id } = request.params;
-      const { type } = request.query;
 
-      const member = await ReturnByTypeVariable.exec(type, id);
+      const returnMemberFamilyById = new ReturnMemberFamilyById();
+
+      const member = await returnMemberFamilyById.execute({
+        memberFamilyId: id,
+      });
 
       if (!member) {
         return response
