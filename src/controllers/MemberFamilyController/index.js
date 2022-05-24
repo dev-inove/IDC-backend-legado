@@ -1,8 +1,3 @@
-const MemberFamily = require('@models/MemberFamily');
-const Assisted = require('@models/AssistedUser');
-
-const ReturnByTypeVariableAndEdit = require('@service/ReturnAllMemberFamilyByTypeService');
-const ReturnByTypeVariable = require('@service/ReturnMemberFamilyByTypeService');
 const CreateMemberFamilyService = require('@service/CreateMemberFamilyService');
 const ListMemberFamilyByidAssistedService = require('@service/ListMemberFamilyByIdAssistedService');
 const UpdateMemberFamilyService = require('@service/UpdateMemberFamilyService');
