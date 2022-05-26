@@ -1,11 +1,11 @@
-class UpdateAssistedService {
-  async execute(rType, id) {
-    const type = await rType.find();
-    const assistedId = await id.get();
+const AssistedUser = require('@models/AssistedUser');
 
-    if (!assistedId) {
-      throw new Error('Verifique o id especificado');
-    }
+class UpdateAssistedService {
+  async execute({ AssistedId, assistedUpdateData }) {
+    const assistedFinded = await AssistedUser.findById(AssistedId);
+
+    await assistedFinded.set(assistedUpdateData);
+    await assistedFinded.save();
   }
 }
 module.exports = UpdateAssistedService;

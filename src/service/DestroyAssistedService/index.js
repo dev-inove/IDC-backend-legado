@@ -1,11 +1,19 @@
-class DestroyAssistedService {
-  async execute(id, rType, destroy) {
-    const assistedId = await id.find();
-    const type = await rType.find();
-    const destroy_members = await destroy.find();
+const AssistedUser = require('@models/AssistedUser');
+const MemberFamily = require('@models/MemberFamily');
 
-    if (!id) {
-      throw new Error('ID nao especificado');
+class DestroyAssistedService {
+  async execute({assistedId, destroy_members}) {
+    const assistedFinded= await AssistedUser.findById(assistedId);
+    const destroy = await AssistedUser.find(destroy_members);
+
+    if (destroy) {
+      const members = await MemberFamily.find({
+        idAssisted: AssistedUser.AssistedId,
+      });
+
+      await members.remove();
+
+      return true;
     }
   }
 }

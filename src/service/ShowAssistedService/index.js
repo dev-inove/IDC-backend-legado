@@ -1,8 +1,8 @@
-class ShowAssistedService {
-  async execute(rType, id) {
-    const type = await rType.find();
+const AssistedUser = require('@models/AssistedUser');
 
-    const assistedId = await id.find();
+class ShowAssistedService {
+  async execute(AssistedId) {
+    const assistedId = await AssistedUser.findById(AssistedId);
   }
 }
 module.exports = ShowAssistedService;

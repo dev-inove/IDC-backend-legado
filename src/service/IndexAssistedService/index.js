@@ -1,6 +1,8 @@
+const AssistedUser = require("@models/AssistedUser");
+
 class IndexAssistedService {
-  async execute(assistedData) {
-    const assisted = await assistedData.find();
+  async execute() {
+    const assisted = await AssistedUser.find();
 
     return assisted;
   }

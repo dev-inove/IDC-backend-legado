@@ -1,5 +1,3 @@
-const Assisted = require('@models/AssistedUser');
-const MemberFamily = require('@models/MemberFamily');
 const StoreAssistedService = require('@service/StoreAssistedService');
 const IndexAssistedService = require('@service/IndexAssistedService');
 const ShowAssistedService = require('@service/ShowAssistedService');
@@ -9,13 +7,9 @@ const e = require('cors');
 class AssistedController {
   async store(request, response) {
     try {
-      const assisted = new Assisted(request.body);
+      const storeAssistedService = new StoreAssistedService();
 
-      const storeAssistedService = new StoreAssistedService(request.body);
-
-      const response = await storeAssistedService.execute({
-        assisted,
-      });
+      const response = await storeAssistedService.execute(request.body);
 
       return response.status(200).json(assisted);
     } catch (error) {
@@ -25,27 +19,22 @@ class AssistedController {
 
   async index(request, response) {
     try {
-      const assisted = await Assisted.find();
+      const indexAssistedService = new IndexAssistedService();
 
-      const indexAssistedService = new IndexAssistedService(request.body);
+      const assisted = await indexAssistedService.execute(request.body);
 
-      const assist = await indexAssistedService.execute({
-        assisted,
-      });
       return response.json(assisted);
     } catch (error) {}
   }
 
   async show(request, response) {
     try {
-      const { type } = request.query;
 
       const { id } = request.params;
 
       const showAssistedService = new ShowAssistedService(request.body);
 
       const assisted = await showAssistedService.execute({
-        type,
         id,
       });
       if (assisted === null) {
@@ -59,22 +48,21 @@ class AssistedController {
     try {
       const { id } = request.params;
 
-      const { type } = request.query;
+      const updateAssistedService = new UpdateAssistedService();
+      const showAssistedService = new ShowAssistedService();
 
-      const updateAssistedService = new UpdateAssistedService(request.body);
+      const haveAssisted = await showAssistedService.execute(id);
 
-      const assisted = updateAssistedService.execute({
-        type,
-        id,
-      });
-
-      if (assisted === null) {
-        throw new Error('Usuário nao existe!');
+      if(!!haveAssisted){
+        return response.status(404).json({error:'Assitido nâo encontrado!'})
       }
-      assisted.set(request.body);
-      await assisted.save();
 
-      return res.json(assisted);
+      const assisted = await UpdateAssistedService.execute({
+        assistedId: id,
+        assisteUpdateData: request.body,
+      })
+
+      return response.json(assisted);
     } catch (error) {
       throw new Error(error);
     }
@@ -84,33 +72,25 @@ class AssistedController {
     try {
       const { id } = request.params;
 
-      const { type } = request.query;
       const { destroy_members } = request.query;
 
-      const destroyAssistedService = new DestroyAssistedService(request.body);
+      const destroyAssistedService = new DestroyAssistedService();
+      const showAssistedService = new ShowAssistedService();
+
+      const haveAssisted = await showAssistedService.execute(id);
+
+      if(!!haveAssisted){
+        throw new Error('Assistido nao encontrado');
+      }
 
       const assisted = await destroyAssistedService.execute({
         id,
-        type,
         destroy_members,
       });
 
-      if (assisted === null) {
-        throw new Error('Usuário nao existe!');
-      }
-
-      if (destroy_members) {
-        const members = await MemberFamily.find({
-          idAssisted: assisted.id,
-        });
-
-        await members.forEach(member => {
-          member.remove();
-        });
-      }
     } catch (error) {}
 
-    return res.json({ success: 'Deletado com sucesso!' });
+    return response.json({ success: 'Deletado com sucesso!' });
   }
 }
 
