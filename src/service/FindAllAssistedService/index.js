@@ -1,6 +1,6 @@
 const AssistedUser = require("@models/AssistedUser");
 
-class IndexAssistedService {
+class FindAllAssistedService {
   async execute() {
     const assisted = await AssistedUser.find();
 
@@ -8,4 +8,4 @@ class IndexAssistedService {
   }
 }
 
-module.exports = IndexAssistedService;
+module.exports = FindAllAssistedService;
