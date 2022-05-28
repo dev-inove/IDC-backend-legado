@@ -3,7 +3,6 @@ const IndexAssistedService = require('@service/IndexAssistedService');
 const ShowAssistedService = require('@service/ShowAssistedService');
 const UpdateAssistedService = require('@service/UpdateAssistedService');
 const DestroyAssistedService = require('@service/DestroyAssistedService');
-const e = require('cors');
 class AssistedController {
   async store(request, response) {
     try {
@@ -29,7 +28,6 @@ class AssistedController {
 
   async show(request, response) {
     try {
-
       const { id } = request.params;
 
       const showAssistedService = new ShowAssistedService(request.body);
@@ -53,14 +51,14 @@ class AssistedController {
 
       const haveAssisted = await showAssistedService.execute(id);
 
-      if(!!haveAssisted){
-        return response.status(404).json({error:'Assitido nâo encontrado!'})
+      if (!!haveAssisted) {
+        return response.status(404).json({ error: 'Assitido nâo encontrado!' });
       }
 
       const assisted = await UpdateAssistedService.execute({
         assistedId: id,
         assisteUpdateData: request.body,
-      })
+      });
 
       return response.json(assisted);
     } catch (error) {
@@ -79,7 +77,7 @@ class AssistedController {
 
       const haveAssisted = await showAssistedService.execute(id);
 
-      if(!!haveAssisted){
+      if (!!haveAssisted) {
         throw new Error('Assistido nao encontrado');
       }
 
@@ -87,7 +85,6 @@ class AssistedController {
         id,
         destroy_members,
       });
-
     } catch (error) {}
 
     return response.json({ success: 'Deletado com sucesso!' });
