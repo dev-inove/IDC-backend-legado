@@ -1,88 +1,109 @@
-const Assisted = require('@models/AssistedUser');
-const MemberFamily = require('@models/MemberFamily');
-const ReturnByType = require('@service/ReturnAllAssistedByTypeService');
-const ReturnByTypeAndEdit = require('@service/ReturnAssistedByTypeService');
-const ReturnByTypeAndDelete = require('@service/ReturnAssistedByTypeAndDeleteService');
-
+const CreateAssistedService = require('@service/CreateAssistedService');
+const FindAllAssistedService = require('@service/FindAllAssistedService');
+const FindAssistedByIdService = require('@service/FindAssistedByIdService');
+const UpdateAssistedService = require('@service/UpdateAssistedService');
+const DestroyAssistedService = require('@service/DestroyAssistedService');
 class AssistedController {
-  async store(req, res) {
+  async store(request, response) {
     try {
-      const assisted = await Assisted.create(req.body);
-      return res.json(assisted);
+      const createAssistedService = new CreateAssistedService();
+
+      const assistedCreated = await createAssistedService.execute(request.body);
+
+      return response.status(200).json(assistedCreated);
     } catch (error) {
-      return res.status(400).json({ message: error });
+      return response.status(400).json({ error });
     }
   }
 
-  async index(req, res) {
-    const assisted = await Assisted.find();
-
-    return res.json(assisted);
-  }
-
-  async show(req, res) {
-    const { type } = req.query;
-
-    const assisted = await ReturnByType.exec(type, req.params.id);
-
-    if (assisted === null) {
-      return res.status(400).json({ message: "user don't exists!" });
-    }
-
-    return res.status(200).json({ assisted });
-  }
-
-  async update(req, res) {
-    const { id } = req.params;
-
-    if (!id) {
-      return res.status(400).json({ error: 'Id not received' });
-    }
-
-    const { type } = req.query;
-
-    const assisted = await ReturnByTypeAndEdit.exec(type, req.params.id);
-
-    if (assisted === null) {
-      return res.status(400).json({ message: "user don't exists!" });
-    }
+  async index(request, response) {
     try {
-      assisted.set(req.body);
-      await assisted.save();
+      const findAllAssistedService = new FindAllAssistedService();
 
-      return res.json(assisted);
+      const assisteds = await findAllAssistedService.execute();
+
+      return response.status(200).json({ assisteds });
     } catch (error) {
-      return res.status(400).json({ message: error });
+      return response.status(400).json({ error });
     }
   }
 
-  async destroy(req, res) {
-    const { id } = req.params;
+  async show(request, response) {
+    try {
+      const { id } = request.params;
 
-    if (!id) {
-      return res.status(400).json({ error: 'Id not received' });
-    }
+      const findAssistedByIdService = new FindAssistedByIdService();
 
-    const { type } = req.query;
-    const { destroy_members } = req.query;
-
-    const assisted = await ReturnByTypeAndDelete.exec(type, req.params.id);
-
-    if (assisted === null) {
-      return res.status(400).json({ message: "user don't exists!" });
-    }
-
-    if (destroy_members) {
-      const members = await MemberFamily.find({
-        idAssisted: assisted.id,
+      const assisted = await findAssistedByIdService.execute({
+        assistedId: id,
       });
 
-      await members.forEach(member => {
-        member.remove();
-      });
-    }
+      if (!assisted) {
+        return response.status(404).json({ error: 'Assistido não encontrado' });
+      }
 
-    return res.json({ success: 'Successfully deleted' });
+      return response.status(201).json({ assisted });
+    } catch (error) {
+      return response.status(400).json({ error });
+    }
+  }
+
+  async update(request, response) {
+    try {
+      const { id } = request.params;
+
+      const updateAssistedService = new UpdateAssistedService();
+      const findAssistedByIdService = new FindAssistedByIdService();
+
+      const haveAssisted = await findAssistedByIdService.execute({
+        assistedId: id,
+      });
+
+      if (!haveAssisted) {
+        return response
+          .status(404)
+          .json({ error: 'Assistido nâo encontrado!' });
+      }
+
+      const assistedUpdated = await updateAssistedService.execute({
+        assistedId: id,
+        assisteUpdateData: request.body,
+      });
+
+      return response.status(201).json(assistedUpdated);
+    } catch (error) {
+      return response.status(400).json({ error });
+    }
+  }
+
+  async destroy(request, response) {
+    try {
+      const { id } = request.params;
+
+      const { destroy_members } = request.query;
+
+      const destroyAssistedService = new DestroyAssistedService();
+      const findAssistedByIdService = new FindAssistedByIdService();
+
+      const haveAssisted = await findAssistedByIdService.execute({
+        assistedId: id,
+      });
+
+      if (!haveAssisted) {
+        return response
+          .status(404)
+          .json({ error: 'Assistido não encontrado!' });
+      }
+
+      await destroyAssistedService.execute({
+        id,
+        destroy_members,
+      });
+
+      return response.status(201).json({ success: 'Deletado com sucesso!' });
+    } catch (error) {
+      return response.status(400).json({ error });
+    }
   }
 }
 
