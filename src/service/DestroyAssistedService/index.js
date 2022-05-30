@@ -2,19 +2,20 @@ const AssistedUser = require('@models/AssistedUser');
 const MemberFamily = require('@models/MemberFamily');
 
 class DestroyAssistedService {
-  async execute({assistedId, destroy_members}) {
-    const assistedFinded= await AssistedUser.findById(assistedId);
-    const destroy = await AssistedUser.find(destroy_members);
+  async execute({ assistedId, destroy_members }) {
+    const assistedFinded = await AssistedUser.findById(assistedId);
 
-    if (destroy) {
+    await assistedFinded.remove();
+
+    if (destroy_members) {
       const members = await MemberFamily.find({
-        idAssisted: AssistedUser.AssistedId,
+        idAssisted: assistedFinded._id,
       });
 
       await members.remove();
-
-      return true;
     }
+
+    return true;
   }
 }
 module.exports = DestroyAssistedService;

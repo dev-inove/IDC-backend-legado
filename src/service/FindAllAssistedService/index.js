@@ -1,10 +1,10 @@
-const AssistedUser = require("@models/AssistedUser");
+const AssistedUser = require('@models/AssistedUser');
 
 class FindAllAssistedService {
   async execute() {
-    const assisted = await AssistedUser.find();
+    const assisteds = await AssistedUser.find();
 
-    return assisted;
+    return assisteds;
   }
 }
 

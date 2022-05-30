@@ -1,8 +1,10 @@
+const AssistedUser = require('@models/AssistedUser');
+
 class CreateAssistedService {
   async execute(assistedData) {
-    const create = await Assisted.create(assistedData);
+    const assistedCreated = await AssistedUser.create(assistedData);
 
-    return create;
+    return assistedCreated;
   }
 }
 module.exports = CreateAssistedService;

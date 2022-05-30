@@ -6,6 +6,8 @@ class UpdateAssistedService {
 
     await assistedFinded.set(assistedUpdateData);
     await assistedFinded.save();
+
+    return assistedFinded;
   }
 }
 module.exports = UpdateAssistedService;

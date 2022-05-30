@@ -1,12 +1,7 @@
-//renomeei esse service(o arquivo na outra pasta também) para CreateAssistedService
 const CreateAssistedService = require('@service/CreateAssistedService');
-
 const FindAllAssistedService = require('@service/FindAllAssistedService');
-
 const FindAssistedByIdService = require('@service/FindAssistedByIdService');
-
 const UpdateAssistedService = require('@service/UpdateAssistedService');
-
 const DestroyAssistedService = require('@service/DestroyAssistedService');
 class AssistedController {
   async store(request, response) {
@@ -17,8 +12,7 @@ class AssistedController {
 
       return response.status(200).json(assistedCreated);
     } catch (error) {
-
-      return response.status(400).json({message:error});
+      return response.status(400).json({ error });
     }
   }
 
@@ -26,12 +20,11 @@ class AssistedController {
     try {
       const findAllAssistedService = new FindAllAssistedService();
 
-      const assisted = await findAllAssistedService.execute();
+      const assisteds = await findAllAssistedService.execute();
 
-      return response.status(200).json(assisted);
-
+      return response.status(200).json({ assisteds });
     } catch (error) {
-      return response.status(400).json({message:error});
+      return response.status(400).json({ error });
     }
   }
 
@@ -42,16 +35,16 @@ class AssistedController {
       const findAssistedByIdService = new FindAssistedByIdService();
 
       const assisted = await findAssistedByIdService.execute({
-        id,
+        assistedId: id,
       });
-      if (!!assisted) {
 
-        return response.status(404).json({message:'Assistido nao encontrado'});
+      if (!assisted) {
+        return response.status(404).json({ error: 'Assistido não encontrado' });
       }
-      return response.status(201).json({ assisted });
 
+      return response.status(201).json({ assisted });
     } catch (error) {
-      return response.status(400).json({message:error});
+      return response.status(400).json({ error });
     }
   }
 
@@ -62,10 +55,14 @@ class AssistedController {
       const updateAssistedService = new UpdateAssistedService();
       const findAssistedByIdService = new FindAssistedByIdService();
 
-      const haveAssisted = await findAssistedByIdService.execute(id);
+      const haveAssisted = await findAssistedByIdService.execute({
+        assistedId: id,
+      });
 
-      if (!!haveAssisted) {
-        return response.status(404).json({ error: 'Assistido nâo encontrado!' });
+      if (!haveAssisted) {
+        return response
+          .status(404)
+          .json({ error: 'Assistido nâo encontrado!' });
       }
 
       const assistedUpdated = await updateAssistedService.execute({
@@ -74,9 +71,8 @@ class AssistedController {
       });
 
       return response.status(201).json(assistedUpdated);
-
     } catch (error) {
-      return response.status(400).json({message:error});
+      return response.status(400).json({ error });
     }
   }
 
@@ -89,11 +85,14 @@ class AssistedController {
       const destroyAssistedService = new DestroyAssistedService();
       const findAssistedByIdService = new FindAssistedByIdService();
 
-      const haveAssisted = await findAssistedByIdService.execute(id);
+      const haveAssisted = await findAssistedByIdService.execute({
+        assistedId: id,
+      });
 
-      if (!!haveAssisted) {
-
-        return response.status(404).json({message:'Assistido nao encontrado!'});
+      if (!haveAssisted) {
+        return response
+          .status(404)
+          .json({ error: 'Assistido não encontrado!' });
       }
 
       await destroyAssistedService.execute({
@@ -102,11 +101,9 @@ class AssistedController {
       });
 
       return response.status(201).json({ success: 'Deletado com sucesso!' });
-
     } catch (error) {
-      return response.status(400).json({message:error});
+      return response.status(400).json({ error });
     }
-
   }
 }
 

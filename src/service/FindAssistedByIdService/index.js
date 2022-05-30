@@ -1,8 +1,10 @@
-class FindAssistedByIdService {
-  async execute(assistedData) {
-    const create = await Assisted.create(assistedData);
+const AssistedUser = require('@models/AssistedUser');
 
-    return create;
+class FindAssistedByIdService {
+  async execute({ assistedId }) {
+    const assistedFinded = await AssistedUser.findById(assistedId);
+
+    return assistedFinded;
   }
 }
 module.exports = FindAssistedByIdService;
