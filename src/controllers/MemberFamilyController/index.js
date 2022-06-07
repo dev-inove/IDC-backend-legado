@@ -1,5 +1,5 @@
 const CreateMemberFamilyService = require('@service/CreateMemberFamilyService');
-const ListMemberFamilyByidAssistedService = require('@service/ListMemberFamilyByIdAssistedService');
+const FindAllMemberFamilyByIdAssistedService = require('@service/FindAllMemberFamilyByIdAssistedService');
 const UpdateMemberFamilyService = require('@service/UpdateMemberFamilyService');
 const DeleteMemberFamilyService = require('@service/DeleteMemberFamilyService');
 const FindMemberFamilyByIdService = require('@service/FindMemberFamilyByIdService');
@@ -27,12 +27,13 @@ class MemberFamilyController {
     try {
       const { idAssisted } = request.params;
 
-      const listMemberFamilyByIdAssistedService =
-        new ListMemberFamilyByidAssistedService();
+      const findAllMemberFamilyByIdAssistedService =
+        new FindAllMemberFamilyByIdAssistedService();
 
-      const membersFamily = await listMemberFamilyByIdAssistedService.execute({
-        idAssisted,
-      });
+      const membersFamily =
+        await findAllMemberFamilyByIdAssistedService.execute({
+          idAssisted,
+        });
 
       return response.status(200).json(membersFamily);
     } catch (err) {
