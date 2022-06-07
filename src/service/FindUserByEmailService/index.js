@@ -1,6 +1,6 @@
 const User = require('@models/User');
 
-class ShowUserByEmail {
+class FindUserByEmailService {
   async execute({ email }) {
     if (!email) throw new Error('O email deve ser informado!');
 
@@ -10,4 +10,4 @@ class ShowUserByEmail {
   }
 }
 
-module.exports = ShowUserByEmail;
+module.exports = FindUserByEmailService;

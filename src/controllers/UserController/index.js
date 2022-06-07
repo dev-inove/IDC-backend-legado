@@ -1,6 +1,6 @@
 const CreateUserService = require('@service/CreateUserService');
 const ListAllUsersService = require('@service/ListAllUsersService');
-const ShowUserByEmail = require('@service/ShowUserByEmail');
+const FindUserByEmailService = require('@service/FindUserByEmailService');
 
 const UpdateUserService = require('@service/UpdateUserService');
 
@@ -9,8 +9,8 @@ class UserController {
     try {
       const { name, email, password } = request.body;
 
-      const showUserByEmail = new ShowUserByEmail();
-      const userExists = await showUserByEmail.execute({ email });
+      const findUserByEmailService = new FindUserByEmailService();
+      const userExists = await findUserByEmailService.execute({ email });
 
       if (userExists) {
         return response
@@ -51,8 +51,8 @@ class UserController {
     try {
       const { email } = request.params;
 
-      const showUserByEmail = new ShowUserByEmail();
-      const user = await showUserByEmail.execute({ email });
+      const findUserByEmailService = new FindUserByEmailService();
+      const user = await findUserByEmailService.execute({ email });
       if (!user) {
         return response.status(404).json({ error: 'Usuário não encontrado' });
       }
