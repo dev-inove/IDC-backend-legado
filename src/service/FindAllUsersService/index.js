@@ -1,6 +1,6 @@
 const User = require('@models/User');
 
-class ListAllUsersService {
+class FindAllUsersService {
   async execute() {
     const users = await User.find(
       {},
@@ -11,4 +11,4 @@ class ListAllUsersService {
   }
 }
 
-module.exports = ListAllUsersService;
+module.exports = FindAllUsersService;

@@ -1,5 +1,5 @@
 const CreateUserService = require('@service/CreateUserService');
-const ListAllUsersService = require('@service/ListAllUsersService');
+const FindAllUsersService = require('@service/FindAllUsersService');
 const FindUserByEmailService = require('@service/FindUserByEmailService');
 
 const UpdateUserService = require('@service/UpdateUserService');
@@ -32,12 +32,9 @@ class UserController {
 
   async index(request, response) {
     try {
-      const listAllUserService = new ListAllUsersService();
+      const findAllUsersService = new FindAllUsersService();
 
-      const users = await listAllUserService.execute(
-        {},
-        { password_hash: 0, createdAt: 0, updatedAt: 0 },
-      );
+      const users = await findAllUsersService.execute();
 
       return response.status(200).json({ users });
     } catch (err) {
