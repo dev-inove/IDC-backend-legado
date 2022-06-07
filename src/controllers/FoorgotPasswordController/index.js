@@ -1,6 +1,6 @@
 const { sign } = require('jsonwebtoken');
 
-const ShowUserByEmail = require('@service/ShowUserByEmail');
+const FindUserByEmailService = require('@service/FindUserByEmailService');
 
 const forgotTokenConfig = require('@config/ForgotPassConfig');
 const mailerTransport = require('@providers/mailerProvider');
@@ -9,9 +9,9 @@ class ForgotPasswordConbtroller {
   async store(request, response) {
     try {
       const { email } = request.body;
-      const showUserbyEmail = new ShowUserByEmail();
+      const findUserByEmailService = new FindUserByEmailService();
 
-      const user = await showUserbyEmail.execute({ email });
+      const user = await findUserByEmailService.execute({ email });
 
       const { secret, expiresIn } = forgotTokenConfig.jwt;
 
