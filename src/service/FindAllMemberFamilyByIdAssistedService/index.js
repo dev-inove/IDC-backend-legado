@@ -1,6 +1,6 @@
 const MemberFamily = require('@models/MemberFamily');
 
-class ListMemberFamilyByidAssistedService {
+class FindAllMemberFamilyByIdAssistedService {
   async execute({ idAssisted }) {
     const membersFamily = await MemberFamily.find({
       idAssisted,
@@ -16,4 +16,4 @@ class ListMemberFamilyByidAssistedService {
   }
 }
 
-module.exports = ListMemberFamilyByidAssistedService;
+module.exports = FindAllMemberFamilyByIdAssistedService;

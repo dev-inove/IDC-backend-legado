@@ -1,6 +1,6 @@
 const MemberFamily = require('@models/MemberFamily');
 
-class ReturnMemberFamilyById {
+class FindMemberFamilyByIdService {
   async execute({ memberFamilyId }) {
     const memberFamily = await MemberFamily.findById(memberFamilyId);
 
@@ -8,4 +8,4 @@ class ReturnMemberFamilyById {
   }
 }
 
-module.exports = ReturnMemberFamilyById;
+module.exports = FindMemberFamilyByIdService;
