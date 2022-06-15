@@ -1,6 +1,6 @@
-const FoorgotPasswordController = require('@controllers/FoorgotPasswordController');
+const FoorgotPasswordController = require('@controllers/ForgotPasswordController');
 const UpdateUserPasswordWithTokenController = require('@controllers/UpdateUserPasswordWithTokenController');
-const FoorgotPasswordValidation = require('@middlewares/validations/FoorgotPasswordValidation');
+const FoorgotPasswordValidation = require('@middlewares/validations/ForgotPasswordValidation');
 const UpdateUserPasswordWithTokenValidation = require('@middlewares/validations/UpdateUserPasswordWithTokenValidation');
 const { Router } = require('express');
 
