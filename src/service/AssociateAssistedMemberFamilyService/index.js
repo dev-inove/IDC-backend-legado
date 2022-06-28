@@ -3,10 +3,10 @@ const AssistedUser = require('@models/AssistedUser');
 
 class AssociateAssistedWithMemberFamilyService {
   async execute({ CPFAssisted, CPFMemberFamily, isResponsible }) {
-    const assisted = await MemberFamily.findOne({ CPFMemberFamily });
+    const assisted =  await AssistedUser.findOne({ CPFAssisted });
 
-    const member = await AssistedUser.findOne({ CPFAssisted });
-
+    const member = await MemberFamily.findOne({ CPFMemberFamily });
+    
     if (!assisted || !member) {
       throw new Error('Cheque os dados e tente novamente');
     }
