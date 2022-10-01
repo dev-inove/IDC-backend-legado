@@ -1,13 +1,13 @@
 const { Router } = require('express');
 const passport = require('passport');
 
-const UserController = require('@controllers/UserController');
-const UpdateUserPasswordController = require('@controllers/UpdateUserPasswordController');
+const UserController = require('@controllers/User/UserController');
+const UpdateUserPasswordController = require('@controllers/User/UpdateUserPasswordController');
 
-const UpdateUserValidation = require('@middlewares/validations/UpdateUserValidation');
-const CreateUserValidation = require('@middlewares/validations/CreateUserValidation');
-const UpdateUserPasswordValidation = require('@middlewares/validations/UpdateUserPasswordValidation');
-const ShowUserValidation = require('@middlewares/validations/ShowUserValidation');
+const UpdateUserValidation = require('@middlewares/validations/User/UpdateUserValidation');
+const CreateUserValidation = require('@middlewares/validations/User/CreateUserValidation');
+const UpdateUserPasswordValidation = require('@middlewares/validations/User/UpdateUserPasswordValidation');
+const ShowUserValidation = require('@middlewares/validations/User/ShowUserValidation');
 const SchemaPassport = require('@middlewares/Auth');
 
 const userRouter = Router();

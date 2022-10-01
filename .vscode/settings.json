@@ -1,0 +1,8 @@
+{
+    "editor.hover.delay": 100,
+    "java.dependency.refreshDelay": 100,
+    "editor.quickSuggestionsDelay": 1,
+    "workbench.sash.hoverDelay": 100,
+    "files.autoSaveDelay": 100,
+    "gitlens.advanced.blame.delayAfterEdit": 1000
+}

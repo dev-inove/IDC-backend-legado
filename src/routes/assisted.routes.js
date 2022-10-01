@@ -1,12 +1,12 @@
-const AssistedController = require('@controllers/AssistedController');
-const AssociateAssistedWithMemberFamilyController = require('@controllers/AssociateAssistedWithMemberFamilyController');
+const AssistedController = require('@controllers/Assisted/AssistedController');
+const AssociateAssistedWithMemberFamilyController = require('@controllers/Assisted/AssociateAssistedWithMemberFamilyController');
 const { Router } = require('express');
 
-const CreateAssistedValidation = require('@middlewares/validations/CreateAssistedValidation');
-const ShowAssistedValidation = require('@middlewares/validations/ShowAssistedValidation');
-const UpdateAssistedValidation = require('@middlewares/validations/UpdateAssistedValidation');
-const DestroyAssistedValidation = require('@middlewares/validations/DestroyAssistedValidation');
-const AssociateAssistedWithMemberFamilyValidation = require('@middlewares/validations/AssociateAssistedWithMemberFamilyValidation');
+const CreateAssistedValidation = require('@middlewares/validations/Assisted/CreateAssistedValidation');
+const ShowAssistedValidation = require('@middlewares/validations/Assisted/ShowAssistedValidation');
+const UpdateAssistedValidation = require('@middlewares/validations/Assisted/UpdateAssistedValidation');
+const DestroyAssistedValidation = require('@middlewares/validations/Assisted/DestroyAssistedValidation');
+const AssociateAssistedWithMemberFamilyValidation = require('@middlewares/validations/Assisted/AssociateAssistedWithMemberFamilyValidation');
 const SchemaPassport = require('@middlewares/Auth');
 const passport = require('passport');
 
