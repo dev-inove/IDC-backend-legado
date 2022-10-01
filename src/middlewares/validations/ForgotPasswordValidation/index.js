@@ -1,6 +1,6 @@
 const Yup = require('yup');
 
-async function FoorgotPasswordValidation(request, response, next) {
+async function ForgotPasswordValidation(request, response, next) {
   const schema = Yup.object().shape({
     email: Yup.string()
       .required('O email é obrigatório para solicitar a alteração de senha.')
@@ -18,4 +18,4 @@ async function FoorgotPasswordValidation(request, response, next) {
   return next();
 }
 
-module.exports = FoorgotPasswordValidation;
+module.exports = ForgotPasswordValidation;
