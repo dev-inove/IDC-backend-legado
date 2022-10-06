@@ -67,7 +67,6 @@ async function CreateAssistedValidation(request, response, next) {
       .required('O número da indentidade deve ser informado.')
       .typeError('O número da indentidade  deve ser um numero valido.'),
     cpf: Yup.string()
-      .positive('o cpf deve ser um número positivo.')
       .required('O cpf deve ser informado.')
       .typeError('O cpf deve ser um número valido.'),
     Department: Yup.string()
@@ -153,7 +152,7 @@ async function CreateAssistedValidation(request, response, next) {
         .typeError('O tipo de propriedade deve ser um texto.'),
       physical_structure: Yup.string()
         .required('A estrutura física deve ser informado.')
-        .typeError('A estrutura física ser um texto.'),
+        .typeError('A estrutura física deve ser um texto.'),
       numberOfRooms: Yup.number()
         .positive('O número de quartos deve ser positivo')
         .required('O número de quartos deve ser informado.')
