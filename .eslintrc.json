@@ -33,7 +33,7 @@
         "map": [
           ["@modules","./src/modules"],
           ["@shared","./src/shared"],
-          ["@config", "./src/config"],
+          ["@config", "./src/config"]
           ],
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
