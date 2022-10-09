@@ -1,11 +1,11 @@
 const UserAuthenticationController = require('@modules/User/controllers/UserAuthenticationController');
-const assistedRouter = require('@routes/assisted.routes');
-const memberFamilyRouter = require('@routes/memberFamily.routes');
+const assistedRouter = require('@modules/Assisted/routes/assisted.routes');
+const memberFamilyRouter = require('@modules/MemberFamily/routes/memberFamily.routes');
 const userRouter = require('@modules/User/routes/user.routes');
 const { Router } = require('express');
 
 const AuthenticationValidation = require('@modules/User/middlewares/AuthenticationValidation');
-const forgotPasswordRouter = require('@routes/forgotPassword.routes');
+const forgotPasswordRouter = require('@modules/User/routes/forgotPassword.routes');
 
 const routes = new Router();
 

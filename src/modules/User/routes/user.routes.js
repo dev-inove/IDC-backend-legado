@@ -8,7 +8,7 @@ const UpdateUserValidation = require('@modules/User/middlewares/UpdateUserValida
 const CreateUserValidation = require('@modules/User/middlewares/CreateUserValidation');
 const UpdateUserPasswordValidation = require('@modules/User/middlewares/UpdateUserPasswordValidation');
 const ShowUserValidation = require('@modules/User/middlewares/ShowUserValidation');
-const SchemaPassport = require('@middlewares/Auth');
+const SchemaPassport = require('@shared/middlewares/Auth');
 
 const userRouter = Router();
 

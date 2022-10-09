@@ -1,8 +1,8 @@
-const CreateAssistedService = require('@service/Assisted/CreateAssistedService');
-const FindAllAssistedService = require('@service/Assisted/FindAllAssistedService');
-const FindAssistedByIdService = require('@service/Assisted/FindAssistedByIdService');
-const UpdateAssistedService = require('@service/Assisted/UpdateAssistedService');
-const DestroyAssistedService = require('@service/Assisted/DestroyAssistedService');
+const CreateAssistedService = require('@modules/Assisted/services/CreateAssistedService');
+const FindAllAssistedService = require('@modules/Assisted/services/FindAllAssistedService');
+const FindAssistedByIdService = require('@modules/Assisted/services/FindAssistedByIdService');
+const UpdateAssistedService = require('@modules/Assisted/services/UpdateAssistedService');
+const DestroyAssistedService = require('@modules/Assisted/services/DestroyAssistedService');
 class AssistedController {
   async store(request, response) {
     try {

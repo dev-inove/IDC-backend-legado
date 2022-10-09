@@ -1,12 +1,12 @@
 const MemberFamilyController = require('@modules/MemberFamily/controllers/MemberFamilyController');
 const { Router } = require('express');
 
-const CreateMemberFamilyValidation = require('@middlewares/validations/Member/CreateMemberFamilyValidation');
-const ListMembersFamilyValidation = require('@middlewares/validations/Member/ListMembersFamilyValidation');
-const ShowMemberFamilyValidation = require('@middlewares/validations/Member/ShowMemberFamilyValidation');
-const UpdateMemberFamilyValidation = require('@middlewares/validations/Member/UpdateMemberFamilyValidation');
-const DestroyMemberFamilyValidation = require('@middlewares/validations/Member/DestroyMemberFamilyValidation');
-const SchemaPassport = require('@middlewares/Auth');
+const CreateMemberFamilyValidation = require('@modules/MemberFamily/middlewares/validations/CreateMemberFamilyValidation');
+const ListMembersFamilyValidation = require('@modules/MemberFamily/middlewares/validations/ListMembersFamilyValidation');
+const ShowMemberFamilyValidation = require('@modules/MemberFamily/middlewares/validations/ShowMemberFamilyValidation');
+const UpdateMemberFamilyValidation = require('@modules/MemberFamily/middlewares/validations/UpdateMemberFamilyValidation');
+const DestroyMemberFamilyValidation = require('@modules/MemberFamily/middlewares/validations/DestroyMemberFamilyValidation');
+const SchemaPassport = require('@shared/middlewares/Auth');
 const passport = require('passport');
 
 const memberFamilyRouter = Router();

@@ -1,4 +1,4 @@
-const AssociateAssistedWithMemberFamilyService = require('@service/Assisted/AssociateAssistedMemberFamilyService');
+const AssociateAssistedWithMemberFamilyService = require('@modules/Assisted/services/AssociateAssistedMemberFamilyService');
 const MemberFamily = require('@modules/MemberFamily/models/MemberFamily');
 const AssistedUser = require('@modules/Assisted/models/AssistedUser');
 // Esse controller é usado apenas quando quero fazer a associação rápida

@@ -1,8 +1,8 @@
-const CreateMemberFamilyService = require('@service/Member/CreateMemberFamilyService');
-const FindAllMemberFamilyByIdAssistedService = require('@service/Member/FindAllMemberFamilyByIdAssistedService');
-const UpdateMemberFamilyService = require('@service/Member/UpdateMemberFamilyService');
-const DeleteMemberFamilyService = require('@service/Member/DeleteMemberFamilyService');
-const FindMemberFamilyByIdService = require('@service/Member/FindMemberFamilyByIdService');
+const CreateMemberFamilyService = require('@modules/MemberFamily/services/CreateMemberFamilyService');
+const FindAllMemberFamilyByIdAssistedService = require('@modules/MemberFamily/services/FindAllMemberFamilyByIdAssistedService');
+const UpdateMemberFamilyService = require('@modules/MemberFamily/services/UpdateMemberFamilyService');
+const DeleteMemberFamilyService = require('@modules/MemberFamily/services/DeleteMemberFamilyService');
+const FindMemberFamilyByIdService = require('@modules/MemberFamily/services/FindMemberFamilyByIdService');
 
 class MemberFamilyController {
   async store(request, response) {
