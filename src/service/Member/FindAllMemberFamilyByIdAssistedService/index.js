@@ -1,4 +1,4 @@
-const MemberFamily = require('@models/MemberFamily');
+const MemberFamily = require('@modules/MemberFamily/models/MemberFamily');
 
 class FindAllMemberFamilyByIdAssistedService {
   async execute({ idAssisted }) {

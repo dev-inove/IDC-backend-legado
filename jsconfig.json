@@ -5,6 +5,8 @@
     "paths": {
       "@controllers/*": ["controllers/*"],
       "@models/*": ["models/*"],
+      "@modules/*": ["modules/*"],
+      "@shared/*": ["shared/*"],
       "@config/*": ["config/*"],
       "@service/*": ["service/*"],
       "@routes/*": ["routes/*"],

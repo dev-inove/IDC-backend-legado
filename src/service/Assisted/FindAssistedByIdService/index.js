@@ -1,4 +1,4 @@
-const AssistedUser = require('@models/AssistedUser');
+const AssistedUser = require('@modules/Assisted/models/AssistedUser');
 
 class FindAssistedByIdService {
   async execute({ assistedId }) {

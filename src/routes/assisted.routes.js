@@ -1,5 +1,5 @@
-const AssistedController = require('@controllers/Assisted/AssistedController');
-const AssociateAssistedWithMemberFamilyController = require('@controllers/Assisted/AssociateAssistedWithMemberFamilyController');
+const AssistedController = require('@modules/Assisted/controllers/AssistedController');
+const AssociateAssistedWithMemberFamilyController = require('@modules/Assisted/controllers/AssociateAssistedWithMemberFamilyController');
 const { Router } = require('express');
 
 const CreateAssistedValidation = require('@middlewares/validations/Assisted/CreateAssistedValidation');

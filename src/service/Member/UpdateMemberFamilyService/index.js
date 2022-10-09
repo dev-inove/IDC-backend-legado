@@ -1,5 +1,5 @@
-const AssistedUser = require('@models/AssistedUser');
-const MemberFamily = require('@models/MemberFamily');
+const AssistedUser = require('@modules/Assisted/models/AssistedUser');
+const MemberFamily = require('@modules/MemberFamily/models/MemberFamily');
 
 class UpdateMemberFamilyService {
   async execute({ memberId, dataMemberFamilyUpdate }) {

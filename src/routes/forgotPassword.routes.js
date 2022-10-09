@@ -1,7 +1,7 @@
-const ForgotPasswordController = require('@controllers/User/ForgotPasswordController');
-const UpdateUserPasswordWithTokenController = require('@controllers/User/UpdateUserPasswordWithTokenController');
-const ForgotPasswordValidation = require('@middlewares/validations/User/ForgotPasswordValidation');
-const UpdateUserPasswordWithTokenValidation = require('@middlewares/validations/User/UpdateUserPasswordWithTokenValidation');
+const ForgotPasswordController = require('@modules/User/controllers/ForgotPasswordController');
+const UpdateUserPasswordWithTokenController = require('@modules/User/controllers/UpdateUserPasswordWithTokenController');
+const ForgotPasswordValidation = require('@modules/User/middlewares/ForgotPasswordValidation');
+const UpdateUserPasswordWithTokenValidation = require('@modules/User/middlewares/UpdateUserPasswordWithTokenValidation');
 const { Router } = require('express');
 
 const forgotPasswordRouter = Router();

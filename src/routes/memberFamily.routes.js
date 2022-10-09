@@ -1,4 +1,4 @@
-const MemberFamilyController = require('@controllers/Member/MemberFamilyController');
+const MemberFamilyController = require('@modules/MemberFamily/controllers/MemberFamilyController');
 const { Router } = require('express');
 
 const CreateMemberFamilyValidation = require('@middlewares/validations/Member/CreateMemberFamilyValidation');
