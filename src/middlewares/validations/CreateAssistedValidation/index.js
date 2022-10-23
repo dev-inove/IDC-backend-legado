@@ -18,7 +18,7 @@ async function CreateAssistedValidation(request, response, next) {
             .positive('O número de telefone deve ser positivo')
             .required('O número de telefone deve ser informado.')
             .typeError('O número telefone deve ser um numero valido.'),
-        birth: Yup.date()
+        birth: Yup.string()
             .required('A data de nascimento deve ser informado.')
             .typeError('A data de nascimento deve ser uma data valida.'),
         sex: Yup.string()
@@ -34,7 +34,6 @@ async function CreateAssistedValidation(request, response, next) {
             .required('Se possui alguma deficiência deve ser informada.')
             .typeError('Se possui alguma deficiência deve ser verdadeiro ou falso.'),
         deficiency: Yup.string()
-            .required('A deficiência deve ser informada.')
             .typeError('A deficiência deve ser um texto.'),
 
         address: Yup.object().shape({
@@ -67,13 +66,12 @@ async function CreateAssistedValidation(request, response, next) {
             .required('O número da indentidade deve ser informado.')
             .typeError('O número da indentidade  deve ser um numero valido.'),
         cpf: Yup.string()
-            .positive('o cpf deve ser um número positivo.')
             .required('O cpf deve ser informado.')
             .typeError('O cpf deve ser um número valido.'),
         Department: Yup.string()
             .required('O departamento deve ser informado.')
             .typeError('O departamento deve ser um texto.'),
-        emission: Yup.date()
+        emission: Yup.string()
             .required('A data de emissão deve ser informado.')
             .typeError('A data de emissão deve ser uma data valida.'),
         diagnostic: Yup.string()
@@ -92,7 +90,6 @@ async function CreateAssistedValidation(request, response, next) {
                 'Se ja teve um parente atendido deve ser verdadeiro ou falso.',
             ),
         relativeAttended: Yup.string()
-            .required('O parente atendido deve ser informado.')
             .typeError('O parente atendido deve ser um texto.'),
         transport: Yup.string()
             .required('O tipo de transporte deve ser informado.')
@@ -103,16 +100,12 @@ async function CreateAssistedValidation(request, response, next) {
                 'Se participa de um programa do governo ser verdadeiro ou falso.',
             ),
         governmentProgram: Yup.string()
-            .required('O programa do governo que participa deve ser informado.')
             .typeError('O programa do governo que participa deve ser um texto.'),
         governmentProgramValue: Yup.number()
             .positive()
-            .required(
-                'O valor que recebia do programa do governo deve ser informado.',
-            )
             .typeError('O valor que recebia do programa do governo ser um numero.'),
         beneficiary: Yup.string()
-            .required('O beneficiário deve ser informado.')
+
             .typeError('O beneficiário deve ser um texto.'),
         nisNumber: Yup.number()
             .positive('O número de indetificação social deve ser positivo ')
