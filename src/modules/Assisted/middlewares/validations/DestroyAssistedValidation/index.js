@@ -8,7 +8,7 @@ async function DestroyAssistedValidation(request, response, next) {
   });
 
   try {
-    await schema.validate(request.body, {
+    await schema.validate(request.params, {
       strict: true,
       abortEarly: false,
     });

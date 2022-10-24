@@ -1,0 +1,67 @@
+// MongoDB Playground
+// Use Ctrl+Space inside a snippet or a string literal to trigger completions.
+
+// The current database to use.
+use('test');
+
+// Search for documents in the current collection.
+db.assistedusers.insert({
+  "fullName": "Teste 3",
+  "socialName": "Teste 3",
+  "maritalStatus": "solteiro",
+  "birth": {
+    "$date": "1990-08-09T03:00:00Z"
+  },
+  "sex": "Masculino",
+  "nationality": "brasileiro",
+  "placeOfBirth": "Fortaleza",
+  "address": {
+    "address": "meireles",
+    "number": "422",
+    "city": "Fortaleza",
+    "neighborhood": "bairro",
+    "state": "ceara",
+    "cep": "160510138",
+    "referencePoint": "proximo a coisa"
+  },
+  "phone": 5585998782434,
+  "email": "fulano@gmail.com",
+  "identity": "2007009059958",
+  "cpf": "13868429391",
+  "Department": "SSPDS-CE",
+  "emission": {
+    "$date": {
+      "$numberLong": "-55844715212000"
+    }
+  },
+  "diagnostic": "cegueira",
+  "visualAcuity": "miopia",
+  "cid10": "naosei",
+  "hasARelativeAttended": true,
+  "transport": "carro",
+  "hasDeficiency": false,
+  "isInGovernmentProgram": false,
+  "nisNumber": 12,
+  "schooling": {
+    "grade": "ensino medio",
+    "turn": "Manhã",
+    "hasVinculeHelioGoes": false,
+    "transportToInstitute": "hillux",
+    "hasMemberMatriculatedOrWillMatriculate": false
+  },
+  "property": {
+    "type_property": "Imóvel próprio",
+    "physical_structure": "É uma casa com um andar",
+    "numberOfRooms": 3,
+    "numberOfBathrooms": 2,
+    "energyElectric": "50 reais",
+    "waterSupply": "60 reais",
+    "sanitarySewage": true,
+    "garbageCollection": true,
+    "statusProperty": "Financiado pela casa própria",
+    "monthlyRent": 500,
+    "monthlyFinancing": 900,
+    "isSharedWithOtherFamily": true,
+    "houseProvidedBy": "otavio augusto"
+  }
+});

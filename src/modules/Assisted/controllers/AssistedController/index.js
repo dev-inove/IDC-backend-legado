@@ -65,7 +65,11 @@ class AssistedController {
                     .json({ error: 'Assistido nâo encontrado!' });
             }
 
-            await updateAssistedService.execute(request,response);
+            await updateAssistedService.execute({
+                assistedId: id,
+                body: request.body,
+                res: response
+            });
 
             return response.status(201).json({ sucesso: "Atualizado com sucesso"});
         } catch (error) {
@@ -93,7 +97,7 @@ class AssistedController {
             }
 
             await destroyAssistedService.execute({
-                id,
+                assistedId: id,
                 destroy_members,
             });
 
