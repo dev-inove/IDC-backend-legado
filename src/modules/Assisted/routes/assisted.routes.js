@@ -20,21 +20,21 @@ assistedRouter.get('/', AssistedController.index);
 // use ?type=[TYPE] after id as query param to set the type of search
 assistedRouter.get('/:id', ShowAssistedValidation, AssistedController.show);
 assistedRouter.put(
-  '/update/:id',
-  UpdateAssistedValidation,
-  AssistedController.update,
+    '/update/:id',
+    UpdateAssistedValidation,
+    AssistedController.update,
 );
 assistedRouter.delete(
-  '/:id',
-  DestroyAssistedValidation,
-  AssistedController.destroy,
+    '/:id',
+    DestroyAssistedValidation,
+    AssistedController.destroy,
 );
 
 // Rota para associar um membro a um assistido
 assistedRouter.put(
-  '/associate',
-  AssociateAssistedWithMemberFamilyValidation,
-  AssociateAssistedWithMemberFamilyController.update,
+    '/associate',
+    AssociateAssistedWithMemberFamilyValidation,
+    AssociateAssistedWithMemberFamilyController.update,
 );
 
 module.exports = assistedRouter;
