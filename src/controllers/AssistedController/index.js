@@ -69,9 +69,9 @@ class AssistedController {
 
             // await AssistedUser.updateOne({ _id: id }, request.body)
 
-            await updateAssistedService.execute(request);
+            await updateAssistedService.execute(request,response);
 
-            return response.status(201).json({ sucesso: "atualizado com sucesso" });
+            return response.status(201).json({ sucesso: "Atualizado com sucesso"});
         } catch (error) {
             return response.status(400).json({ error });
         }
