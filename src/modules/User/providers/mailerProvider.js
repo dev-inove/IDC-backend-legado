@@ -15,9 +15,9 @@ transport.use(
   hbs({
     viewEngine: {
       extname: '.handlebars',
-      layoutsDir: path.resolve('/src/modules/User/resources/mail/layouts'),
+      layoutsDir: path.resolve('./src/modules/User/resources/mail/layouts'),
     },
-    viewPath: path.resolve('/src/modules/User/resources/mail'),
+    viewPath: path.resolve('./src/modules/User/resources/mail'),
     extName: '.handlebars',
   }),
 );
