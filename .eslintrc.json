@@ -31,14 +31,10 @@
     "import/resolver": {
       "alias": {
         "map": [
-          ["@models", "./src/models"],
-          ["@controllers", "./src/controllers"],
-          ["@config", "./src/config"],
-          ["@service", "./src/service"],
-          ["@routes", "./src/routes"],
-          ["@middlewares", "./src/middlewares"],
-          ["@providers", "./src/providers"]
-        ],
+          ["@modules","./src/modules"],
+          ["@shared","./src/shared"],
+          ["@config", "./src/config"]
+          ],
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
     }
