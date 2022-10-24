@@ -1,13 +1,16 @@
 const AssistedUser = require('@models/AssistedUser');
 
 class UpdateAssistedService {
-  async execute({ AssistedId, assistedUpdateData }) {
-    const assistedFinded = await AssistedUser.findById(AssistedId);
+    async execute(request,res) {
+        const { id } = request.params
 
-    await assistedFinded.set(assistedUpdateData);
-    await assistedFinded.save();
+        await AssistedUser.updateOne({ _id: id }, request.body);
 
-    return assistedFinded;
-  }
+        if (AssistedUser.matchedCount === 0) {
+            res.status(442).json({ message: 'Assistido não encontrado' })
+            return false;
+        }
+        return true;
+    }
 }
 module.exports = UpdateAssistedService;
