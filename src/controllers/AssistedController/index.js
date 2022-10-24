@@ -3,7 +3,6 @@ const FindAllAssistedService = require('@service/FindAllAssistedService');
 const FindAssistedByIdService = require('@service/FindAssistedByIdService');
 const UpdateAssistedService = require('@service/UpdateAssistedService');
 const DestroyAssistedService = require('@service/DestroyAssistedService');
-const AssistedUser = require('@models/AssistedUser');
 
 class AssistedController {
     async store(request, response) {
@@ -66,8 +65,6 @@ class AssistedController {
                     .status(404)
                     .json({ error: 'Assistido nâo encontrado!' });
             }
-
-            // await AssistedUser.updateOne({ _id: id }, request.body)
 
             await updateAssistedService.execute(request,response);
 
