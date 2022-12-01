@@ -10,7 +10,7 @@ async function UpdateAssistedValidation(request, response, next) {
             .positive('O telefone não pode ser negativo.')
             .typeError('O telefone deve ser um número.'),
 
-        birth: Yup.string().typeError('O aniversário deve ser uma data.'),
+        birth: Yup.string(),
         sex: Yup.string().typeError('O sexo deve ser um texto.'),
         nationality: Yup.string().typeError('A nacionalidade deve ser um texto.'),
         placeOfBirth: Yup.string().typeError(

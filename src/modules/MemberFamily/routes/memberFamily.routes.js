@@ -15,30 +15,30 @@ passport.use(SchemaPassport);
 memberFamilyRouter.use(passport.authenticate('jwt', { session: false }));
 
 memberFamilyRouter.post(
-  '/',
-  CreateMemberFamilyValidation,
-  MemberFamilyController.store,
+    '/',
+    CreateMemberFamilyValidation,
+    MemberFamilyController.store,
 );
 memberFamilyRouter.get(
-  '/:idAssisted',
-  ListMembersFamilyValidation,
-  MemberFamilyController.index,
+    '/:idAssisted',
+    ListMembersFamilyValidation,
+    MemberFamilyController.index,
 );
 memberFamilyRouter.get(
-  '/search/:id',
-  ShowMemberFamilyValidation,
-  MemberFamilyController.show,
+    '/search/:id',
+    ShowMemberFamilyValidation,
+    MemberFamilyController.show,
 );
 memberFamilyRouter.put(
-  '/update/:id',
-  UpdateMemberFamilyValidation,
+    '/update/:id',
+    UpdateMemberFamilyValidation,
 
-  MemberFamilyController.update,
+    MemberFamilyController.update,
 );
 memberFamilyRouter.delete(
-  '/delete/:id',
-  DestroyMemberFamilyValidation,
-  MemberFamilyController.destroy,
+    '/delete/:id',
+    DestroyMemberFamilyValidation,
+    MemberFamilyController.destroy,
 );
 
 module.exports = memberFamilyRouter;
